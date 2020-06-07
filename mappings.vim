@@ -16,12 +16,12 @@ nnoremap <silent> <F1> :NERDTreeFind<cr>C
 inoremap <c-c> <esc>
 
 " Move line up/down
-nnoremap <c-\> :m .+1<cr>==
-nnoremap <c-]> :m .-2<cr>==
-inoremap <c-\> <esc>:m .+1<cr>==gi
-inoremap <c-]> <esc>:m .-2<cr>==gi
-vnoremap <c-\> :m '>+1<cr>gv=gv
-vnoremap <c-]> :m '<-2<cr>gv=gv
+nnoremap <c-pagedown> :m .+1<cr>==
+nnoremap <c-pageup> :m .-2<cr>==
+inoremap <c-pagedown> <esc>:m .+1<cr>==gi
+inoremap <c-pageup> <esc>:m .-2<cr>==gi
+vnoremap <c-pagedown> :m '>+1<cr>gv=gv
+vnoremap <c-pageup> :m '<-2<cr>gv=gv
 
 " Move pane up/down/left/right
 nnoremap <c-k> 10<c-y>
