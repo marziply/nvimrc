@@ -51,9 +51,6 @@ set foldcolumn=1
 set re=1
 set bg=dark
 
-" color tender
-" color apprentice
-" color tender
 color one
 runtime macros/matchit.vim
 filetype off

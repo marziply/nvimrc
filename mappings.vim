@@ -117,6 +117,8 @@ nnoremap N Nzz
 nnoremap * *zz
 " Creates empty object after key
 inoremap <c-d> : {<cr><cr>},<c-c>kS
+" Increases syntax column length for current buffer
+nnoremap <c-f>x :set synmaxcol=5000<cr>
 
 
 "Plugins
