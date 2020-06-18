@@ -1,6 +1,6 @@
-set directory=$NVIM_DIR/tmp
-set backupdir=$NVIM_DIR/backup
-set undodir=$NVIM_DIR/undo
+set directory=$NVIM_DIR/tmp//
+set backupdir=$NVIM_DIR/backup//
+set undodir=$NVIM_DIR/undo//
 set undofile
 set nohlsearch
 set incsearch
