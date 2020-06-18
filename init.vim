@@ -1,5 +1,5 @@
-if empty($XDG_CONFIG_HOME) | let $XDG_CONFIG_HOME = '~/.config' | endif
-if empty($NVIM_DIR) | let $NVIM_DIR = $XDG_CONFIG_HOME . "/nvim" | endif
+if empty($XDG_CONFIG_HOME) | let $XDG_CONFIG_HOME = glob("~/.config") | endif
+if empty($NVIM_DIR) | let $NVIM_DIR = glob($XDG_CONFIG_HOME . "/nvim") | endif
 
 if empty(glob("$NVIM_DIR/autoload/plug.vim"))
   if empty(glob("$NVIM_DIR/autoload")) | silent exec "!mkdir $NVIM_DIR/autoload" | endif
