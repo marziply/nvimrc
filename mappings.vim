@@ -6,13 +6,6 @@
 
 " General keybinds
 
-" Toggle NERDTree panel
-nnoremap <silent> <F12> :NERDTreeToggle<cr>
-" Focus opened NERDTree panel
-nnoremap <silent> <F11> :NERDTreeFocus<cr>
-" Find current directory and focus it
-nnoremap <silent> <F1> :NERDTreeFind<cr>C
-" Alternative to pressing ESC
 inoremap <c-c> <esc>
 
 " Move line up/down

@@ -271,11 +271,6 @@ function! ChangeDirectory (init)
     try
       exec "cd " . directory
 
-      NERDTreeCWD
-      NERDTreeClose
-
-      mod
-
       echo directory
     catch
       redraw

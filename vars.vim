@@ -25,10 +25,6 @@ let g:EasyMotion_prompt = '[{n}] >>> '
 let g:EasyMotion_keys = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ;'
 let g:lens#width_resize_max = 160
 let g:lens#width_resize_min = 80
-let NERDTreeMinimalUI = 1
-let NERDSpaceDelims = 1
-let NERDDefaultAlign = 'left'
-let NERDTreeIgnore = ['node_modules', '.git']
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlPCurWD'
 let g:ctrlp_by_filename = 1
@@ -66,10 +62,3 @@ let g:ale_linters = {
 let g:ale_linter_aliases = {
   \ 'vue': ['javascript', 'html', 'scss']
 \}
-" let g:LanguageClient_serverCommands = {
-"  \ 'vue': ['/usr/local/bin/vls', 'javascript-typescript-stdio'],
-"  \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
-"  \ 'ruby': ['/Users/hayden/.rbenv/shims/solargraph', 'stdio']
-"\}
-" let g:LanguageClient_loggingFile = expand('~/lang.log')
-" let g:LanguageClient_loggingLevel = 'DEBUG'
