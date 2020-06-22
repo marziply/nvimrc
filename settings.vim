@@ -33,7 +33,7 @@ set updatetime=100
 set shortmess+=c
 set signcolumn=yes
 set completeopt=menuone,noselect,noinsert
-set wildignore+=*/node_modules/*,*/.git/*
+set wildignore+=*/node_modules/*,*/.git/*,*/vendor/*,*/docs/*
 set guicursor=a:ver25-blinkon750
 set autoread
 set ttimeoutlen=0
