@@ -33,6 +33,7 @@ let g:ctrlp_open_new_file = 'r'
 let g:ctrlp_mruf_max = 20
 let g:ctrlp_mruf_case_sensitive = 0
 let g:ctrlp_working_path_mode = 0
+let g:ctrlsf_context = '-C 10'
 let g:ctrlsf_ignore_dir = ['node_modules', 'docs']
 let g:ctrlsf_auto_focus = { 'at': 'start' }
 let g:ctrlsf_default_view_mode = 'compact'
