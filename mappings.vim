@@ -22,12 +22,6 @@ nnoremap <c-j> 10<c-e>
 noremap <c-h> 10zh
 noremap <c-l> 10zl
 
-" Resize current pane up/down/left/right
-nnoremap <s-up> 10<c-w>-
-nnoremap <s-down> 10<c-w>+
-nnoremap <s-left> 10<c-w><
-nnoremap <s-right> 10<c-w>>
-
 " Save vim config
 nnoremap <c-s> :w<cr>
 inoremap <c-s> <esc>:w<cr>
@@ -68,12 +62,6 @@ nnoremap <silent> <leader>Q :bufdo bwipe<cr>
 nnoremap <silent> <c-q> :call CloseWindow()<cr>
 " Clear search
 nnoremap <esc> :noh<cr>
-" Insert line below without insert mode
-nnoremap <cr> o<esc>
-" Insert new line above without insert mode
-nnoremap <s-enter> O<esc>
-" Insert new line above in insert move
-inoremap <c-enter> <c-o>O
 " Inserts single character
 nnoremap <silent> Y :exec "normal i".nr2char(getchar())."\e"<cr>
 " Search file for selected string
@@ -112,7 +100,10 @@ nnoremap * *zz
 inoremap <c-d> : {<cr><cr>},<c-c>kS
 " Increases syntax column length for current buffer
 nnoremap <c-f>x :set synmaxcol=5000<cr>
-
+" New line below without insert
+nnoremap <leader>o o<esc>
+" New line above without insert
+nnoremap <leader>O O<esc>
 
 "Plugins
 
