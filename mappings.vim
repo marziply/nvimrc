@@ -171,3 +171,6 @@ map <leader>h <plug>(easymotion-linebackward)
 " Undo
 nnoremap <silent> <leader>m :MundoToggle<cr>
 nnoremap <silent> <leader>M :wincmd t<cr>
+
+" Winteract
+nnoremap <silent> <leader>w :InteractiveWindow<cr>

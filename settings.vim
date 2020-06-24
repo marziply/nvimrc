@@ -48,6 +48,7 @@ set foldlevel=2
 set foldnestmax=10
 set foldmethod=manual
 set foldcolumn=1
+set nowrap
 set re=1
 set bg=dark
 

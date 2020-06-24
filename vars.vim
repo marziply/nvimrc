@@ -8,6 +8,8 @@ let test#runner_commands = ["jest"]
 " let g:vim_vue_plugin_use_foldexpr = 1
 
 let mapleader = "\<space>"
+let g:eighties_compute = 0
+let g:eighties_minimum_width = 100
 let g:polyglot_disabled = ['vue']
 let g:one_allow_italics = 1
 let g:gotofile_extensions = ['js', 'vue']
@@ -23,8 +25,6 @@ let g:EasyMotion_use_upper = 1
 let g:EasyMotion_enter_jump_first = 1
 let g:EasyMotion_prompt = '[{n}] >>> '
 let g:EasyMotion_keys = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ;'
-let g:lens#width_resize_max = 160
-let g:lens#width_resize_min = 80
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlPCurWD'
 let g:ctrlp_by_filename = 1

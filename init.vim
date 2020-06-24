@@ -4,7 +4,10 @@ if empty($NVIM_DIR) | let $NVIM_DIR = glob($XDG_CONFIG_HOME . "/nvim") | endif
 if empty(glob("$NVIM_DIR/autoload/plug.vim"))
   if empty(glob("$NVIM_DIR/autoload")) | silent exec "!mkdir $NVIM_DIR/autoload" | endif
 
-  silent exec "!curl -fLo $NVIM_DIR/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+  silent exec "
+    \ !curl -fLo $NVIM_DIR/autoload/plug.vim
+    \ --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  \"
 
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
@@ -55,8 +58,9 @@ Plug 'andrewradev/splitjoin.vim'
 Plug 'tpope/vim-dispatch'
 Plug 'janko/vim-test'
 Plug 'simnalamburt/vim-mundo'
-Plug 'camspiers/lens.vim'
 Plug 'honza/vim-snippets'
+Plug 'simeji/winresizer'
+Plug 'justincampbell/vim-eighties'
 " Plug 'sirver/ultisnips'
 
 call plug#end()
