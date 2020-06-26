@@ -101,9 +101,9 @@ inoremap <c-d> : {<cr><cr>},<c-c>kS
 " Increases syntax column length for current buffer
 nnoremap <c-f>x :set synmaxcol=5000<cr>
 " New line below without insert
-nnoremap <leader>o o<esc>
+nnoremap mo o<esc>
 " New line above without insert
-nnoremap <leader>O O<esc>
+nnoremap mO O<esc>
 
 "Plugins
 
