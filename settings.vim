@@ -2,6 +2,7 @@ set directory=$NVIM_DIR/tmp//
 set backupdir=$NVIM_DIR/backup//
 set undodir=$NVIM_DIR/undo//
 set undofile
+set clipboard=unnamedplus
 set nohlsearch
 set incsearch
 set expandtab

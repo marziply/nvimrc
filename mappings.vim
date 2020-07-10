@@ -104,6 +104,10 @@ nnoremap <c-f>x :set synmaxcol=5000<cr>
 nnoremap mo o<esc>
 " New line above without insert
 nnoremap mO O<esc>
+" Centers screen after going 'back'
+nnoremap <c-o> <c-o>zz
+" Centers screen after going 'forward'
+nnoremap <c-i> <c-i>zz
 
 "Plugins
 
