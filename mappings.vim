@@ -71,13 +71,15 @@ vnoremap <silent> gch :s/<!--\s//ge \| '<,'>s/\s-->//ge<cr>:noh<cr>
 " Fold function
 nnoremap <c-f>f $v%Vzf
 " Fold in visual mode
-vnoremap <c-f> zf
+vnoremap <c-f>f zf
 " Fold HTML tag
 nnoremap <c-f>t ^vatVzf
 " Fold self closing HTML tag
 nnoremap <c-f>p ^v%Vzf
 " Fold all function blocks
 nnoremap <c-f>a :call FoldAllBlocks()<cr>
+" Formats a selected JSON object
+vnoremap <c-f>j :call FormatJson()<cr>
 " Previous buffer
 nnoremap <c-h> :bp<cr>
 " Next buffer

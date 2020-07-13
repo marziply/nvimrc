@@ -355,3 +355,19 @@ function! CloseWindow ()
     bw
   endif
 endfunction
+
+function! SelShell (cmd)
+  let s = @s
+
+  normal! gv"sy
+
+  call setreg('h', system("echo '" . getreg('s') . "' | " . a:cmd))
+
+  norm! gv
+  norm! "hp
+endfunction
+
+function! FormatJson ()
+  call SelShell("jq .")
+  call feedkeys('kJ')
+endfunction
