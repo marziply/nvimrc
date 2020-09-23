@@ -23,8 +23,8 @@ noremap <c-h> 10zh
 noremap <c-l> 10zl
 
 " Save vim config
-nnoremap <c-s> :w<cr>
-inoremap <c-s> <esc>:w<cr>
+nnoremap <c-s> :w<cr>:e<cr>
+inoremap <c-s> <esc>:w<cr>:e<cr>
 
 " Go to component under cursor
 nnoremap <silent> <leader>gt :call GoToTag()<cr>
@@ -57,7 +57,7 @@ nnoremap <silent> <leader>u vu
 " Conver current character to uppercase
 nnoremap <silent> <leader>U vU
 " Wipe all buffers
-nnoremap <silent> <leader>Q :bufdo bwipe<cr>
+nnoremap <silent> <leader>Q :bufdo bwipe<cr>:call feedkeys("Q")<cr>
 " Exit window
 nnoremap <silent> <c-q> :call CloseWindow()<cr>
 " Clear search
