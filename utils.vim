@@ -1,3 +1,6 @@
+command! -nargs=1 Cman :vert Man 3 <args>
+command! -nargs=1 Silent call SilentExec(<q-args>)
+
 " Escape special characters in a string for exact matching.
 " This is useful to copying strings from the file to the search tool
 " http://peterodding.com/code/vim/profile/autoload/xolox/escape.vim
@@ -238,8 +241,6 @@ function! CommitChanges ()
 
   echo "Commited and pushed"
 endfunction
-
-command! -nargs=1 Silent call SilentExec(<q-args>)
 
 function! SilentExec (cmd)
   let cmd = substitute(a:cmd, "^!", "", "")
