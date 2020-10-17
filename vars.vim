@@ -49,6 +49,7 @@ let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline_highlighting_cache = 1
 let g:vim_vue_plugin_use_sass = 1
 let g:vim_vue_plugin_highlight_vue_attr = 1
+let g:ale_c_gcc_options = '-std=gnu18 -g -Wall'
 let g:ale_sign_column_always = 1
 let g:ale_lint_on_text_changed = 'normal'
 let g:ale_lint_on_insert_leave = 1

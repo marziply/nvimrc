@@ -23,8 +23,8 @@ noremap <c-h> 10zh
 noremap <c-l> 10zl
 
 " Save vim config
-nnoremap <c-s> :w<cr>:e<cr>
-inoremap <c-s> <esc>:w<cr>:e<cr>
+nnoremap <c-s> :w<cr>
+inoremap <c-s> <esc>:w<cr>
 
 " Go to component under cursor
 nnoremap <silent> <leader>gt :call GoToTag()<cr>
