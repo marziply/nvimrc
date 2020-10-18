@@ -61,7 +61,6 @@ Plug 'simnalamburt/vim-mundo'
 Plug 'honza/vim-snippets'
 Plug 'simeji/winresizer'
 Plug 'justincampbell/vim-eighties'
-Plug 'jez/vim-superman'
 " Plug 'joshdick/onedark.vim'
 " Plug 'sirver/ultisnips'
 

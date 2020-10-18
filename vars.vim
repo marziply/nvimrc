@@ -56,11 +56,13 @@ let g:ale_lint_on_insert_leave = 1
 let g:ale_fix_on_save = 1
 let g:ale_fixers = {
   \ 'vue': ['eslint', 'remove_trailing_lines', 'trim_whitespace'],
-  \ 'javascript': ['eslint']
+  \ 'javascript': ['eslint'],
+  \ 'c': ['clang-format']
 \}
 let g:ale_linters = {
   \ 'vue': ['eslint', 'vls'],
-  \ 'javascript': ['eslint']
+  \ 'javascript': ['eslint'],
+  \ 'c': ['clangd']
 \}
 let g:ale_linter_aliases = {
   \ 'vue': ['javascript', 'html', 'scss']
