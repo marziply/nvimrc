@@ -66,4 +66,5 @@ aug aug
   au BufWritePost $NVIM_DIR/*.vim call Init(1)
   au BufEnter,BufReadPost *.vue set ft=vue
   au BufEnter,BufReadPost .env.* set ft=sh
+  au BufEnter,BufReadPost *.njk.html set ft=jinja
 aug end
