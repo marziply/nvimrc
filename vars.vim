@@ -57,12 +57,14 @@ let g:ale_fix_on_save = 1
 let g:ale_fixers = {
   \ 'vue': ['eslint', 'remove_trailing_lines', 'trim_whitespace'],
   \ 'javascript': ['eslint'],
-  \ 'c': ['clang-format']
+  \ 'c': ['clang-format'],
+  \ 'css': ['prettier']
 \}
 let g:ale_linters = {
   \ 'vue': ['eslint', 'vls'],
   \ 'javascript': ['eslint'],
-  \ 'c': ['clangd']
+  \ 'c': ['clangd'],
+  \ 'css': ['prettier']
 \}
 let g:ale_linter_aliases = {
   \ 'vue': ['javascript', 'html', 'scss']
