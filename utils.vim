@@ -372,3 +372,15 @@ function! FormatJson ()
   call SelShell("jq .")
   call feedkeys('kJ')
 endfunction
+
+function! EasyMotionCoc() abort
+  if EasyMotion#is_active()
+    let g:easymotion#is_active = 1
+    silent! CocDisable
+  else
+    if g:easymotion#is_active == 1
+      let g:easymotion#is_active = 0
+      silent! CocEnable
+    endif
+  endif
+endfunction

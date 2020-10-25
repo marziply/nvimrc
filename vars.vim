@@ -19,6 +19,7 @@ let g:mundo_close_on_revert = 1
 let g:mundo_verbose_graph = 0
 let g:coc_snippet_next = '<tab>'
 let g:coc_snippet_prev = '<s-tab>'
+let g:easymotion#is_active = 0
 let g:EasyMotion_startofline = 0
 let g:EasyMotion_smartcase = 1
 let g:EasyMotion_use_upper = 1
@@ -49,6 +50,7 @@ let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline_highlighting_cache = 1
 let g:vim_vue_plugin_use_sass = 1
 let g:vim_vue_plugin_highlight_vue_attr = 1
+let g:vimspector_enable_mappings = 'HUMAN'
 let g:ale_c_gcc_options = '-std=gnu18 -g -Wall'
 let g:ale_sign_column_always = 1
 let g:ale_lint_on_text_changed = 'normal'

@@ -67,4 +67,5 @@ aug aug
   au BufEnter,BufReadPost *.vue set ft=vue
   au BufEnter,BufReadPost .env.* set ft=sh
   au BufEnter,BufReadPost *.njk.html set ft=jinja
+  au TextChanged,CursorMoved * call EasyMotionCoc()
 aug end
