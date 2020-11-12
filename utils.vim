@@ -1,3 +1,4 @@
+command! -nargs=1 -complete=buffer Vsb :vert sb <args>
 command! -nargs=1 Cman :vert Man 3 <args>
 command! -nargs=1 Silent call SilentExec(<q-args>)
 

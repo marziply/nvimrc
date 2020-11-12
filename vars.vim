@@ -60,12 +60,18 @@ let g:ale_fixers = {
   \ 'vue': ['eslint', 'remove_trailing_lines', 'trim_whitespace'],
   \ 'javascript': ['eslint'],
   \ 'c': ['clang-format'],
+  \ 'h': ['clang-format'],
+  \ 'cpp': ['clang-format'],
+  \ 'hpp': ['clang-format'],
   \ 'css': ['prettier']
 \}
 let g:ale_linters = {
   \ 'vue': ['eslint', 'vls'],
   \ 'javascript': ['eslint'],
   \ 'c': ['clangd'],
+  \ 'h': ['clangd'],
+  \ 'cpp': ['clang-format'],
+  \ 'hpp': ['clang-format'],
   \ 'css': ['prettier']
 \}
 let g:ale_linter_aliases = {
