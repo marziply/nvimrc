@@ -60,10 +60,11 @@ syn on
 
 aug aug
   au!
-  au BufEnter,InsertLeave * syntax sync fromstart
   au VimEnter * call SetColours()
   au VimEnter * call ChangeDirectory(1)
+  au BufWritePost * silent :CocRestart
   au BufWritePost $NVIM_DIR/*.vim call Init(1)
+  au BufEnter,InsertLeave * syntax sync fromstart
   au BufEnter,BufReadPost *.vue set ft=vue
   au BufEnter,BufReadPost .env.* set ft=sh
   au BufEnter,BufReadPost *.njk.html set ft=jinja
