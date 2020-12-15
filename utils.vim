@@ -240,7 +240,7 @@ function! CommitChanges ()
 
   redraw!
 
-  echo "Commited and pushed"
+  echo "Committed and pushed"
 endfunction
 
 function! SilentExec (cmd)
