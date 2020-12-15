@@ -250,40 +250,6 @@ function! SilentExec (cmd)
   call system(cmd)
 endfunction
 
-function! ChangeDirectory (init)
-  if has('gui_running')
-    let dirs = ["~/dev/pollen8-discover", "~/dev/pollen8-platform-customer", "~/dev/pollen8-backend-v2"]
-
-    if a:init && getcwd() != $HOME | return | endif
-
-    let dir_choice = confirm("Choose directory", "&Discover\n&Platform\n&Node\n&Other")
-
-    if dir_choice == 0 || dir_choice == 4
-      redraw
-
-      call inputsave()
-
-      let directory = input("Directory: ", "", "dir")
-
-      call inputrestore()
-    else
-      let directory = dirs[dir_choice - 1]
-    endif
-
-    try
-      exec "cd " . directory
-
-      echo directory
-    catch
-      redraw
-
-      echo "Directory not found\n"
-
-      call ChangeDirectory(a:init)
-    endtry
-  endif
-endfunction
-
 function! WriteEmptyJson ()
   normal! $
 

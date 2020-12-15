@@ -62,8 +62,6 @@ Plug 'honza/vim-snippets'
 Plug 'simeji/winresizer'
 Plug 'justincampbell/vim-eighties'
 Plug 'puremourning/vimspector'
-" Plug 'joshdick/onedark.vim'
-" Plug 'sirver/ultisnips'
 
 call plug#end()
 call Init(0)

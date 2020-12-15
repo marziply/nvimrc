@@ -61,7 +61,6 @@ syn on
 aug aug
   au!
   au VimEnter * call SetColours()
-  au VimEnter * call ChangeDirectory(1)
   au BufWritePost * silent :CocRestart
   au BufWritePost $NVIM_DIR/*.vim call Init(1)
   au BufEnter,InsertLeave * syntax sync fromstart
