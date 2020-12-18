@@ -66,6 +66,6 @@ aug aug
   au BufEnter,InsertLeave * syntax sync fromstart
   au BufEnter,BufReadPost *.vue set ft=vue
   au BufEnter,BufReadPost .env.* set ft=sh
-  au BufEnter,BufReadPost *.njk.html set ft=htmldjango
+  au BufEnter,BufReadPost,BufWritePost *.njk.html set ft=htmldjango
   au TextChanged,CursorMoved * call EasyMotionCoc()
 aug end
