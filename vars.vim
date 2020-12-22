@@ -1,4 +1,6 @@
-let g:block_reg = '^\s*\(\(\(get\|set\|\(\(async\s\+\)*function\)\)\s\+\)*\)[0-9A-Za-z_]\+\s*([0-9A-Za-z_ \t,.{}\[\]]*)\s*{$'
+let s:fn_reg = '\(\(\(get\|set\|\(\(async\s\+\)*function\)\)\s\+\)*\)'
+let s:body_reg = '([0-9A-Za-z_ \t,.{}\[\]]*)\s*{'
+let g:block_reg = '^\s*' . s:fn_reg . '[0-9A-Za-z_]\+\s*' . s:body_reg . '$'
 
 let g:ale_ft_opts = {
   \ 'vue': ['eslint', 'vls'],
