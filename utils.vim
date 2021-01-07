@@ -137,31 +137,15 @@ endfunction
 
 " Format single line HTML tags to multi line tags
 function! FormatTag ()
-  let l:end_keys = "i\r\<esc>$"
-
-  normal! ^
+  normal ^
 
   SplitjoinSplit
-  SplitjoinSplit
 
-  " normal! %
-  call feedkeys("%")
+  normal ^%
 
-  " let l:this_line = trim(getline("."))
-  " 
-  " if GetChar(1) == "/" | call feedkeys("hhx") | endif
+  if GetChar(2) == "/" | call feedkeys("hhx") | endif
 
-  call feedkeys("Y\<cr>")
-  " if GetChar(1) == ">" && l:this_line[0] == "<"
-  "   SplitjoinSplit
-  " 
-  "   call feedkeys("^%")
-  " 
-  "   let l:end_keys = l:end_keys . "gJ$"
-  " else
-  " endif
-  " 
-  " call feedkeys(l:end_keys)
+  call feedkeys("Y\<cr>$%")
 endfunction
 
 function! MatchTag ()

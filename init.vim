@@ -61,7 +61,7 @@ Plug 'simnalamburt/vim-mundo'
 Plug 'honza/vim-snippets'
 Plug 'simeji/winresizer'
 Plug 'justincampbell/vim-eighties'
-Plug 'puremourning/vimspector'
+" Plug 'puremourning/vimspector'
 
 call plug#end()
 call Init(0)
