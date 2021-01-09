@@ -1,3 +1,5 @@
+let $NVIM_COC_LOG_LEVEL = 'off'
+
 let s:fn_reg = '\(\(\(get\|set\|\(\(async\s\+\)*function\)\)\s\+\)*\)'
 let s:body_reg = '([0-9A-Za-z_ \t,.{}\[\]]*)\s*{'
 let g:block_reg = '^\s*' . s:fn_reg . '[0-9A-Za-z_]\+\s*' . s:body_reg . '$'

@@ -1,15 +1,15 @@
-if empty($XDG_CONFIG_HOME) | let $XDG_CONFIG_HOME = glob("~/.config") | endif
-if empty($NVIM_DIR) | let $NVIM_DIR = glob($XDG_CONFIG_HOME . "/nvim") | endif
+if empty($XDG_CONFIG_HOME) | let $XDG_CONFIG_HOME = glob("$HOME/.config") | endif
+if empty($NVIM_DIR) | let $NVIM_DIR = glob("$XDG_CONFIG_HOME/nvim") | endif
 
 if empty(glob("$NVIM_DIR/autoload/plug.vim"))
   if empty(glob("$NVIM_DIR/autoload")) | silent exec "!mkdir $NVIM_DIR/autoload" | endif
 
   silent exec "
-    \ !curl -fLo $NVIM_DIR/autoload/plug.vim
-    \ --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    \ !curl -fLo "$NVIM_DIR/autoload/plug.vim"
+    \ --create-dirs "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
   \"
 
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+  autocmd VimEnter * PlugInstall --sync | source "$NVIM_DIR/autoload/plug.vim"
 endif
 
 let g:rc = ["vars", "utils", "mappings", "settings"]
@@ -43,25 +43,16 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'dyng/ctrlsf.vim'
-Plug 'jiangmiao/auto-pairs'
 Plug 'moll/vim-bbye'
 Plug 'blueyed/vim-diminactive'
-Plug 'tpope/vim-rails'
 Plug 'sheerun/vim-polyglot'
 Plug 'tyru/caw.vim'
 Plug 'othree/eregex.vim'
 Plug 'tpope/vim-surround'
 Plug 'easymotion/vim-easymotion'
-Plug 'kshenoy/vim-signature'
-Plug 'tpope/vim-fugitive'
 Plug 'andrewradev/splitjoin.vim'
-Plug 'tpope/vim-dispatch'
-Plug 'janko/vim-test'
 Plug 'simnalamburt/vim-mundo'
 Plug 'honza/vim-snippets'
-Plug 'simeji/winresizer'
-Plug 'justincampbell/vim-eighties'
-" Plug 'puremourning/vimspector'
 
 call plug#end()
 call Init(0)

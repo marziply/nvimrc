@@ -1,6 +1,7 @@
 set directory=$NVIM_DIR/tmp//
 set backupdir=$NVIM_DIR/backup//
 set undodir=$NVIM_DIR/undo//
+set runtimepath^=$NVIM_DIR/plug/coc.nvim
 set undofile
 set clipboard=unnamedplus
 set nohlsearch
@@ -34,7 +35,8 @@ set updatetime=100
 set shortmess+=c
 set signcolumn=yes
 set completeopt=menuone,noselect,noinsert
-set wildignore+=*/node_modules/*,*/.git/*,*/vendor/*,*/docs/*,*/coverage/*,*/tmp/*,*/build/*,*/target/*
+" set wildignore+=*/node_modules/*,*/.git/*,*/vendor/*,*/docs/*,*/coverage/*,*/tmp/*,*/build/*,*/target/*
+set wildignore+=*/node_modules/*,*/.git/*,*/docs/*,*/coverage/*,*/tmp/*,*/build/*,*/target/*
 set guicursor=a:ver25-blinkon750
 set autoread
 set ttimeoutlen=0
@@ -64,8 +66,10 @@ aug aug
   au BufWritePost * silent :CocRestart
   au BufWritePost $NVIM_DIR/*.vim call Init(1)
   au BufEnter,InsertLeave * syntax sync fromstart
-  au BufEnter,BufReadPost *.vue set ft=vue
   au BufEnter,BufReadPost .env.* set ft=sh
-  au BufEnter,BufReadPost,BufWritePost *.njk.html set ft=htmldjango
+  au BufEnter,BufReadPost *.vue set ft=vue
+  au BufEnter,BufReadPost *.njk.html set ft=htmldjango
+  au BufEnter,BufReadPost *.sway set ft=i3config
+  au BufEnter,BufReadPost *.toml set ft=toml
   au TextChanged,CursorMoved * call EasyMotionCoc()
 aug end
