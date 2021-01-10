@@ -5,8 +5,8 @@ if empty(glob("$NVIM_DIR/autoload/plug.vim"))
   if empty(glob("$NVIM_DIR/autoload")) | silent exec "!mkdir $NVIM_DIR/autoload" | endif
 
   silent exec "
-    \ !curl -fLo "$NVIM_DIR/autoload/plug.vim"
-    \ --create-dirs "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+    \ !curl -fLo $NVIM_DIR/autoload/plug.vim
+    \ --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   \"
 
   autocmd VimEnter * PlugInstall --sync | source "$NVIM_DIR/autoload/plug.vim"
