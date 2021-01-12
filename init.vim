@@ -9,7 +9,7 @@ if empty(glob("$NVIM_DIR/autoload/plug.vim"))
     \ --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   \"
 
-  autocmd VimEnter * PlugInstall --sync | source "$NVIM_DIR/autoload/plug.vim"
+  au VimEnter * PlugInstall --sync | source "$NVIM_DIR/autoload/plug.vim"
 endif
 
 let g:rc = ["vars", "utils", "mappings", "settings"]
@@ -28,7 +28,7 @@ if !exists("*Init")
     endif
 
     call SetColours()
-  endfunction
+  endfun
 endif
 
 call plug#begin("$NVIM_DIR/plug")
