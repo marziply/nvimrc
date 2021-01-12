@@ -1,28 +1,28 @@
-command! -nargs=1 -complete=buffer Vsb :vert sb <args>
-command! -nargs=1 Cman :vert Man 3 <args>
-command! -nargs=1 Silent call SilentExec(<q-args>)
+com! -nargs=1 -complete=buffer Vsb :vert sb <args>
+com! -nargs=1 Cman :vert Man 3 <args>
+com! -nargs=1 Silent call SilentExec(<q-args>)
 
 " Escape special characters in a string for exact matching.
 " This is useful to copying strings from the file to the search tool
 " http://peterodding.com/code/vim/profile/autoload/xolox/escape.vim
-function! EscapeString (string)
+fun! EscapeString (string)
   let string = a:string
   let string = escape(string, '^$.*\/~[]')
   let string = substitute(string, '\n', '\\n', "g")
 
   return string
-endfunction
+endfun
 
 " Get the current visual block for search and replaces
-" This function passed the visual block through a string escape function
+" This fun passed the visual block through a string escape fun
 " https://stackoverflow.com/questions/676600/vim-replace-selected-text/677918#677918
-function! GetVisual () range
+fun! GetVisual () range
   let reg_save = getreg('"')
   let regtype_save = getregtype('"')
   let cb_save = &clipboard
 
   set clipboard&
-  normal! ""gvy
+  norm! ""gvy
 
   let selection = getreg('"')
 
@@ -32,11 +32,11 @@ function! GetVisual () range
   let escaped_selection = EscapeString(selection)
 
   return escaped_selection
-endfunction
+endfun
 
 " Find file in current directory and edit it
 " https://vim.fandom.com/wiki/Find_files_in_subdirectories
-function! Find (name)
+fun! Find (name)
   let l:list = system("find . -name '" . a:name . "' | perl -ne 'print \"$.\t\$_\"'")
   let l:num = strlen(substitute(l:list, "[^\n]", "", "g"))
 
@@ -85,32 +85,32 @@ function! Find (name)
   echo l:line
 
   execute ":e ".l:line
-endfunction
+endfun
 
-function! FindNew (name)
+fun! FindNew (name)
   let list = system("find . -name '" . a:name)
-endfunction
+endfun
 
 " COC method for checking if previous character is a space
-function! CheckBackSpace () abort
+fun! CheckBackSpace () abort
   let col = col('.') - 1
 
   return !col || getline('.')[col - 1] =~# '\s'
-endfunction
+endfun
 
 " Deletes code block and removes comma if last element in block
-function! DeleteBlock ()
-  normal! $v%Vx
+fun! DeleteBlock ()
+  norm! $v%Vx
 
   let curr_char = GetChar(1)
 
   if match(curr_char, '\w') < 0
-    normal! k$x
+    norm! k$x
   endif
-endfunction
+endfun
 
 " Set custom 'one' colourscheme colours
-function! SetColours ()
+fun! SetColours ()
   if exists("*one#highlight")
     call one#highlight("Normal", "bbbbbb", "202020", "")
     call one#highlight("Include", "c678dd", "", "none")
@@ -126,29 +126,29 @@ function! SetColours ()
     " call one#highlight('htmlTag', 'b7b7b7', '', '')
     " call one#highlight('htmlEndTag', 'b7b7b7', '', '')
   endif
-endfunction
+endfun
 
 " Get character at given pos distance away from the cursor
-function! GetChar (pos)
+fun! GetChar (pos)
   let this_char = getline(".")[col(".") - a:pos:]
 
   return strcharpart(this_char, 0, 1)
-endfunction
+endfun
 
 " Format single line HTML tags to multi line tags
-function! FormatTag ()
-  normal ^
+fun! FormatTag ()
+  norm ^
 
   SplitjoinSplit
 
-  normal ^%
+  norm ^%
 
   if GetChar(2) == "/" | call feedkeys("hhx") | endif
 
   call feedkeys("Y\<cr>$%")
-endfunction
+endfun
 
-function! MatchTag ()
+fun! MatchTag ()
   let this_line = getline('.')
   let matched_tag = matchstr(this_line, '<[A-Za-z-]\+')
 
@@ -157,10 +157,10 @@ function! MatchTag ()
   else
     return matched_tag
   endif
-endfunction
+endfun
 
 " Search globally for either tag on given line or from the filename
-function! SearchTag (search_dir)
+fun! SearchTag (search_dir)
   let ctrlsf_com = 'CtrlSF -R -W -S "'
 
   if a:search_dir
@@ -176,9 +176,9 @@ function! SearchTag (search_dir)
       echo v:exception
     endtry
   endif
-endfunction
+endfun
 
-function! GoToTag ()
+fun! GoToTag ()
   try
     let matched_tag = MatchTag()
     let file_name = matched_tag[1:] . ".vue"
@@ -187,16 +187,16 @@ function! GoToTag ()
   catch
     echo v:exception
   endtry
-endfunction
+endfun
 
 " Search globally for the given selection
-function! SearchSelection ()
+fun! SearchSelection ()
   let selected = GetVisual()
 
   execute 'CtrlSF "' . selected . '"'
-endfunction
+endfun
 
-function! EditVimConf ()
+fun! EditVimConf ()
   let conf_choice = confirm("Choose Vim config", "&Vars\n&Utils\n&Mappings\n&Settings\n&Init")
 
   if conf_choice > 0
@@ -206,9 +206,9 @@ function! EditVimConf ()
       execute "e $NVIM_DIR/" . g:imports[conf_choice - 1]
     endif
   endif
-endfunction
+endfun
 
-function! CommitChanges ()
+fun! CommitChanges ()
   silent exec "!cd $NVIM_DIR && git add ."
 
   redraw!
@@ -225,77 +225,77 @@ function! CommitChanges ()
   redraw!
 
   echo "Committed and pushed"
-endfunction
+endfun
 
-function! SilentExec (cmd)
+fun! SilentExec (cmd)
   let cmd = substitute(a:cmd, "^!", "", "")
   let cmd = substitute(cmd, "%", shellescape(expand("%")), "")
 
   call system(cmd)
-endfunction
+endfun
 
-function! WriteEmptyJson ()
-  normal! $
+fun! WriteEmptyJson ()
+  norm! $
 
   let this_char = GetChar(1)
   let prev_char = GetChar(2)
 
   if this_char == "{"
-    normal! O{
-    normal! o},
+    norm! O{
+    norm! o},
 
     call feedkeys("O")
   elseif this_char == "}"
-    normal! A,
-    normal! o{
-    normal! o}
+    norm! A,
+    norm! o{
+    norm! o}
 
     call feedkeys("O")
   elseif prev_char . this_char == "},"
-    normal! o{
-    normal! o}
+    norm! o{
+    norm! o}
 
     call feedkeys("O")
   else
     echo "Cannot insert here"
   endif
-endfunction
+endfun
 
-function! SelectBlock ()
+fun! SelectBlock ()
   let block_end = 0
 
-  normal! $V%
+  norm! $V%
 
   while block_end == 0
-    normal! g_
+    norm! g_
 
     if GetChar(1) == "{"
-      normal! %
+      norm! %
     else
       let block_end = 1
     endif
   endwhile
-endfunction
+endfun
 
-function! FoldAllBlocks ()
+fun! FoldAllBlocks ()
   let this_line = line(".")
   let matched = 1
 
-  normal! gg
+  norm! gg
 
   while matched > 0
     let matched = search(g:block_reg, "eW")
 
-    normal! V%zfj
-    execute "normal! \<esc>"
+    norm! V%zfj
+    execute "norm! \<esc>"
   endwhile
 
   execute this_line
 
-  normal! zz
-endfunction
+  norm! zz
+endfun
 
-function! CloseWindow ()
+fun! CloseWindow ()
   if (bufnr(".new$") >= 0)
     wincmd l
     bw
@@ -306,25 +306,25 @@ function! CloseWindow ()
   else
     bw
   endif
-endfunction
+endfun
 
-function! SelShell (cmd)
+fun! SelShell (cmd)
   let s = @s
 
-  normal! gv"sy
+  norm! gv"sy
 
   call setreg('h', system("echo '" . getreg('s') . "' | " . a:cmd))
 
   norm! gv
   norm! "hp
-endfunction
+endfun
 
-function! FormatJson ()
+fun! FormatJson ()
   call SelShell("jq .")
   call feedkeys('kJ')
-endfunction
+endfun
 
-function! EasyMotionCoc() abort
+fun! EasyMotionCoc() abort
   if EasyMotion#is_active()
     let g:easymotion#is_active = 1
     silent! CocDisable
@@ -334,4 +334,4 @@ function! EasyMotionCoc() abort
       silent! CocEnable
     endif
   endif
-endfunction
+endfun
