@@ -89,7 +89,7 @@ nnoremap Q :Bwipe!<cr>
 " Scroll up when cursor is moved to the bottom
 nnoremap G Gzz
 " Clear whitespace
-nnoremap ds :%S/\s+$//g<cr>
+nnoremap dS :%S/\s+$//g<cr>
 " Comments out function
 nnoremap <silent> gc{ :call SelectBlock() \| call feedkeys("gcc")<cr>
 " Centers screen after next search
