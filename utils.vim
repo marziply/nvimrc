@@ -34,7 +34,7 @@ fun! GetVisual () range
   return escaped_selection
 endfun
 
-fun! Find (name)
+fun! Find (name, split)
   let l:result = system("fd -e vue -t f \"" . a:name . "\"" . " .")
   let l:list = split(l:result, '\n')
   let l:num = len(l:list)
@@ -73,7 +73,11 @@ fun! Find (name)
     return
   endif
 
-  execute ":e " . l:list[0]
+  if a:split == 1
+    execute ":vs " . l:list[0]
+  else
+    execute ":e " . l:list[0]
+  endif
 endfun
 
 fun! FindNew (name)
@@ -167,12 +171,11 @@ fun! SearchTag (search_dir)
   endif
 endfun
 
-fun! GoToTag ()
+fun! GoToTag (split)
   try
     let matched_tag = MatchTag()
-    let file_name = matched_tag[1:] . ".vue"
 
-    call Find(file_name)
+    call Find(matched_tag[1:], a:split)
   catch
     echo v:exception
   endtry

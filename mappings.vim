@@ -27,7 +27,9 @@ nnoremap <c-s> :w<cr>
 inoremap <c-s> <esc>:w<cr>
 
 " Go to component under cursor
-nnoremap <silent> <leader>gt :call GoToTag()<cr>
+nnoremap <silent> <leader>gt :call GoToTag(0)<cr>
+" Go to component under cursor and split
+nnoremap <silent> <leader>gT :call GoToTag(1)<cr>
 " Format single line tag to multi line tag
 nnoremap <silent> <leader>t :call FormatTag()<cr>
 " Search globally for tag on line
