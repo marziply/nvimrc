@@ -54,6 +54,8 @@ fun! Find (name)
 
     redir END
 
+    let old_efm = &efm
+
     setl efm=%f
 
     if exists(":cgetfile")
@@ -63,6 +65,8 @@ fun! Find (name)
     endif
 
     botright copen
+
+    let &efm = old_efm
 
     call delete(tmpfile)
 
