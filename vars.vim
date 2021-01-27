@@ -61,6 +61,10 @@ let g:ctrlsf_ignore_dir = [
   \ 'public',
   \ 'coverage'
 \]
+let g:ctrlsf_mapping = {
+  \ 'split': '',
+  \ 'vsplit': '<c-o>'
+\}
 let g:ctrlsf_context = '-C 10'
 let g:ctrlsf_auto_focus = { 'at': 'start' }
 let g:ctrlsf_default_view_mode = 'compact'

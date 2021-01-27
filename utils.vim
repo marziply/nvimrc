@@ -34,57 +34,42 @@ fun! GetVisual () range
   return escaped_selection
 endfun
 
-" Find file in current directory and edit it
-" https://vim.fandom.com/wiki/Find_files_in_subdirectories
 fun! Find (name)
-  let l:list = system("find . -name '" . a:name . "' | perl -ne 'print \"$.\t\$_\"'")
-  let l:num = strlen(substitute(l:list, "[^\n]", "", "g"))
+  let l:result = system("fd -e vue -t f \"" . a:name . "\"" . " .")
+  let l:list = split(l:result, '\n')
+  let l:num = len(l:list)
 
-  if l:num < 1
+  if l:num == 0
     echo "'" . a:name . "' not found"
 
     return
   endif
 
-  if l:num != 1
-    echo l:list
-    
-    try
-      let l:input = nr2char(getchar())
-    catch
-      redraw!
+  if l:num > 1
+    let tmpfile = tempname()
 
-      echo "Cancelled"
+    exe "redir! > " . tmpfile
 
-      return
-    endtry
+    silent echon l:result
 
-    if strlen(l:input) == 0 | return | endif
-    
-    if strlen(substitute(l:input, "[0-9]", "", "g")) > 0
-      echo "Not a number"
-    
-      return
-    endif
-    
-    if l:input < 1 || l:input > l:num
-      echo "Out of range"
-    
-      return
+    redir END
+
+    setl efm=%f
+
+    if exists(":cgetfile")
+        exec "silent! cgetfile " . tmpfile
+    else
+        exec "silent! cfile " . tmpfile
     endif
 
-    let l:line = matchstr("\n" . l:list, "\n" . l:input . "\t[^\n]*")
-  else
-    let l:line = l:list
+    botright copen
+
+    call delete(tmpfile)
+
+    return
   endif
 
-  let l:line = substitute(l:line, "^[^\t]*\t./", "", "")
-
-  redraw!
-
-  echo l:line
-
-  execute ":e ".l:line
+  execute ":e " . l:list[0]
 endfun
 
 fun! FindNew (name)

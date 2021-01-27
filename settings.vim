@@ -74,4 +74,5 @@ aug aug
   au BufEnter,BufReadPost *.sway set ft=i3config
   au BufEnter,BufReadPost *.toml set ft=toml
   au TextChanged,CursorMoved * call EasyMotionCoc()
+  au FileType qf nnoremap <buffer> <cr> <cr>:ccl<cr>
 aug end
