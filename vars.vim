@@ -1,8 +1,18 @@
-let $NVIM_COC_LOG_LEVEL = 'off'
-
 let s:fn_reg = '\(\(\(get\|set\|\(\(async\s\+\)*function\)\)\s\+\)*\)'
 let s:body_reg = '([0-9A-Za-z_ \t,.{}\[\]]*)\s*{'
 let g:block_reg = '^\s*' . s:fn_reg . '[0-9A-Za-z_]\+\s*' . s:body_reg . '$'
+let g:ignore_dirs = [
+  \ 'node_modules',
+  \ 'docs',
+  \ 'vendor',
+  \ 'public',
+  \ 'coverage',
+  \ 'tmp',
+  \ 'build',
+  \ 'target',
+  \ '.git'
+\]
+let g:wild_ignore_dirs = map(g:ignore_dirs, {_, val -> '*/' . val . '/*'})
 
 let g:ale_ft_opts = {
   \ 'vue': ['eslint', 'vls'],
@@ -54,17 +64,11 @@ let g:ctrlp_mruf_max = 20
 let g:ctrlp_mruf_case_sensitive = 0
 let g:ctrlp_working_path_mode = 0
 
-let g:ctrlsf_ignore_dir = [
-  \ 'node_modules',
-  \ 'docs',
-  \ 'vendor',
-  \ 'public',
-  \ 'coverage'
-\]
 let g:ctrlsf_mapping = {
   \ 'split': '',
   \ 'vsplit': '<c-o>'
 \}
+let g:ctrlsf_ignore_dir = g:ignore_dirs
 let g:ctrlsf_context = '-C 10'
 let g:ctrlsf_auto_focus = { 'at': 'start' }
 let g:ctrlsf_default_view_mode = 'compact'

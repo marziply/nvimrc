@@ -1,15 +1,19 @@
 if empty($XDG_CONFIG_HOME) | let $XDG_CONFIG_HOME = glob("$HOME/.config") | endif
 if empty($NVIM_DIR) | let $NVIM_DIR = glob("$XDG_CONFIG_HOME/nvim") | endif
 
-if empty(glob("$NVIM_DIR/autoload/plug.vim"))
-  if empty(glob("$NVIM_DIR/autoload")) | silent exec "!mkdir $NVIM_DIR/autoload" | endif
+let s:auto_dir = "$NVIM_DIR/autoload"
+let s:plug_file = s:auto_dir . "/plug.vim"
+let s:plug_url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+
+if empty(glob(s:plug_file))
+  if empty(glob(s:auto_dir)) | silent exec "!mkdir " . s:auto_dir | endif
 
   silent exec "
-    \ !curl -fLo $NVIM_DIR/autoload/plug.vim
-    \ --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    \ !curl -fLo \" . s:plug_file
+    \ --create-dirs \" . s:plug_url
   \"
 
-  au VimEnter * PlugInstall --sync | source "$NVIM_DIR/autoload/plug.vim"
+  au VimEnter * PlugInstall --sync | source s:plug_file
 endif
 
 let g:rc = ["vars", "utils", "mappings", "settings"]
@@ -33,27 +37,49 @@ endif
 
 call plug#begin("$NVIM_DIR/plug")
 
-Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+" Language specific plugins
 Plug 'pangloss/vim-javascript'
 Plug 'leafoftree/vim-vue-plugin'
-Plug 'shougo/context_filetype.vim'
-Plug 'rakr/vim-one'
-Plug 'w0rp/ale'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'dyng/ctrlsf.vim'
-Plug 'jiangmiao/auto-pairs'
-Plug 'moll/vim-bbye'
-Plug 'blueyed/vim-diminactive'
 Plug 'sheerun/vim-polyglot'
-Plug 'tyru/caw.vim'
-Plug 'othree/eregex.vim'
-Plug 'tpope/vim-surround'
-Plug 'easymotion/vim-easymotion'
-Plug 'andrewradev/splitjoin.vim'
-Plug 'simnalamburt/vim-mundo'
+
+" Code snippets
 Plug 'honza/vim-snippets'
+" Context specific syntax highlighting
+Plug 'shougo/context_filetype.vim'
+" Colour scheme
+Plug 'rakr/vim-one'
+" Linter
+Plug 'w0rp/ale'
+" Status bar
+Plug 'vim-airline/vim-airline'
+" Status bar theme
+Plug 'vim-airline/vim-airline-themes'
+" Search for files
+Plug 'ctrlpvim/ctrlp.vim'
+" Search in files
+Plug 'dyng/ctrlsf.vim'
+" Automatically close scopes, quotes, parens, etc.
+Plug 'jiangmiao/auto-pairs'
+" Soft delete buffers
+Plug 'moll/vim-bbye'
+" Dim inactive panes
+Plug 'blueyed/vim-diminactive'
+" Context specific comments
+Plug 'tyru/caw.vim'
+" Advanced regex matcher
+Plug 'othree/eregex.vim'
+" Surround selection/words with scopes, quotes, parens, etc.
+Plug 'tpope/vim-surround'
+" Motions via cursor text search
+Plug 'easymotion/vim-easymotion'
+" Split or join language specific lines of code
+Plug 'andrewradev/splitjoin.vim'
+" Undo tree navigator
+Plug 'simnalamburt/vim-mundo'
+" Language server
+Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+" Matchit improved
+Plug 'andymass/vim-matchup'
 
 call plug#end()
 call Init(0)
