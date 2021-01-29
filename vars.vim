@@ -26,6 +26,8 @@ let g:ale_ft_opts = {
 
 let mapleader = "\<space>"
 
+let g:matchup_matchparen_offscreen = { 'method': 'popup' }
+
 let g:one_allow_italics = 1
 
 let g:gotofile_extensions = ['js', 'vue']
