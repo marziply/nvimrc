@@ -31,21 +31,15 @@ nnoremap <silent> <leader>gt :call GoToTag(0)<cr>
 " Go to component under cursor and split
 nnoremap <silent> <leader>gT :call GoToTag(1)<cr>
 " Format single line tag to multi line tag
-nnoremap <silent> <leader>t :call FormatTag()<cr>
+nnoremap <silent> <leader>t :call MultilineTag()<cr>
 " Search globally for tag on line
 nnoremap <silent> <leader>s :call SearchTag(0)<cr>
 " Search globally for tag in filename
 nnoremap <silent> <leader>S :call SearchTag(1)<cr>
-" Commit vim config changes to vimrc git respo
+" Commit vim config changes to vimrc git repo
 nnoremap <silent> <leader>V :call CommitChanges()<cr>
 " Open vimrc for edit
 nnoremap <silent> <leader>v :call EditVimConf()<cr>
-" Set current directory
-nnoremap <silent> <leader>c :call ChangeDirectory(0)<cr>
-" Write an empty JSON object either above or below depending on location
-nnoremap <silent> <leader>J :call WriteEmptyJson()<cr>
-" Delete {} block and remove comma if last element in block
-nnoremap <silent> <leader>} :call DeleteBlock()<cr>
 " Select function
 nnoremap <silent> <leader>{ :call SelectBlock()<cr>
 " Refresh vim config
@@ -59,29 +53,23 @@ nnoremap <silent> <leader>u vu
 " Conver current character to uppercase
 nnoremap <silent> <leader>U vU
 " Wipe all buffers
-nnoremap <silent> <leader>Q :bufdo bwipe<cr>:call feedkeys("Q")<cr>
+nnoremap <silent> <leader>Q :bufdo bwipe \| call feedkeys('Q')<cr>
 " Exit window
 nnoremap <silent> <c-q> :call CloseWindow()<cr>
 " Clear search
 nnoremap <esc> :noh<cr>
 " Inserts single character
-nnoremap <silent> Y :exec "normal i".nr2char(getchar())."\e"<cr>
+nnoremap <silent> Y :exec 'norm i' . nr2char(getchar()) . "\e"<cr>
 " Search file for selected string
 vnoremap <c-r> <esc>:%s/<c-r>=GetVisual()<cr>//g<left><left>
 " Uncomment selected HTML tag
-vnoremap <silent> gch :s/<!--\s//ge \| '<,'>s/\s-->//ge<cr>:noh<cr>
-" Fold function
-nnoremap <c-f>f $v%Vzf
+vnoremap <silent> gch :s/<!--\s//ge \| '<,'>s/\s-->//ge \| noh<cr>
 " Fold in visual mode
 vnoremap <c-f>f zf
-" Fold HTML tag
-nnoremap <c-f>t ^vatVzf
-" Fold self closing HTML tag
-nnoremap <c-f>p ^v%Vzf
 " Fold all function blocks
 nnoremap <c-f>a :call FoldAllBlocks()<cr>
 " Formats a selected JSON object
-vnoremap <c-f>j :call FormatJson()<cr>
+vnoremap <c-f>j :call ShellOutput('jq .') \| call feedkeys('kJ')<cr>
 " Previous buffer
 nnoremap <c-h> :bp<cr>
 " Next buffer
@@ -94,12 +82,6 @@ nnoremap G Gzz
 nnoremap dS :%S/\s+$//g<cr>
 " Comments out function
 nnoremap <silent> gc{ :call SelectBlock() \| call feedkeys("gcc")<cr>
-" Centers screen after next search
-nnoremap n nzz
-" Centers screen after previous search
-nnoremap N Nzz
-" Center screen after *
-nnoremap * *zz
 " Creates empty object after key
 inoremap <c-d> : {<cr><cr>},<c-c>kS
 " Increases syntax column length for current buffer
@@ -108,26 +90,38 @@ nnoremap <c-f>x :set synmaxcol=5000<cr>
 nnoremap mo o<esc>
 " New line above without insert
 nnoremap mO O<esc>
+
+" Centering
+
+" Centers screen after next search
+nnoremap n nzz
+" Centers screen after previous search
+nnoremap N Nzz
+" Center screen after *
+nnoremap * *zz
 " Centers screen after going 'back'
 nnoremap <c-o> <c-o>zz
 " Centers screen after going 'forward'
 nnoremap <c-i> <c-i>zz
 
-"Plugins
+" Plugins
 
 " COC related keybinds
 inoremap <silent> <c-f> <c-r>=coc#start({'source': 'snippets'})<cr>
 inoremap <expr> <cr> pumvisible() ? "\<c-y>" : "\<c-g>u\<cr>"
 inoremap <expr> <esc> pumvisible() ? "<c-y>" : "<esc>"
-inoremap <silent><expr> <tab>
-      \ pumvisible() ? "\<c-n>" :
-      \ coc#jumpable() ? "\<c-r>=coc#rpc#request('snippetNext',[])\<cr>" :
-      \ CheckBackSpace() ? "\<tab>" :
-      \ coc#refresh()
-inoremap <silent><expr> <s-tab>
-    \ pumvisible() ? "\<c-p>" :
-    \ coc#jumpable() ? "\<c-r>=coc#rpc#request('snippetPrev',[])\<cr>" :
-    \ "\<c-h>"
+inoremap <silent><expr> <tab> pumvisible()
+  \ ? "\<c-n>"
+  \ : coc#jumpable()
+    \ ? "\<c-r>=coc#rpc#request('snippetNext',[])\<cr>"
+    \ : CheckBackSpace()
+      \ ? "\<tab>"
+      \ : coc#refresh()
+inoremap <silent><expr> <s-tab> pumvisible()
+  \ ? "\<c-p>"
+    \ : coc#jumpable()
+      \ ? "\<c-r>=coc#rpc#request('snippetPrev',[])\<cr>"
+      \ : "\<c-h>"
 
 " Go-to definitions
 nmap <silent> gd <plug>(coc-definition)
@@ -135,16 +129,13 @@ nmap <silent> gy <plug>(coc-type-definition)
 nmap <silent> gi <plug>(coc-implementation)
 nmap <silent> gr <plug>(coc-references)
 
-" imap <c-l> <plug>(coc-snippets-expand)
-" imap <c-j> <plug>(coc-snippets-expand-jump)
-" vmap <c-j> <plug>(coc-snippets-select)
-
-" Open CTRLSF
+" Open CtrlSF
 nmap <leader>f <plug>CtrlSFPrompt""<left>
 " Search globally for selected text
 vmap <leader>F :call SearchSelection()<cr>
-" Open CtrlP Buffer list
+" Open CtrlP buffer list
 nmap <silent> <leader>b :CtrlPBuffer<cr>
+" Open CtrlP search list
 nmap <silent> <leader>p :CtrlPLine<cr>
 
 " Downwards eregex
@@ -170,6 +161,3 @@ map <leader>h <plug>(easymotion-linebackward)
 " Undo
 nnoremap <silent> <leader>m :MundoToggle<cr>
 nnoremap <silent> <leader>M :wincmd t<cr>
-
-" Winteract
-nnoremap <silent> <leader>w :InteractiveWindow<cr>

@@ -64,8 +64,6 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'moll/vim-bbye'
 " Dim inactive panes
 Plug 'blueyed/vim-diminactive'
-" Context specific comments
-Plug 'tyru/caw.vim'
 " Advanced regex matcher
 Plug 'othree/eregex.vim'
 " Surround selection/words with scopes, quotes, parens, etc.
@@ -80,6 +78,9 @@ Plug 'simnalamburt/vim-mundo'
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 " Matchit improved
 Plug 'andymass/vim-matchup'
+" Context specific comments
+" Plug 'tyru/caw.vim'
+Plug 'tomtom/tcomment_vim'
 
 call plug#end()
 call Init(0)

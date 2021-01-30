@@ -2,9 +2,6 @@ com! -nargs=1 -complete=buffer Vsb :vert sb <args>
 com! -nargs=1 Cman :vert Man 3 <args>
 com! -nargs=1 Silent call SilentExec(<q-args>)
 
-" Escape special characters in a string for exact matching.
-" This is useful to copying strings from the file to the search tool
-" http://peterodding.com/code/vim/profile/autoload/xolox/escape.vim
 fun! EscapeString (string)
   let string = a:string
   let string = escape(string, '^$.*\/~[]')
@@ -13,9 +10,6 @@ fun! EscapeString (string)
   return string
 endfun
 
-" Get the current visual block for search and replaces
-" This fun passed the visual block through a string escape fun
-" https://stackoverflow.com/questions/676600/vim-replace-selected-text/677918#677918
 fun! GetVisual () range
   let reg_save = getreg('"')
   let regtype_save = getregtype('"')
@@ -34,8 +28,8 @@ fun! GetVisual () range
   return escaped_selection
 endfun
 
-fun! Find (name, split)
-  let l:result = system("fd -e vue -t f \"" . a:name . "\"" . " .")
+fun! FindComponent (name, split)
+  let l:result = system('fd -e vue -t f "' . a:name . '"' . ' .')
   let l:list = split(l:result, '\n')
   let l:num = len(l:list)
 
@@ -48,7 +42,7 @@ fun! Find (name, split)
   if l:num > 1
     let tmpfile = tempname()
 
-    exe "redir! > " . tmpfile
+    exe 'redir! > ' . tmpfile
 
     silent echon l:result
 
@@ -58,11 +52,9 @@ fun! Find (name, split)
 
     setl efm=%f
 
-    if exists(":cgetfile")
-        exec "silent! cgetfile " . tmpfile
-    else
-        exec "silent! cfile " . tmpfile
-    endif
+    let cmd = exists(':cgetfile') ? 'cgetfile' : 'cfile'
+
+    exec 'silent! ' . cmd . ' ' . tmpfile
 
     botright copen
 
@@ -73,15 +65,9 @@ fun! Find (name, split)
     return
   endif
 
-  if a:split == 1
-    execute ":vs " . l:list[0]
-  else
-    execute ":e " . l:list[0]
-  endif
-endfun
+  let edit = a:split == 1 ? ':vs' : ':e'
 
-fun! FindNew (name)
-  let list = system("find . -name '" . a:name)
+  exec edit . ' ' . l:list[0]
 endfun
 
 " COC method for checking if previous character is a space
@@ -89,17 +75,6 @@ fun! CheckBackSpace () abort
   let col = col('.') - 1
 
   return !col || getline('.')[col - 1] =~# '\s'
-endfun
-
-" Deletes code block and removes comma if last element in block
-fun! DeleteBlock ()
-  norm! $v%Vx
-
-  let curr_char = GetChar(1)
-
-  if match(curr_char, '\w') < 0
-    norm! k$x
-  endif
 endfun
 
 " Set custom 'one' colourscheme colours
@@ -115,9 +90,6 @@ fun! SetColours ()
     call one#highlight("CursorColumn", "", "424752", "none")
     call one#highlight("CursorLine", "", "32353c", "none")
     call one#highlight("NonText", "8d93a1", "", "none")
-    " call one#highlight('htmlArg', 'b7b7b7', '', '')
-    " call one#highlight('htmlTag', 'b7b7b7', '', '')
-    " call one#highlight('htmlEndTag', 'b7b7b7', '', '')
   endif
 endfun
 
@@ -129,7 +101,7 @@ fun! GetChar (pos)
 endfun
 
 " Format single line HTML tags to multi line tags
-fun! FormatTag ()
+fun! MultilineTag ()
   norm ^
 
   SplitjoinSplit
@@ -175,7 +147,7 @@ fun! GoToTag (split)
   try
     let matched_tag = MatchTag()
 
-    call Find(matched_tag[1:], a:split)
+    call FindComponent(matched_tag[1:], a:split)
   catch
     echo v:exception
   endtry
@@ -189,34 +161,42 @@ fun! SearchSelection ()
 endfun
 
 fun! EditVimConf ()
-  let conf_choice = confirm("Choose Vim config", "&Vars\n&Utils\n&Mappings\n&Settings\n&Init")
+  let options = [
+    \ 'Vars',
+    \ 'Utils',
+    \ 'Mappings',
+    \ 'Settings',
+    \ 'Init'
+  \]
+  let choices = join(map(options, '"&" . v:val'), "\n")
+  let sel = confirm("Choose Vim config", choices)
 
-  if conf_choice > 0
-    if conf_choice == 5
-      execute "e $NVIM_DIR/init.vim"
-    else
-      execute "e $NVIM_DIR/" . g:imports[conf_choice - 1]
-    endif
+  if sel > 0
+    let file = sel == 5 ? 'init.vim' : g:imports[sel - 1]
+
+    exec "e $NVIM_DIR/" . file
   endif
 endfun
 
 fun! CommitChanges ()
-  silent exec "!cd $NVIM_DIR && git add ."
-
-  redraw!
-
   call inputsave()
 
-  let message = input("Commit message: ")
+  let msg = input('Commit message: ')
 
   call inputrestore()
 
-  silent exec '!cd $NVIM_DIR && git commit -am "' . message . '"'
-  silent exec "!cd $NVIM_DIR && git push"
+  let cmd = [
+    \ "!cd $NVIM_DIR",
+    \ 'git add .',
+    \ 'git commit -am "' . msg . '"',
+    \ 'git push'
+  \]
+
+  silent exec join(cmd, ' && ')
 
   redraw!
 
-  echo "Committed and pushed"
+  echo 'Committed and pushed'
 endfun
 
 fun! SilentExec (cmd)
@@ -224,33 +204,6 @@ fun! SilentExec (cmd)
   let cmd = substitute(cmd, "%", shellescape(expand("%")), "")
 
   call system(cmd)
-endfun
-
-fun! WriteEmptyJson ()
-  norm! $
-
-  let this_char = GetChar(1)
-  let prev_char = GetChar(2)
-
-  if this_char == "{"
-    norm! O{
-    norm! o},
-
-    call feedkeys("O")
-  elseif this_char == "}"
-    norm! A,
-    norm! o{
-    norm! o}
-
-    call feedkeys("O")
-  elseif prev_char . this_char == "},"
-    norm! o{
-    norm! o}
-
-    call feedkeys("O")
-  else
-    echo "Cannot insert here"
-  endif
 endfun
 
 fun! SelectBlock ()
@@ -300,7 +253,7 @@ fun! CloseWindow ()
   endif
 endfun
 
-fun! SelShell (cmd)
+fun! ShellOutput (cmd)
   let s = @s
 
   norm! gv"sy
@@ -309,11 +262,6 @@ fun! SelShell (cmd)
 
   norm! gv
   norm! "hp
-endfun
-
-fun! FormatJson ()
-  call SelShell("jq .")
-  call feedkeys('kJ')
 endfun
 
 fun! EasyMotionCoc() abort
