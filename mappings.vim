@@ -26,6 +26,8 @@ noremap <c-l> 10zl
 nnoremap <c-s> :w<cr>
 inoremap <c-s> <esc>:w<cr>
 
+" Refresh vim config
+nnoremap <silent> <leader>r :call Init(0)<cr>
 " Go to component under cursor
 nnoremap <silent> <leader>gt :call GoToTag(0)<cr>
 " Go to component under cursor and split
@@ -42,10 +44,6 @@ nnoremap <silent> <leader>V :call CommitChanges()<cr>
 nnoremap <silent> <leader>vv :call EditVimConf(0)<cr>
 " Open vimrc for edit and split
 nnoremap <silent> <leader>vs :call EditVimConf(1)<cr>
-" Select function
-nnoremap <silent> <leader>{ :call SelectBlock()<cr>
-" Refresh vim config
-nnoremap <silent> <leader>r :call Init(0)<cr>
 " Insert two lines above
 nnoremap <silent> <leader>o o<esc>o
 " Insert two lines below
@@ -82,8 +80,6 @@ nnoremap Q :Bwipe!<cr>
 nnoremap G Gzz
 " Clear whitespace
 nnoremap dS :%S/\s+$//g<cr>
-" Comments out function
-nnoremap <silent> gc{ :call SelectBlock() \| call feedkeys("gcc")<cr>
 " Creates empty object after key
 inoremap <c-d> : {<cr><cr>},<c-c>kS
 " Increases syntax column length for current buffer

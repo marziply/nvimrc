@@ -207,22 +207,6 @@ fun! SilentExec (cmd)
   call system(cmd)
 endfun
 
-fun! SelectBlock ()
-  let block_end = 0
-
-  norm! $V%
-
-  while block_end == 0
-    norm! g_
-
-    if GetChar(1) == "{"
-      norm! %
-    else
-      let block_end = 1
-    endif
-  endwhile
-endfun
-
 fun! FoldAllBlocks ()
   let this_line = line(".")
   let matched = 1
