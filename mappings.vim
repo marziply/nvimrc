@@ -39,7 +39,9 @@ nnoremap <silent> <leader>S :call SearchTag(1)<cr>
 " Commit vim config changes to vimrc git repo
 nnoremap <silent> <leader>V :call CommitChanges()<cr>
 " Open vimrc for edit
-nnoremap <silent> <leader>v :call EditVimConf()<cr>
+nnoremap <silent> <leader>vv :call EditVimConf(0)<cr>
+" Open vimrc for edit and split
+nnoremap <silent> <leader>vs :call EditVimConf(1)<cr>
 " Select function
 nnoremap <silent> <leader>{ :call SelectBlock()<cr>
 " Refresh vim config

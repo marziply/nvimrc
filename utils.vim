@@ -65,7 +65,7 @@ fun! FindComponent (name, split)
     return
   endif
 
-  let edit = a:split == 1 ? ':vs' : ':e'
+  let edit = a:split == 1 ? 'vs' : 'e'
 
   exec edit . ' ' . l:list[0]
 endfun
@@ -160,7 +160,7 @@ fun! SearchSelection ()
   execute 'CtrlSF "' . selected . '"'
 endfun
 
-fun! EditVimConf ()
+fun! EditVimConf (split)
   let options = [
     \ 'Vars',
     \ 'Utils',
@@ -173,8 +173,9 @@ fun! EditVimConf ()
 
   if sel > 0
     let file = sel == 5 ? 'init.vim' : g:imports[sel - 1]
+    let edit = a:split == 1 ? 'vs' : 'e'
 
-    exec "e $NVIM_DIR/" . file
+    exec edit . " $NVIM_DIR/" . file
   endif
 endfun
 
@@ -267,10 +268,12 @@ endfun
 fun! EasyMotionCoc() abort
   if EasyMotion#is_active()
     let g:easymotion#is_active = 1
+
     silent! CocDisable
   else
     if g:easymotion#is_active == 1
       let g:easymotion#is_active = 0
+
       silent! CocEnable
     endif
   endif
