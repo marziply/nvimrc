@@ -53,7 +53,7 @@ nnoremap <silent> <leader>u vu
 " Conver current character to uppercase
 nnoremap <silent> <leader>U vU
 " Wipe all buffers
-nnoremap <silent> <leader>Q :bufdo bwipe \| call feedkeys('Q')<cr>
+nnoremap <silent> <leader>Q :bufdo bwipe<bar>call feedkeys('Q')<cr>
 " Exit window
 nnoremap <silent> <c-q> :call CloseWindow()<cr>
 " Clear search
@@ -63,13 +63,13 @@ nnoremap <silent> Y :exec 'norm i' . nr2char(getchar()) . "\e"<cr>
 " Search file for selected string
 vnoremap <c-r> <esc>:%s/<c-r>=GetVisual()<cr>//g<left><left>
 " Uncomment selected HTML tag
-vnoremap <silent> gch :s/<!--\s//ge \| '<,'>s/\s-->//ge \| noh<cr>
+vnoremap <silent> gch :s/<!--\s//ge<bar>'<,'>s/\s-->//ge<bar>noh<cr>
 " Fold in visual mode
 vnoremap <c-f>f zf
 " Fold all function blocks
 nnoremap <c-f>a :call FoldAllBlocks()<cr>
 " Formats a selected JSON object
-vnoremap <c-f>j :call ShellOutput('jq .') \| call feedkeys('kJ')<cr>
+vnoremap <c-f>j :call ShellOutput('jq .')<bar>call feedkeys('kJ')<cr>
 " Previous buffer
 nnoremap <c-h> :bp<cr>
 " Next buffer
@@ -88,6 +88,10 @@ nnoremap <c-f>x :set synmaxcol=5000<cr>
 nnoremap mo o<esc>
 " New line above without insert
 nnoremap mO O<esc>
+" Select block
+vnoremap g{ V$%
+" Delete block
+vnoremap gd V$%d<bar>:call feedkeys(col('$') == 1 ? 'dd' : '')<cr>
 
 " Centering
 
