@@ -109,7 +109,6 @@ nnoremap <c-i> <c-i>zz
 " Plugins
 
 " COC related keybinds
-inoremap <silent> <c-f> <c-r>=coc#start({'source': 'snippets'})<cr>
 inoremap <expr> <cr> pumvisible() ? "\<c-y>" : "\<c-g>u\<cr>"
 inoremap <expr> <esc> pumvisible() ? "<c-y>" : "<esc>"
 inoremap <silent><expr> <tab> pumvisible()
@@ -132,9 +131,9 @@ nmap <silent> gi <plug>(coc-implementation)
 nmap <silent> gr <plug>(coc-references)
 
 " Open CtrlSF
-nmap <leader>f <plug>CtrlSFPrompt""<left>
+nmap <leader>f :CtrlSF ""<left>
 " Search globally for selected text
-vmap <leader>F :call SearchSelection()<cr>
+vmap <leader>F :norm! gv"ay<cr>:CtrlSF "<c-r>a"<cr>
 " Open CtrlP buffer list
 nmap <silent> <leader>b :CtrlPBuffer<cr>
 " Open CtrlP search list

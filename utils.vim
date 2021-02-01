@@ -2,32 +2,6 @@ com! -nargs=1 -complete=buffer Vsb :vert sb <args>
 com! -nargs=1 Cman :vert Man 3 <args>
 com! -nargs=1 Silent call SilentExec(<q-args>)
 
-fun! EscapeString (string)
-  let string = a:string
-  let string = escape(string, '^$.*\/~[]')
-  let string = substitute(string, '\n', '\\n', "g")
-
-  return string
-endfun
-
-fun! GetVisual () range
-  let reg_save = getreg('"')
-  let regtype_save = getregtype('"')
-  let cb_save = &clipboard
-
-  set clipboard&
-  norm! ""gvy
-
-  let selection = getreg('"')
-
-  call setreg('"', reg_save, regtype_save)
-
-  let &clipboard = cb_save
-  let escaped_selection = EscapeString(selection)
-
-  return escaped_selection
-endfun
-
 fun! FindComponent (name, split)
   let l:result = system('fd -e vue -t f "' . a:name . '"' . ' .')
   let l:list = split(l:result, '\n')
@@ -151,13 +125,6 @@ fun! GoToTag (split)
   catch
     echo v:exception
   endtry
-endfun
-
-" Search globally for the given selection
-fun! SearchSelection ()
-  let selected = GetVisual()
-
-  execute 'CtrlSF "' . selected . '"'
 endfun
 
 fun! EditVimConf (split)
