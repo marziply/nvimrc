@@ -61,7 +61,7 @@ nnoremap <esc> :noh<cr>
 " Inserts single character
 nnoremap <silent> Y :exec 'norm i' . nr2char(getchar()) . "\e"<cr>
 " Search file for selected string
-vnoremap <c-r> :YankVisual<cr>:%s/<c-r>a//g<left><left>
+vnoremap <c-r> :YankVisual<cr>:%s/<c-r>=escape(@a, '/\')<cr>//g<left><left>
 " Fold in visual mode
 vnoremap <c-f>f zf
 " Fold all function blocks
