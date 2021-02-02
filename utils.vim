@@ -1,5 +1,6 @@
-com! -nargs=1 -complete=buffer Vsb :vert sb <args>
-com! -nargs=1 Cman :vert Man 3 <args>
+com! -nargs=0 -range YankVisual norm! gv"ay
+com! -nargs=1 -complete=buffer Vsb vert sb <args>
+com! -nargs=1 Cman vert Man 3 <args>
 com! -nargs=1 Silent call SilentExec(<q-args>)
 
 fun! FindComponent (name, split)

@@ -61,9 +61,7 @@ nnoremap <esc> :noh<cr>
 " Inserts single character
 nnoremap <silent> Y :exec 'norm i' . nr2char(getchar()) . "\e"<cr>
 " Search file for selected string
-vnoremap <c-r> <esc>:%s/<c-r>=GetVisual()<cr>//g<left><left>
-" Uncomment selected HTML tag
-vnoremap <silent> gch :s/<!--\s//ge<bar>'<,'>s/\s-->//ge<bar>noh<cr>
+vnoremap <c-r> :YankVisual<cr>:%s/<c-r>a//g<left><left>
 " Fold in visual mode
 vnoremap <c-f>f zf
 " Fold all function blocks
@@ -109,6 +107,7 @@ nnoremap <c-i> <c-i>zz
 " Plugins
 
 " COC related keybinds
+inoremap <silent> <c-f> <c-r>=coc#start({'source': 'snippets'})<cr>
 inoremap <expr> <cr> pumvisible() ? "\<c-y>" : "\<c-g>u\<cr>"
 inoremap <expr> <esc> pumvisible() ? "<c-y>" : "<esc>"
 inoremap <silent><expr> <tab> pumvisible()
@@ -125,19 +124,19 @@ inoremap <silent><expr> <s-tab> pumvisible()
       \ : "\<c-h>"
 
 " Go-to definitions
-nmap <silent> gd <plug>(coc-definition)
-nmap <silent> gy <plug>(coc-type-definition)
-nmap <silent> gi <plug>(coc-implementation)
-nmap <silent> gr <plug>(coc-references)
+nnoremap <silent> gd <plug>(coc-definition)
+nnoremap <silent> gy <plug>(coc-type-definition)
+nnoremap <silent> gi <plug>(coc-implementation)
+nnoremap <silent> gr <plug>(coc-references)
 
 " Open CtrlSF
-nmap <leader>f :CtrlSF ""<left>
+nnoremap <leader>f :CtrlSF ""<left>
 " Search globally for selected text
-vmap <leader>F :norm! gv"ay<cr>:CtrlSF "<c-r>a"<cr>
+vnoremap <leader>F :YankVisual<cr>:CtrlSF "<c-r>a"<cr>
 " Open CtrlP buffer list
-nmap <silent> <leader>b :CtrlPBuffer<cr>
+nnoremap <silent> <leader>b :CtrlPBuffer<cr>
 " Open CtrlP search list
-nmap <silent> <leader>p :CtrlPLine<cr>
+nnoremap <silent> <leader>p :CtrlPLine<cr>
 
 " Downwards eregex
 nnoremap <leader>/ :1M/
@@ -145,19 +144,19 @@ nnoremap <leader>/ :1M/
 nnoremap <leader>? :1M?
 
 " Easymotion keybinds
-nmap T <plug>(easymotion-F2)
-nmap t <plug>(easymotion-f2)
-nmap yT <plug>(easymotion-F)
-nmap yt <plug>(easymotion-f)
-nmap gT <plug>(easymotion-b)
-nmap gt <plug>(easymotion-w)
-nmap s <plug>(easymotion-overwin-f2)
+nnoremap T <plug>(easymotion-F2)
+nnoremap t <plug>(easymotion-f2)
+nnoremap yT <plug>(easymotion-F)
+nnoremap yt <plug>(easymotion-f)
+nnoremap gT <plug>(easymotion-b)
+nnoremap gt <plug>(easymotion-w)
+nnoremap s <plug>(easymotion-overwin-f2)
 
 " Easymotion x/y linewise movement
-map <leader>l <plug>(easymotion-lineforward)
-map <leader>j <plug>(easymotion-j)
-map <leader>k <plug>(easymotion-k)
-map <leader>h <plug>(easymotion-linebackward)
+noremap <leader>l <plug>(easymotion-lineforward)
+noremap <leader>j <plug>(easymotion-j)
+noremap <leader>k <plug>(easymotion-k)
+noremap <leader>h <plug>(easymotion-linebackward)
 
 " Undo
 nnoremap <silent> <leader>m :MundoToggle<cr>
