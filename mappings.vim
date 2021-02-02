@@ -144,19 +144,19 @@ nnoremap <leader>/ :1M/
 nnoremap <leader>? :1M?
 
 " Easymotion keybinds
-nnoremap T <plug>(easymotion-F2)
-nnoremap t <plug>(easymotion-f2)
-nnoremap yT <plug>(easymotion-F)
-nnoremap yt <plug>(easymotion-f)
-nnoremap gT <plug>(easymotion-b)
-nnoremap gt <plug>(easymotion-w)
-nnoremap s <plug>(easymotion-overwin-f2)
+map T <plug>(easymotion-F2)
+map t <plug>(easymotion-f2)
+map yT <plug>(easymotion-F)
+map yt <plug>(easymotion-f)
+map gT <plug>(easymotion-b)
+map gt <plug>(easymotion-w)
+map s <plug>(easymotion-overwin-f2)
 
 " Easymotion x/y linewise movement
-noremap <leader>l <plug>(easymotion-lineforward)
-noremap <leader>j <plug>(easymotion-j)
-noremap <leader>k <plug>(easymotion-k)
-noremap <leader>h <plug>(easymotion-linebackward)
+nmap <leader>l <plug>(easymotion-lineforward)
+nmap <leader>j <plug>(easymotion-j)
+nmap <leader>k <plug>(easymotion-k)
+nmap <leader>h <plug>(easymotion-linebackward)
 
 " Undo
 nnoremap <silent> <leader>m :MundoToggle<cr>
