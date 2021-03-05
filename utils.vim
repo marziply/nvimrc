@@ -3,6 +3,13 @@ com! -nargs=1 -complete=buffer Vsb vert sb <args>
 com! -nargs=1 Cman vert Man 3 <args>
 com! -nargs=1 Silent call SilentExec(<q-args>)
 
+fun! FoldApiBlocks (global)
+  let g_str = a:global == 1 ? 'g' : ''
+  let top_str = a:global == 1 ? 'gg' : ''
+
+  exec 'silent!' . g_str . ' /@openapi/,/\n[ ]\+\*\//fo | norm ' . top_str . 'zM'
+endfun
+
 fun! FindComponent (name, split)
   let l:result = system('fd -e vue -t f "' . a:name . '"' . ' .')
   let l:list = split(l:result, '\n')

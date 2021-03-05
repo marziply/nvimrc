@@ -70,11 +70,13 @@ aug aug
   au BufWritePost */sway/*.sway silent !swaymsg reload
   au BufWritePost */tmux.conf silent !tmux source-file "$XDG_CONFIG_HOME/tmux.conf"
   au BufEnter,InsertLeave * syntax sync fromstart
+  au BufEnter,InsertLeave * syn match jsDocTags contained "@\(openapi\)\>"
   au BufEnter,BufReadPost .env.* set ft=sh
   au BufEnter,BufReadPost *.vue set ft=vue
   au BufEnter,BufReadPost *.njk.html set ft=htmldjango
   au BufEnter,BufReadPost *.sway set ft=i3config
   au BufEnter,BufReadPost *.toml set ft=toml
+  au BufReadPost *.mjs call FoldApiBlocks(1)
   au TextChanged,CursorMoved * call EasyMotionCoc()
   au FileType qf nnoremap <buffer> <cr> <cr>:ccl<cr>
 aug end

@@ -90,6 +90,8 @@ nnoremap mO O<esc>
 vnoremap g{ V$%
 " Delete block
 vnoremap gd V$%d<bar>:call feedkeys(col('$') == 1 ? 'dd' : '')<cr>
+" Folds first matched Open API JSDoc block
+nnoremap zfo :call FoldApiBlocks(0)<cr>
 
 " Centering
 
@@ -144,13 +146,13 @@ nnoremap <leader>/ :1M/
 nnoremap <leader>? :1M?
 
 " Easymotion keybinds
-map T <plug>(easymotion-F2)
-map t <plug>(easymotion-f2)
-map yT <plug>(easymotion-F)
-map yt <plug>(easymotion-f)
-map gT <plug>(easymotion-b)
-map gt <plug>(easymotion-w)
-map s <plug>(easymotion-overwin-f2)
+nmap T <plug>(easymotion-F2)
+nmap t <plug>(easymotion-f2)
+nmap yT <plug>(easymotion-F)
+nmap yt <plug>(easymotion-f)
+nmap gT <plug>(easymotion-b)
+nmap gt <plug>(easymotion-w)
+nmap s <plug>(easymotion-overwin-f2)
 
 " Easymotion x/y linewise movement
 nmap <leader>l <plug>(easymotion-lineforward)
