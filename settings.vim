@@ -76,6 +76,7 @@ aug aug
   au BufEnter,BufReadPost *.njk.html set ft=htmldjango
   au BufEnter,BufReadPost *.sway set ft=i3config
   au BufEnter,BufReadPost *.toml set ft=toml
+  au BufEnter,BufReadPost *.json.jbuilder set ft=ruby
   au BufReadPost *.mjs call FoldApiBlocks(1)
   au TextChanged,CursorMoved * call EasyMotionCoc()
   au FileType qf nnoremap <buffer> <cr> <cr>:ccl<cr>
