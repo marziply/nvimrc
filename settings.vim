@@ -14,7 +14,7 @@ set cinoptions+=:0
 set virtualedit=onemore
 set cmdheight=2
 set updatetime=100
-set shortmess+=c
+set shortmess+=I
 set signcolumn=yes
 set completeopt=menuone,noselect,noinsert
 set guicursor=a:ver25-blinkon750
@@ -65,7 +65,7 @@ syn on
 aug aug
   au!
   au VimEnter * call SetColours()
-  au BufWritePost * silent :CocRestart
+  " au BufWritePost * silent :CocRestart
   au BufWritePost */nvim/*.vim call Init(1)
   au BufWritePost */sway/*.sway silent !swaymsg reload
   au BufWritePost */tmux.conf silent !tmux source-file "$XDG_CONFIG_HOME/tmux.conf"
