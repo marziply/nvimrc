@@ -3,8 +3,6 @@ let s:body_reg = '([0-9A-Za-z_ \t,.{}\[\]]*)\s*{'
 let g:block_reg = '^\s*' . s:fn_reg . '[0-9A-Za-z_]\+\s*' . s:body_reg . '$'
 let g:ignore_dirs = [
   \ 'node_modules',
-  \ 'docs',
-  \ 'vendor',
   \ 'public',
   \ 'coverage',
   \ 'tmp',
