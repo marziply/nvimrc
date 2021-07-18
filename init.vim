@@ -81,6 +81,8 @@ Plug 'andymass/vim-matchup'
 " Context specific comments
 " Plug 'tyru/caw.vim'
 Plug 'tomtom/tcomment_vim'
+" Kubectl
+Plug 'rottencandy/vimkubectl'
 
 call plug#end()
 call Init(0)
