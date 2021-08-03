@@ -237,3 +237,13 @@ fun! EasyMotionCoc() abort
     endif
   endif
 endfun
+
+fun! ToggleRelative()
+  let rn = &relativenumber
+
+  set rnu!
+
+  if rn == 0
+    au CursorMoved * ++once call ToggleRelative()
+  endif
+endfun

@@ -66,7 +66,7 @@ syn on
 aug aug
   au!
   au VimEnter * call SetColours()
-  " au BufWritePost * silent :CocRestart
+  au BufWritePost * silent :CocRestart
   au BufWritePost */nvim/*.vim call Init(1)
   au BufWritePost */sway/*.sway silent !swaymsg reload
   au BufWritePost */tmux.conf silent !tmux source-file "$XDG_CONFIG_HOME/tmux.conf"

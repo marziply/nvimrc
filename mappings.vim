@@ -6,7 +6,10 @@
 
 " General keybinds
 
+" Alias for escape
 inoremap <c-c> <esc>
+" Clear search
+nnoremap <esc> :noh<cr>
 
 " Move line up/down
 nnoremap <c-pagedown> :m .+1<cr>==
@@ -56,8 +59,6 @@ nnoremap <silent> <leader>U vU
 nnoremap <silent> <leader>Q :bufdo bwipe<bar>call feedkeys('Q')<cr>
 " Exit window
 nnoremap <silent> <c-q> :call CloseWindow()<cr>
-" Clear search
-nnoremap <esc> :noh<cr>
 " Inserts single character
 nnoremap <silent> Y :exec 'norm i' . nr2char(getchar()) . "\e"<cr>
 " Search file for selected string
@@ -93,8 +94,9 @@ vnoremap gd V$%d<bar>:call feedkeys(col('$') == 1 ? 'dd' : '')<cr>
 " Folds first matched Open API JSDoc block
 nnoremap zfo :call FoldApiBlocks(0)<cr>
 " Toggle relative numbers
-nnoremap - :set rnu!<cr>
-vnoremap - <esc>:set rnu!<cr>gv
+" nnoremap - :set rnu!<cr>
+nnoremap - :call ToggleRelative()<cr>
+vnoremap - <esc>:call ToggleRelative()<cr>gv
 
 " Centering
 
