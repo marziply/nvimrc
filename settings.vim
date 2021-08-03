@@ -28,6 +28,7 @@ set foldmethod=manual
 set foldcolumn=1
 set re=1
 set bg=dark
+set nu
 
 set undofile
 set incsearch

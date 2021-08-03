@@ -1,8 +1,10 @@
+let mapleader = "\<space>"
 let s:fn_reg = '\(\(\(get\|set\|\(\(async\s\+\)*function\)\)\s\+\)*\)'
 let s:body_reg = '([0-9A-Za-z_ \t,.{}\[\]]*)\s*{'
 let g:block_reg = '^\s*' . s:fn_reg . '[0-9A-Za-z_]\+\s*' . s:body_reg . '$'
 let g:ignore_dirs = [
   \ 'node_modules',
+  \ 'docs',
   \ 'vendor',
   \ 'public',
   \ 'coverage',
@@ -23,15 +25,16 @@ let g:ale_ft_opts = {
   \ 'hpp': ['clang-format']
 \}
 
-let mapleader = "\<space>"
-
-let g:matchup_matchparen_offscreen = { 'method': 'popup' }
+let g:matchup_matchparen_offscreen = {
+  \ 'method': 'popup'
+\}
 
 let g:one_allow_italics = 1
 
 let g:gotofile_extensions = ['js', 'vue']
 
 let g:javascript_plugin_jsdoc = 1
+let g:javascript_sql_dialect = 'pgsql'
 
 let g:eregex_default_enable = 0
 
