@@ -94,7 +94,7 @@ vnoremap gd V$%d<bar>:call feedkeys(col('$') == 1 ? 'dd' : '')<cr>
 nnoremap zfo :call FoldApiBlocks(0)<cr>
 " Toggle relative numbers
 nnoremap - :set rnu!<cr>
-vnoremap - :set rnu!<cr>
+vnoremap - <esc>:set rnu!<cr>gv
 
 " Centering
 
