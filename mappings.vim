@@ -10,6 +10,8 @@
 inoremap <c-c> <esc>
 " Clear search
 nnoremap <esc> :noh<cr>
+" Rebound vim exit
+nnoremap ZZ :qa!<cr>
 
 " Move line up/down
 nnoremap <c-pagedown> :m .+1<cr>==

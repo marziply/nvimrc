@@ -16,7 +16,12 @@ if empty(glob(s:plug_file))
   au VimEnter * PlugInstall --sync | source s:plug_file
 endif
 
-let g:rc = ["vars", "utils", "mappings", "settings"]
+let g:rc = [
+  \ "vars",
+  \ "utils",
+  \ "mappings",
+  \ "settings"
+\]
 let g:imports = map(g:rc, "v:val . '.vim'")
 
 if !exists("*Init")
@@ -42,12 +47,14 @@ Plug 'pangloss/vim-javascript'
 Plug 'leafoftree/vim-vue-plugin'
 Plug 'sheerun/vim-polyglot'
 
+" Colour schemes
+Plug 'rakr/vim-one'
+" Plug 'ghifarit53/tokyonight-vim'
+
 " Code snippets
 Plug 'honza/vim-snippets'
 " Context specific syntax highlighting
 Plug 'shougo/context_filetype.vim'
-" Colour scheme
-Plug 'rakr/vim-one'
 " Linter
 Plug 'w0rp/ale'
 " Status bar
@@ -78,7 +85,6 @@ Plug 'simnalamburt/vim-mundo'
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 " Matchit improved
 Plug 'andymass/vim-matchup'
-" Context specific comments
 " Plug 'tyru/caw.vim'
 Plug 'tomtom/tcomment_vim'
 " Kubectl

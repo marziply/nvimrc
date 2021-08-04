@@ -28,7 +28,6 @@ set foldmethod=manual
 set foldcolumn=1
 set re=1
 set bg=dark
-set nu
 
 set undofile
 set incsearch
@@ -58,7 +57,6 @@ set nofoldenable
 
 exe 'set wildignore+=' . join(g:wild_ignore_dirs, ',')
 
-" runtime macros/matchit.vim
 color one
 filetype off
 syn on
@@ -66,19 +64,19 @@ syn on
 aug aug
   au!
   au VimEnter * call SetColours()
+  au FileType qf nnoremap <buffer> <cr> <cr>:ccl<cr>
+  au TextChanged,CursorMoved * call EasyMotionCoc()
+  au BufReadPost *.mjs call FoldApiBlocks(1)
   au BufWritePost * silent :CocRestart
   au BufWritePost */nvim/*.vim call Init(1)
   au BufWritePost */sway/*.sway silent !swaymsg reload
   au BufWritePost */tmux.conf silent !tmux source-file "$XDG_CONFIG_HOME/tmux.conf"
-  au BufEnter,InsertLeave * syntax sync fromstart
+  au BufEnter,InsertLeave * syn sync fromstart
   au BufEnter,InsertLeave * syn match jsDocTags contained "@\(openapi\)\>"
   au BufEnter,BufReadPost .env.* set ft=sh
   au BufEnter,BufReadPost *.vue set ft=vue
   au BufEnter,BufReadPost *.njk.html set ft=htmldjango
   au BufEnter,BufReadPost *.sway set ft=i3config
-  au BufEnter,BufReadPost *.toml set ft=toml
+  au BufEnter,BufReadPost *.jq set ft=jq
   au BufEnter,BufReadPost *.json.jbuilder set ft=ruby
-  au BufReadPost *.mjs call FoldApiBlocks(1)
-  au TextChanged,CursorMoved * call EasyMotionCoc()
-  au FileType qf nnoremap <buffer> <cr> <cr>:ccl<cr>
 aug end

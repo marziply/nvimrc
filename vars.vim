@@ -14,31 +14,46 @@ let g:ignore_dirs = [
   \ '.git'
 \]
 let g:wild_ignore_dirs = map(g:ignore_dirs, {_, val -> '*/' . val . '/*'})
+let g:easymotion#is_active = 0
 
 let g:ale_ft_opts = {
-  \ 'vue': ['eslint', 'vls'],
-  \ 'javascript': ['eslint'],
-  \ 'css': ['prettier'],
-  \ 'c': ['clang-format'],
-  \ 'h': ['clang-format'],
-  \ 'cpp': ['clang-format'],
-  \ 'hpp': ['clang-format']
+  \ 'vue': [
+    \ 'eslint',
+    \ 'vls'
+  \],
+  \ 'javascript': [
+    \ 'eslint'
+  \ ],
+  \ 'css': [
+    \ 'prettier'
+  \ ],
+  \ 'c': [
+    \ 'clang-format'
+  \ ],
+  \ 'h': [
+    \ 'clang-format'
+  \ ],
+  \ 'cpp': [
+    \ 'clang-format'
+  \ ],
+  \ 'hpp': [
+    \ 'clang-format'
+  \ ]
 \}
 
 let g:matchup_matchparen_offscreen = {
   \ 'method': 'popup'
 \}
 
-let g:one_allow_italics = 1
-
-let g:gotofile_extensions = ['js', 'vue']
+let g:gotofile_extensions = [
+  \ 'js',
+  \ 'vue'
+\ ]
 
 let g:javascript_plugin_jsdoc = 1
 let g:javascript_sql_dialect = 'pgsql'
 
 let g:eregex_default_enable = 0
-
-let g:easymotion#is_active = 0
 
 let g:eighties_compute = 0
 let g:eighties_minimum_width = 100
@@ -68,18 +83,27 @@ let g:ctrlp_mruf_max = 20
 let g:ctrlp_mruf_case_sensitive = 0
 let g:ctrlp_working_path_mode = 0
 
+let g:ctrlsf_ignore_dir = g:ignore_dirs
+let g:ctrlsf_context = '-C 10'
+let g:ctrlsf_default_view_mode = 'compact'
+let g:ctrlsf_search_mode = 'async'
+let g:ctrlsf_position = 'bottom'
+let g:ctrlsf_winsize = '50%'
 let g:ctrlsf_mapping = {
   \ 'split': '',
   \ 'vsplit': '<c-o>'
 \}
-let g:ctrlsf_ignore_dir = g:ignore_dirs
-let g:ctrlsf_context = '-C 10'
-let g:ctrlsf_auto_focus = { 'at': 'start' }
-let g:ctrlsf_default_view_mode = 'compact'
-let g:ctrlsf_auto_close = { 'normal': 1, 'compact': 1 }
-let g:ctrlsf_search_mode = 'async'
-let g:ctrlsf_position = 'bottom'
-let g:ctrlsf_winsize = '50%'
+let g:ctrlsf_auto_focus = {
+  \ 'at': 'start'
+\}
+let g:ctrlsf_auto_close = {
+  \ 'normal': 1,
+  \ 'compact': 1
+\}
+
+let g:one_allow_italics = 1
+let g:onedark_style = 'deep'
+let g:tokyonight_style = 'night'
 
 let g:airline_theme = 'tomorrow'
 let g:airline#extensions#ale#enabled = 1
@@ -95,5 +119,9 @@ let g:ale_sign_column_always = 1
 let g:ale_lint_on_insert_leave = 1
 let g:ale_fix_on_save = 1
 let g:ale_linter_aliases = {
-  \ 'vue': ['javascript', 'html', 'scss']
+  \ 'vue': [
+    \ 'javascript',
+    \ 'html',
+    \ 'scss'
+  \]
 \}
