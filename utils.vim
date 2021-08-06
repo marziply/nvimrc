@@ -243,11 +243,13 @@ fun! ToggleRelative()
 
   set rnu!
 
-  aug
+  aug rnu
+    au!
+
     if rn == 0
       au CursorMoved * ++once call ToggleRelative()
     else
-      au! CursorMoved * ++once call ToggleRelative()
+      au!
     endif
   aug end
 endfun

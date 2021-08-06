@@ -48,7 +48,7 @@ let g:matchup_matchparen_offscreen = {
 let g:gotofile_extensions = [
   \ 'js',
   \ 'vue'
-\ ]
+\]
 
 let g:javascript_plugin_jsdoc = 1
 let g:javascript_sql_dialect = 'pgsql'
