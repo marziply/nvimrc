@@ -70,6 +70,7 @@ aug aug
   au BufWritePost * silent :CocRestart
   au BufWritePost */nvim/*.vim call Init(1)
   au BufWritePost */sway/*.sway silent !swaymsg reload
+  au BufWritePost */zsh/*.zsh silent !source "$XDG_CONFIG_HOME/zsh/init.zsh"
   au BufWritePost */tmux.conf silent !tmux source-file "$XDG_CONFIG_HOME/tmux.conf"
   au BufEnter,InsertLeave * syn sync fromstart
   au BufEnter,InsertLeave * syn match jsDocTags contained "@\(openapi\)\>"
