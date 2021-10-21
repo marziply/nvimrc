@@ -17,10 +17,13 @@ let g:wild_ignore_dirs = map(g:ignore_dirs, {_, val -> '*/' . val . '/*'})
 let g:easymotion#is_active = 0
 
 let g:ale_ft_opts = {
+  \ 'rs': [
+    \ 'rust-analyzer'
+  \ ],
   \ 'vue': [
     \ 'eslint',
     \ 'vls'
-  \],
+  \ ],
   \ 'javascript': [
     \ 'eslint'
   \ ],
@@ -83,7 +86,6 @@ let g:ctrlp_mruf_max = 20
 let g:ctrlp_mruf_case_sensitive = 0
 let g:ctrlp_working_path_mode = 0
 
-let g:ctrlsf_ignore_dir = g:ignore_dirs
 let g:ctrlsf_context = '-C 10'
 let g:ctrlsf_default_view_mode = 'compact'
 let g:ctrlsf_search_mode = 'async'

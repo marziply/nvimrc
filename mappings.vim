@@ -10,8 +10,11 @@
 inoremap <c-c> <esc>
 " Clear search
 nnoremap <esc> :noh<cr>
-" Rebound vim exit
+" Rebind vim exit
 nnoremap ZZ :qa!<cr>
+
+nnoremap H Hzz
+nnoremap L Lzz
 
 " Move line up/down
 nnoremap <c-pagedown> :m .+1<cr>==
@@ -115,7 +118,7 @@ nnoremap <c-i> <c-i>zz
 " Plugins
 
 " COC related keybinds
-inoremap <silent> <c-f> <c-r>=coc#start({'source': 'snippets'})<cr>
+inoremap <silent> <c-f> <c-r>=coc#start({ 'source': 'snippets' })<cr>
 inoremap <expr> <cr> pumvisible() ? "\<c-y>" : "\<c-g>u\<cr>"
 inoremap <expr> <esc> pumvisible() ? "<c-y>" : "<esc>"
 inoremap <silent><expr> <tab> pumvisible()
@@ -146,16 +149,9 @@ nnoremap <silent> <leader>b :CtrlPBuffer<cr>
 " Open CtrlP search list
 nnoremap <silent> <leader>p :CtrlPLine<cr>
 
-" Downwards eregex
-nnoremap <leader>/ :1M/
-" Backwards eregex
-nnoremap <leader>? :1M?
-
 " Easymotion keybinds
 nmap T <plug>(easymotion-F2)
 nmap t <plug>(easymotion-f2)
-nmap yT <plug>(easymotion-F)
-nmap yt <plug>(easymotion-f)
 nmap gT <plug>(easymotion-b)
 nmap gt <plug>(easymotion-w)
 nmap s <plug>(easymotion-overwin-f2)

@@ -77,7 +77,10 @@ aug aug
   au BufEnter,BufReadPost .env.* set ft=sh
   au BufEnter,BufReadPost *.vue set ft=vue
   au BufEnter,BufReadPost *.njk.html set ft=htmldjango
-  au BufEnter,BufReadPost *.sway set ft=i3config
+  au BufEnter,BufReadPost *.html.tera set ft=htmldjango
+  au BufEnter,BufReadPost *.tera.html set ft=htmldjango
+  " au BufEnter,BufReadPost *.sway set ft=i3config
+  au BufEnter,BufReadPost *.sway set ft=config
   au BufEnter,BufReadPost *.jq set ft=jq
   au BufEnter,BufReadPost *.json.jbuilder set ft=ruby
 aug end

@@ -8,10 +8,7 @@ let s:plug_url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plu
 if empty(glob(s:plug_file))
   if empty(glob(s:auto_dir)) | silent exec "!mkdir " . s:auto_dir | endif
 
-  silent exec "
-    \ !curl -fLo \" . s:plug_file
-    \ --create-dirs \" . s:plug_url
-  \"
+  exec "!curl -fLo " . s:plug_file . " --create-dirs " . s:plug_url
 
   au VimEnter * PlugInstall --sync | source s:plug_file
 endif
@@ -81,6 +78,8 @@ Plug 'easymotion/vim-easymotion'
 Plug 'andrewradev/splitjoin.vim'
 " Undo tree navigator
 Plug 'simnalamburt/vim-mundo'
+" Fuzzy search
+Plug 'junegunn/fzf'
 " Language server
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 " Matchit improved
@@ -91,4 +90,5 @@ Plug 'tomtom/tcomment_vim'
 Plug 'rottencandy/vimkubectl'
 
 call plug#end()
+
 call Init(0)
