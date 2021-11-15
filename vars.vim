@@ -16,10 +16,11 @@ let g:ignore_dirs = [
 let g:wild_ignore_dirs = map(g:ignore_dirs, {_, val -> '*/' . val . '/*'})
 let g:easymotion#is_active = 0
 
+" \ 'rust': [
+"   \ 'rustfmt'
+" \ ],
+
 let g:ale_ft_opts = {
-  \ 'rs': [
-    \ 'rust-analyzer'
-  \ ],
   \ 'vue': [
     \ 'eslint',
     \ 'vls'
@@ -52,6 +53,8 @@ let g:gotofile_extensions = [
   \ 'js',
   \ 'vue'
 \]
+
+let g:rustfmt_autosave = 1
 
 let g:javascript_plugin_jsdoc = 1
 let g:javascript_sql_dialect = 'pgsql'

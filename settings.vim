@@ -83,4 +83,5 @@ aug aug
   au BufEnter,BufReadPost *.sway set ft=config
   au BufEnter,BufReadPost *.jq set ft=jq
   au BufEnter,BufReadPost *.json.jbuilder set ft=ruby
+  au BufEnter,BufReadPost *.rs set shiftwidth=2
 aug end

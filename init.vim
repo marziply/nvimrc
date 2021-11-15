@@ -88,6 +88,8 @@ Plug 'andymass/vim-matchup'
 Plug 'tomtom/tcomment_vim'
 " Kubectl
 Plug 'rottencandy/vimkubectl'
+" Rust
+Plug 'rust-lang/rust.vim'
 
 call plug#end()
 
