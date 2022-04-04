@@ -32,16 +32,16 @@ let g:ale_ft_opts = {
     \ 'prettier'
   \ ],
   \ 'c': [
-    \ 'clang-format'
+    \ 'uncrustify'
   \ ],
   \ 'h': [
-    \ 'clang-format'
+    \ 'uncrustify'
   \ ],
   \ 'cpp': [
-    \ 'clang-format'
+    \ 'uncrustify'
   \ ],
   \ 'hpp': [
-    \ 'clang-format'
+    \ 'uncrustify'
   \ ]
 \}
 
@@ -120,6 +120,7 @@ let g:airline_highlighting_cache = 1
 let g:ale_fixers = g:ale_ft_opts
 let g:ale_linters = g:ale_ft_opts
 let g:ale_lint_on_text_changed = 'normal'
+let g:ale_c_uncrustify_options = '-c format.cfg'
 let g:ale_sign_column_always = 1
 let g:ale_lint_on_insert_leave = 1
 let g:ale_fix_on_save = 1

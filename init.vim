@@ -46,7 +46,6 @@ Plug 'sheerun/vim-polyglot'
 
 " Colour schemes
 Plug 'rakr/vim-one'
-" Plug 'ghifarit53/tokyonight-vim'
 
 " Code snippets
 Plug 'honza/vim-snippets'
