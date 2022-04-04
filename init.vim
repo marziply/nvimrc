@@ -47,6 +47,12 @@ Plug 'sheerun/vim-polyglot'
 " Colour schemes
 Plug 'rakr/vim-one'
 
+" Language server
+Plug 
+\ 'neoclide/coc.nvim',
+\ { 
+  \ 'branch': 'release'
+ \}
 " Code snippets
 Plug 'honza/vim-snippets'
 " Context specific syntax highlighting
@@ -67,8 +73,6 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'moll/vim-bbye'
 " Dim inactive panes
 Plug 'blueyed/vim-diminactive'
-" Advanced regex matcher
-Plug 'othree/eregex.vim'
 " Surround selection/words with scopes, quotes, parens, etc.
 Plug 'tpope/vim-surround'
 " Motions via cursor text search
@@ -79,8 +83,6 @@ Plug 'andrewradev/splitjoin.vim'
 Plug 'simnalamburt/vim-mundo'
 " Fuzzy search
 Plug 'junegunn/fzf'
-" Language server
-Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 " Matchit improved
 Plug 'andymass/vim-matchup'
 " Plug 'tyru/caw.vim'
@@ -89,6 +91,14 @@ Plug 'tomtom/tcomment_vim'
 Plug 'rottencandy/vimkubectl'
 " Rust
 Plug 'rust-lang/rust.vim'
+" Column mark names
+Plug 'kshenoy/vim-signature'
+" Git history/diff info in column
+Plug 'airblade/vim-gitgutter'
+" Git integration commands
+Plug 'tpope/vim-fugitive'
+" Git merge tool
+Plug 'samoshkin/vim-mergetool'
 
 call plug#end()
 

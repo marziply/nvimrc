@@ -61,9 +61,9 @@ nnoremap <silent> <leader>u vu
 " Conver current character to uppercase
 nnoremap <silent> <leader>U vU
 " Wipe all buffers
-nnoremap <silent> <leader>Q :bufdo bwipe<bar>call feedkeys('Q')<cr>
-" Exit window
-nnoremap <silent> <c-q> :call CloseWindow()<cr>
+nnoremap <silent> <leader>Q :bufdo :Bdelete<cr>
+" Delete buffer
+nnoremap <silent> <c-q> :Bdelete<cr>:wincmd q<cr>
 " Inserts single character
 nnoremap <silent> Y :exec 'norm i' . nr2char(getchar()) . "\e"<cr>
 " Search file for selected string
@@ -79,7 +79,7 @@ nnoremap <c-h> :bp<cr>
 " Next buffer
 nnoremap <c-l> :bn<cr>
 " Delete buffer
-nnoremap Q :Bwipe!<cr>
+nnoremap <silent> Q :Bdelete<cr>:silent! bn<cr>
 " Scroll up when cursor is moved to the bottom
 nnoremap G Gzz
 " Clear whitespace
@@ -102,6 +102,16 @@ nnoremap zfo :call FoldApiBlocks(0)<cr>
 nnoremap <silent> - :call ToggleRelative()<cr>
 vnoremap <silent> - <esc>:call ToggleRelative()<cr>gv
 
+nnoremap <silent> gl :Git mergetool<cr>
+nnoremap <silent> gv :Gvdiffsplit!<cr>zt
+nnoremap <silent> gn :cn<cr>zt
+nnoremap <silent> gp :cp<cr>zt
+nnoremap <silent> go :ccl<cr>zz
+nnoremap <silent> gw :w<cr>:Gw<cr>:normal go<cr>
+nnoremap <silent> gdh :diffget //2<cr>
+nnoremap <silent> gdl :diffget //3<cr>
+nnoremap <silent> gfl :normal gdh<cr>:normal gn<cr>
+nnoremap <silent> gfh :normal gdl<cr>:normal gn<cr>
 " Centering
 
 " Centers screen after next search

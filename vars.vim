@@ -108,14 +108,11 @@ let g:ctrlsf_auto_close = {
 
 let g:one_allow_italics = 1
 let g:onedark_style = 'deep'
-let g:tokyonight_style = 'night'
 
-let g:airline_theme = 'tomorrow'
-let g:airline#extensions#ale#enabled = 1
-let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline_highlighting_cache = 1
+let g:airline_theme = 'tomorrow'
 
 let g:ale_fixers = g:ale_ft_opts
 let g:ale_linters = g:ale_ft_opts

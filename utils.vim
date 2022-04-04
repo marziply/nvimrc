@@ -200,19 +200,6 @@ fun! FoldAllBlocks ()
   norm! zz
 endfun
 
-fun! CloseWindow ()
-  if (bufnr(".new$") >= 0)
-    wincmd l
-    bw
-    
-    MundoToggle
-  elseif bufname(".") =~ "__Mundo_"
-    MundoToggle
-  else
-    bw
-  endif
-endfun
-
 fun! ShellOutput (cmd)
   let s = @s
 
