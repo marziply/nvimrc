@@ -36,15 +36,15 @@ noremap <c-l> 10zl
 " Buffers
 
 " Wipe all buffers
-nnoremap <silent> <leader>Q :bufdo :Bdelete!<cr>
+nnoremap <silent> <leader>Q :bufdo :bd<cr>
+" Delete buffer
+nnoremap <silent> Q :Bdelete!<cr>:silent! bn<cr>
 " Delete buffer
 nnoremap <silent> <c-q> :Bdelete!<cr>:wincmd q<cr>
 " Previous buffer
 nnoremap <c-h> :bp<cr>
 " Next buffer
 nnoremap <c-l> :bn<cr>
-" Delete buffer
-nnoremap <silent> Q :Bdelete!<cr>:silent! bn<cr>
 
 " Searching
 
