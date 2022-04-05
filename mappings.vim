@@ -49,7 +49,7 @@ nnoremap <silent> Q :Bdelete!<cr>:silent! bn<cr>
 " Searching
 
 " Search in file for visual selection
-vnoremap F :VisualCopy<cr>/<c-r>a<cr>
+vnoremap F :Vcp<cr>/<c-r>a<cr>
 " Search and replace for selected string
 vnoremap <c-r> :call VisualSearch(1)<cr>
 " Search for selected string
@@ -126,7 +126,7 @@ inoremap <silent><expr> <s-tab> pumvisible() ? "\<c-p>" : CheckJumpable("\<c-h>"
 " Search globally by input text
 nnoremap <leader>f :silent! exec 'CtrlSF "' . input('search: ') . '"'<cr>
 " Search globally for selected text
-vnoremap <leader>F :VisualCopy<cr>:CtrlSF "<c-r>a"<cr>
+vnoremap <leader>F :Vcp<cr>:CtrlSF "<c-r>a"<cr>
 " Open CtrlP buffer list
 nnoremap <silent> <leader>b :CtrlPBuffer<cr>
 

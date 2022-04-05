@@ -1,4 +1,4 @@
-com! -nargs=0 -range VisualCopy norm! gv"ay
+com! -nargs=0 -range Vcp norm! gv"ay
 com! -nargs=1 -complete=buffer Vsb vert sb <args>
 com! -nargs=1 Cman vert Man 3 <args>
 
