@@ -1,7 +1,22 @@
-com! -nargs=0 -range YankVisual norm! gv"ay
+com! -nargs=0 -range VisualCopy norm! gv"ay
 com! -nargs=1 -complete=buffer Vsb vert sb <args>
 com! -nargs=1 Cman vert Man 3 <args>
-com! -nargs=1 Silent call SilentExec(<q-args>)
+
+fun! VisualSearch (num, chars = '')
+  exec 'VisualCopy'
+  call feedkeys(':%s/' . @a . '//g' . a:chars)
+
+  for i in range(0, a:num)
+    call feedkeys("\<left>")
+  endfor
+endfun
+
+fun! ExecSilently (cmd)
+  let cmd = substitute(a:cmd, "^!", "", "")
+  let cmd = substitute(cmd, "%", shellescape(expand("%")), "")
+
+  call system(cmd)
+endfun
 
 fun! FoldApiBlocks (global)
   let g_str = a:global == 1 ? 'g' : ''
@@ -10,53 +25,31 @@ fun! FoldApiBlocks (global)
   exec 'silent!' . g_str . ' /@openapi/,/\n[ ]\+\*\//fo | norm ' . top_str . 'zM'
 endfun
 
-fun! FindComponent (name, split)
-  let l:result = system('fd -e vue -t f "' . a:name . '"' . ' .')
-  let l:list = split(l:result, '\n')
-  let l:num = len(l:list)
-
-  if l:num == 0
-    echo "'" . a:name . "' not found"
-
-    return
-  endif
-
-  if l:num > 1
-    let tmpfile = tempname()
-
-    exe 'redir! > ' . tmpfile
-
-    silent echon l:result
-
-    redir END
-
-    let old_efm = &efm
-
-    setl efm=%f
-
-    let cmd = exists(':cgetfile') ? 'cgetfile' : 'cfile'
-
-    exec 'silent! ' . cmd . ' ' . tmpfile
-
-    botright copen
-
-    let &efm = old_efm
-
-    call delete(tmpfile)
-
-    return
-  endif
-
-  let edit = a:split == 1 ? 'vs' : 'e'
-
-  exec edit . ' ' . l:list[0]
+fun! GetNextSippet ()
+  call feedkeys("\<c-r>=coc#rpc#request('snippetNext', [])\<cr>")
 endfun
 
-" COC method for checking if previous character is a space
-fun! CheckBackSpace () abort
+fun! CheckJumpable (callback)
+  if coc#jumpable()
+    call GetNextSippet()
+  elseif a:callback
+    if has('*' . a:callback)
+      exec 'call ' . a:callback . '()'
+    else
+      call feedkeys(a:callback)
+    endif
+  endif
+endfun
+
+" CoC method for checking if previous character is a space
+fun! CheckDel () abort
   let col = col('.') - 1
 
-  return !col || getline('.')[col - 1] =~# '\s'
+  if !col || getline('.')[col - 1] =~# '\s'
+    call feedkeys("\<tab>")
+  else
+    call coc#refresh()
+  endif
 endfun
 
 " Set custom 'one' colourscheme colours
@@ -82,59 +75,6 @@ fun! GetChar (pos)
   return strcharpart(this_char, 0, 1)
 endfun
 
-" Format single line HTML tags to multi line tags
-fun! MultilineTag ()
-  norm ^
-
-  SplitjoinSplit
-
-  norm ^%
-
-  if GetChar(2) == "/" | call feedkeys("hhx") | endif
-
-  call feedkeys("Y\<cr>$%")
-endfun
-
-fun! MatchTag ()
-  let this_line = getline('.')
-  let matched_tag = matchstr(this_line, '<[A-Za-z-]\+')
-
-  if empty(matched_tag)
-    throw "No matches"
-  else
-    return matched_tag
-  endif
-endfun
-
-" Search globally for either tag on given line or from the filename
-fun! SearchTag (search_dir)
-  let ctrlsf_com = 'CtrlSF -R -W -S "'
-
-  if a:search_dir
-    let this_file = expand("%:t:r")
-    let search_string = "<" . this_file
-
-    execute ctrlsf_com . search_string . '"'
-  else
-    try
-      let matched_tag = MatchTag()
-      execute ctrlsf_com . matched_tag . '"'
-    catch
-      echo v:exception
-    endtry
-  endif
-endfun
-
-fun! GoToTag (split)
-  try
-    let matched_tag = MatchTag()
-
-    call FindComponent(matched_tag[1:], a:split)
-  catch
-    echo v:exception
-  endtry
-endfun
-
 fun! EditVimConf (split)
   let options = [
     \ 'Vars',
@@ -157,7 +97,7 @@ endfun
 fun! CommitChanges ()
   call inputsave()
 
-  let msg = input('Commit message: ')
+  let msg = input('commit message: ')
 
   call inputrestore()
 
@@ -172,14 +112,7 @@ fun! CommitChanges ()
 
   redraw!
 
-  echo 'Committed and pushed'
-endfun
-
-fun! SilentExec (cmd)
-  let cmd = substitute(a:cmd, "^!", "", "")
-  let cmd = substitute(cmd, "%", shellescape(expand("%")), "")
-
-  call system(cmd)
+  echo 'committed and pushed'
 endfun
 
 fun! FoldAllBlocks ()

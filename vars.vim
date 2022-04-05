@@ -1,6 +1,8 @@
 let mapleader = "\<space>"
+
 let s:fn_reg = '\(\(\(get\|set\|\(\(async\s\+\)*function\)\)\s\+\)*\)'
 let s:body_reg = '([0-9A-Za-z_ \t,.{}\[\]]*)\s*{'
+
 let g:block_reg = '^\s*' . s:fn_reg . '[0-9A-Za-z_]\+\s*' . s:body_reg . '$'
 let g:ignore_dirs = [
   \ 'node_modules',
@@ -14,11 +16,9 @@ let g:ignore_dirs = [
   \ '.git'
 \]
 let g:wild_ignore_dirs = map(g:ignore_dirs, {_, val -> '*/' . val . '/*'})
-let g:easymotion#is_active = 0
-
-" \ 'rust': [
-"   \ 'rustfmt'
-" \ ],
+let g:easymotion#is_active = 1
+let g:gitgutter_map_keys = 0
+let g:loaded_matchit = 1
 
 let g:ale_ft_opts = {
   \ 'vue': [
@@ -32,7 +32,7 @@ let g:ale_ft_opts = {
     \ 'prettier'
   \ ],
   \ 'c': [
-    \ 'uncrustify'
+    \ 'clang-format'
   \ ],
   \ 'h': [
     \ 'uncrustify'
@@ -73,6 +73,9 @@ let g:coc_snippet_prev = '<s-tab>'
 let g:vim_vue_plugin_use_sass = 1
 let g:vim_vue_plugin_highlight_vue_attr = 1
 
+let g:SignatureMarkTextHLDynamic = 1
+
+let g:EasyMotion_do_mapping = 0
 let g:EasyMotion_startofline = 0
 let g:EasyMotion_smartcase = 1
 let g:EasyMotion_use_upper = 1
@@ -107,12 +110,13 @@ let g:ctrlsf_auto_close = {
 \}
 
 let g:one_allow_italics = 1
-let g:onedark_style = 'deep'
 
+let g:airline_theme = 'tomorrow'
+let g:airline#extensions#ale#enabled = 1
+let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline_highlighting_cache = 1
-let g:airline_theme = 'tomorrow'
 
 let g:ale_fixers = g:ale_ft_opts
 let g:ale_linters = g:ale_ft_opts
