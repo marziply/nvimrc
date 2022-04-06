@@ -120,8 +120,8 @@ vnoremap <silent> - <esc>:call ToggleRelative()<cr>gv
 inoremap <silent> <c-f> <c-r>=coc#start({ 'source': 'snippets' })<cr>
 inoremap <expr> <cr> pumvisible() ? "\<c-y>" : "\<c-g>u\<cr>"
 inoremap <expr> <esc> pumvisible() ? "<c-y>" : "<esc>"
-inoremap <silent><expr> <tab> pumvisible() ? "\<c-n>" : CheckJumpable('CheckDel')
-inoremap <silent><expr> <s-tab> pumvisible() ? "\<c-p>" : CheckJumpable("\<c-h>")
+inoremap <silent><expr> <tab> pumvisible() ? "\<c-n>" : HandleWhitespace()
+inoremap <expr><s-tab> pumvisible() ? "\<c-p>" : "\<c-h>"
 
 " Search globally by input text
 nnoremap <leader>f :silent! exec 'CtrlSF "' . input('search: ') . '"'<cr>
@@ -156,13 +156,12 @@ nnoremap <silent> <leader>m :MundoToggle<cr>
 " nnoremap <silent> gi <plug>(coc-implementation)
 " nnoremap <silent> gr <plug>(coc-references)
 
-" nnoremap <silent> gl :Git mergetool<cr>
-" nnoremap <silent> gv :Gvdiffsplit!<cr>zt
-" nnoremap <silent> gn :cn<cr>zt
-" nnoremap <silent> gp :cp<cr>zt
-" nnoremap <silent> go :ccl<cr>zz
-" nnoremap <silent> gw :w<cr>:Gw<cr>:normal go<cr>
-" nnoremap <silent> gdh :diffget //2<cr>
-" nnoremap <silent> gdl :diffget //3<cr>
+nnoremap <silent> gml :Git mergetool<cr>
+nnoremap <silent> gmv :Gvdiffsplit!<cr>zt
+nnoremap <silent> gmn :cn<cr>zt
+nnoremap <silent> gmp :cp<cr>zt
+nnoremap <silent> gmw :w<cr>:Gw<cr>:ccl<cr>
+nnoremap <silent> gmH :diffget //2<cr>
+nnoremap <silent> gmL :diffget //3<cr>
 " nnoremap <silent> gfl :normal gdh<cr>:normal gn<cr>
 " nnoremap <silent> gfh :normal gdl<cr>:normal gn<cr>

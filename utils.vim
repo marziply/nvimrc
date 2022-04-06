@@ -29,26 +29,14 @@ fun! GetNextSippet ()
   call feedkeys("\<c-r>=coc#rpc#request('snippetNext', [])\<cr>")
 endfun
 
-fun! CheckJumpable (callback)
-  if coc#jumpable()
-    call GetNextSippet()
-  elseif a:callback
-    if has('*' . a:callback)
-      exec 'call ' . a:callback . '()'
-    else
-      call feedkeys(a:callback)
-    endif
-  endif
-endfun
+fun! HandleWhitespace ()
+  let l:col = col('.') - 1
+  let l:line = getline('.')
 
-" CoC method for checking if previous character is a space
-fun! CheckDel () abort
-  let col = col('.') - 1
-
-  if !col || getline('.')[col - 1] =~# '\s'
-    call feedkeys("\<tab>")
+  if !l:col || l:line[l:col - 1] =~# '\s'
+    return "\<tab>"
   else
-    call coc#refresh()
+    return coc#refresh()
   endif
 endfun
 

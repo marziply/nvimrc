@@ -72,6 +72,7 @@ aug aug
   au BufWritePost */sway/*.sway silent !swaymsg reload
   au BufWritePost */zsh/*.zsh silent !source "$XDG_CONFIG_HOME/zsh/init.zsh"
   au BufWritePost */tmux.conf silent !tmux source-file "$XDG_CONFIG_HOME/tmux/tmux.conf"
+  au BufEnter,InsertLeave * syn sync fromstart
   au BufEnter,InsertLeave * syn match jsDocTags contained "@\(openapi\)\>"
   au BufEnter,BufReadPost .env.* set ft=sh
   au BufEnter,BufReadPost *.{njk,tera}.html,*.html.tera set ft=htmldjango
