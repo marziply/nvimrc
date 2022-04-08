@@ -3,7 +3,7 @@ com! -nargs=1 -complete=buffer Vsb vert sb <args>
 com! -nargs=1 Cman vert Man 3 <args>
 
 fun! VisualSearch (num, chars = '')
-  exec 'VisualCopy'
+  exec 'Vcp'
   call feedkeys(':%s/' . @a . '//g' . a:chars)
 
   for i in range(0, a:num)
