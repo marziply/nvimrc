@@ -3,3 +3,5 @@
 !.git*
 !*.vim
 !*.json
+!LICENSE.md
+!README.md
