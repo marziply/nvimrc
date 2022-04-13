@@ -116,7 +116,7 @@ vnoremap <silent> - <esc>:call ToggleRelative()<cr>gv
 
 " Plugins
 
-" COC related keybinds
+" CoC related keybinds
 inoremap <silent> <c-f> <c-r>=coc#start({ 'source': 'snippets' })<cr>
 inoremap <expr> <cr> pumvisible() ? "\<c-y>" : "\<c-g>u\<cr>"
 inoremap <expr> <esc> pumvisible() ? "<c-y>" : "<esc>"
@@ -130,20 +130,18 @@ vnoremap <leader>F :Vcp<cr>:CtrlSF "<c-r>a"<cr>
 " Open CtrlP buffer list
 nnoremap <silent> <leader>b :CtrlPBuffer<cr>
 
-" Easymotion keybinds
-nmap T <plug>(easymotion-F2)
-nmap t <plug>(easymotion-f2)
-nmap gT <plug>(easymotion-b)
-nmap gt <plug>(easymotion-w)
-nmap s <plug>(easymotion-overwin-f2)
+" Hop keybinds
+nnoremap <silent> T :HopChar2BC<cr>
+nnoremap <silent> t :HopChar2AC<cr>
+nnoremap <silent> gT :HopWordBC<cr>
+nnoremap <silent> gt :HopWordAC<cr>
+nnoremap <silent> s :HopChar2MW<cr>
+nnoremap <silent> <leader>k :HopLineStartBC<cr>
+nnoremap <silent> <leader>j :HopLineStartAC<cr>
+nnoremap <silent> <leader>h :HopWordCurrentLineBC<cr>
+nnoremap <silent> <leader>l :HopWordCurrentLineAC<cr>
 
-" Easymotion x/y linewise movement
-nmap <leader>l <plug>(easymotion-lineforward)
-nmap <leader>j <plug>(easymotion-j)
-nmap <leader>k <plug>(easymotion-k)
-nmap <leader>h <plug>(easymotion-linebackward)
-
-" Undo
+" Undo tree
 nnoremap <silent> <leader>m :MundoToggle<cr>
 
 " Unused

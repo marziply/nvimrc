@@ -16,9 +16,7 @@ let g:ignore_dirs = [
   \ '.git'
 \]
 let g:wild_ignore_dirs = map(g:ignore_dirs, {_, val -> '*/' . val . '/*'})
-let g:easymotion#is_active = 1
 let g:gitgutter_map_keys = 0
-let g:loaded_matchit = 1
 
 let g:ale_ft_opts = {
   \ 'vue': [
@@ -59,11 +57,6 @@ let g:rustfmt_autosave = 1
 let g:javascript_plugin_jsdoc = 1
 let g:javascript_sql_dialect = 'pgsql'
 
-let g:eregex_default_enable = 0
-
-let g:eighties_compute = 0
-let g:eighties_minimum_width = 100
-
 let g:mundo_close_on_revert = 1
 let g:mundo_verbose_graph = 0
 
@@ -74,14 +67,6 @@ let g:vim_vue_plugin_use_sass = 1
 let g:vim_vue_plugin_highlight_vue_attr = 1
 
 let g:SignatureMarkTextHLDynamic = 1
-
-let g:EasyMotion_do_mapping = 0
-let g:EasyMotion_startofline = 0
-let g:EasyMotion_smartcase = 1
-let g:EasyMotion_use_upper = 1
-let g:EasyMotion_enter_jump_first = 1
-let g:EasyMotion_prompt = '[{n}] >>> '
-let g:EasyMotion_keys = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ;'
 
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlPCurWD'

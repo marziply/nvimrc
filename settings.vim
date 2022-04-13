@@ -66,7 +66,7 @@ aug aug
   " au BufWritePost * silent :CocRestart
   au VimEnter * call SetColours()
   au FileType qf nnoremap <buffer> <cr> <cr>:ccl<cr>
-  au TextChanged,CursorMoved * call EasyMotionCoc()
+  " au TextChanged,CursorMoved * call EasyMotionCoc()
   au BufReadPost *.mjs call FoldApiBlocks(1)
   au BufWritePost */nvim/*.vim call Init(1)
   au BufWritePost */sway/*.sway silent !swaymsg reload

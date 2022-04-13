@@ -1,6 +1,15 @@
 if empty($XDG_CONFIG_HOME) | let $XDG_CONFIG_HOME = glob("$HOME/.config") | endif
 if empty($NVIM_DIR) | let $NVIM_DIR = glob("$XDG_CONFIG_HOME/nvim") | endif
 
+let g:rc = [
+  \ "vars",
+  \ "utils",
+  \ "mappings",
+  \ "settings"
+\]
+let g:imports = map(g:rc, "v:val . '.vim'")
+let g:hop_init = ":lua require('hop').setup()"
+
 let s:auto_dir = "$NVIM_DIR/autoload"
 let s:plug_file = s:auto_dir . "/plug.vim"
 let s:plug_url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
@@ -12,14 +21,6 @@ if empty(glob(s:plug_file))
 
   au VimEnter * PlugInstall --sync | source s:plug_file
 endif
-
-let g:rc = [
-  \ "vars",
-  \ "utils",
-  \ "mappings",
-  \ "settings"
-\]
-let g:imports = map(g:rc, "v:val . '.vim'")
 
 if !exists("*Init")
   fun! Init (reset)
@@ -48,11 +49,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'rakr/vim-one'
 
 " Language server
-Plug 
-\ 'neoclide/coc.nvim',
-\ { 
-  \ 'branch': 'release'
- \}
+Plug 'neoclide/coc.nvim',
 " Code snippets
 Plug 'honza/vim-snippets'
 " Context specific syntax highlighting
@@ -75,8 +72,6 @@ Plug 'moll/vim-bbye'
 Plug 'blueyed/vim-diminactive'
 " Surround selection/words with scopes, quotes, parens, etc.
 Plug 'tpope/vim-surround'
-" Motions via cursor text search
-Plug 'easymotion/vim-easymotion'
 " Split or join language specific lines of code
 Plug 'andrewradev/splitjoin.vim'
 " Undo tree navigator
@@ -99,7 +94,14 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 " Git merge tool
 Plug 'samoshkin/vim-mergetool'
+" Motions via cursor text search
+" Plug 'easymotion/vim-easymotion'
+Plug 'phaazon/hop.nvim',
 
 call plug#end()
+
+lua require('hop').setup({
+  \ keys = 'asdghjklqweryuiop'
+\ })
 
 call Init(0)

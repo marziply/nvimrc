@@ -2,22 +2,30 @@ com! -nargs=0 -range Vcp norm! gv"ay
 com! -nargs=1 -complete=buffer Vsb vert sb <args>
 com! -nargs=1 Cman vert Man 3 <args>
 
+" Searchs globally in the current directory byt he currently selected text
 fun! VisualSearch (num, chars = '')
   exec 'Vcp'
+
   call feedkeys(':%s/' . @a . '//g' . a:chars)
 
+  " Moves the cursor left `num` times such that subsequent key presses are
+  " for the replacement section of the command
   for i in range(0, a:num)
     call feedkeys("\<left>")
   endfor
 endfun
 
-fun! ExecSilently (cmd)
-  let cmd = substitute(a:cmd, "^!", "", "")
-  let cmd = substitute(cmd, "%", shellescape(expand("%")), "")
+" Pipes the visual selection value into a shell command
+fun! VisualExecShell (cmd)
+  exec 'Vcp'
 
-  call system(cmd)
+  call setreg('b', system("echo '" . getreg('a') . "' | " . a:cmd))
+
+  norm! gv
+  norm! "bp
 endfun
 
+" Folds all Open API JSDoc comments
 fun! FoldApiBlocks (global)
   let g_str = a:global == 1 ? 'g' : ''
   let top_str = a:global == 1 ? 'gg' : ''
@@ -25,10 +33,27 @@ fun! FoldApiBlocks (global)
   exec 'silent!' . g_str . ' /@openapi/,/\n[ ]\+\*\//fo | norm ' . top_str . 'zM'
 endfun
 
-fun! GetNextSippet ()
-  call feedkeys("\<c-r>=coc#rpc#request('snippetNext', [])\<cr>")
+" Folds all available code blocks within the current buffer
+fun! FoldAllBlocks ()
+  let this_line = line(".")
+  let matched = 1
+
+  norm! gg
+
+  while matched > 0
+    let matched = search(g:block_reg, "eW")
+
+    norm! V%zfj
+
+    exec "norm! \<esc>"
+  endwhile
+
+  exec this_line
+
+  norm! zz
 endfun
 
+" Handles whitespace in CoC dropdown suggestion list
 fun! HandleWhitespace ()
   let l:col = col('.') - 1
   let l:line = getline('.')
@@ -63,6 +88,7 @@ fun! GetChar (pos)
   return strcharpart(this_char, 0, 1)
 endfun
 
+" Edit a selected Vim config file
 fun! EditVimConf (split)
   let options = [
     \ 'Vars',
@@ -82,6 +108,7 @@ fun! EditVimConf (split)
   endif
 endfun
 
+" Commits and pushes all tracked changes to the Vim config files
 fun! CommitChanges ()
   call inputsave()
 
@@ -103,49 +130,7 @@ fun! CommitChanges ()
   echo 'committed and pushed'
 endfun
 
-fun! FoldAllBlocks ()
-  let this_line = line(".")
-  let matched = 1
-
-  norm! gg
-
-  while matched > 0
-    let matched = search(g:block_reg, "eW")
-
-    norm! V%zfj
-    execute "norm! \<esc>"
-  endwhile
-
-  execute this_line
-
-  norm! zz
-endfun
-
-fun! ShellOutput (cmd)
-  let s = @s
-
-  norm! gv"sy
-
-  call setreg('h', system("echo '" . getreg('s') . "' | " . a:cmd))
-
-  norm! gv
-  norm! "hp
-endfun
-
-fun! EasyMotionCoc() abort
-  if EasyMotion#is_active()
-    let g:easymotion#is_active = 1
-
-    silent! CocDisable
-  else
-    if g:easymotion#is_active == 1
-      let g:easymotion#is_active = 0
-
-      silent! CocEnable
-    endif
-  endif
-endfun
-
+" Toggles relative line numbers to make movements up and down easier
 fun! ToggleRelative()
   let rn = &relativenumber
 
