@@ -148,6 +148,7 @@ nnoremap <silent> <leader>m :MundoToggle<cr>
 
 " Formats a selected JSON object
 " vnoremap <c-f>j :call ShellOutput('jq .')<bar>call feedkeys('kJ')<cr>
+vnoremap <c-f>j :Vcp<cr>:call FormatJSON()<cr>
 
 " nnoremap <silent> gd <plug>(coc-definition)
 " nnoremap <silent> gy <plug>(coc-type-definition)

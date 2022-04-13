@@ -15,14 +15,13 @@ fun! VisualSearch (num, chars = '')
   endfor
 endfun
 
-" Pipes the visual selection value into a shell command
-fun! VisualExecShell (cmd)
-  exec 'Vcp'
-
-  call setreg('b', system("echo '" . getreg('a') . "' | " . a:cmd))
+" Formats JavaScript objects to raw JSON
+fun! FormatJSON ()
+  let @b = system('node -p "JSON.stringify(' . @a . ')"')
+  let @c = system('jq', getreg('b'))
 
   norm! gv
-  norm! "bp
+  norm! "cp
 endfun
 
 " Folds all Open API JSDoc comments

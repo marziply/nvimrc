@@ -95,7 +95,6 @@ Plug 'tpope/vim-fugitive'
 " Git merge tool
 Plug 'samoshkin/vim-mergetool'
 " Motions via cursor text search
-" Plug 'easymotion/vim-easymotion'
 Plug 'phaazon/hop.nvim',
 
 call plug#end()
