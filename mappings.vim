@@ -36,7 +36,7 @@ noremap <c-l> 10zl
 " Buffers
 
 " Wipe all buffers
-nnoremap <silent> <leader>Q :bufdo :bd<cr>
+nnoremap <silent> <leader>Q :bufdo :bd<cr>:Bdelete!<cr>
 " Delete buffer
 nnoremap <silent> Q :Bdelete!<cr>:silent! bn<cr>
 " Delete buffer
