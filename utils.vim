@@ -130,7 +130,7 @@ fun! CommitChanges ()
 endfun
 
 " Toggles relative line numbers to make movements up and down easier
-fun! ToggleRelative()
+fun! ToggleRelative ()
   let rn = &relativenumber
 
   set rnu!
@@ -144,4 +144,11 @@ fun! ToggleRelative()
       au!
     endif
   aug end
+endfun
+
+" Sets the file type of the current buffer
+fun! SetFileType ()
+  let l:filetype = input('ft: ')
+
+  setf l:filetype
 endfun

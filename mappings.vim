@@ -1,9 +1,3 @@
-" Key
-" a - ALT/OPTION
-" c - CTRL
-" s - SHIFT
-" l - LEADER '\'
-
 " General
 
 " Alias for escape
@@ -12,6 +6,7 @@ inoremap <c-c> <esc>
 nnoremap <esc> :noh<cr>
 " Rebind vim exit
 nnoremap ZZ :qa!<cr>
+" Close quickfix window
 nnoremap <silent> <c-z> :ccl<cr>
 " Save vim config
 nnoremap <c-s> :w<cr>
@@ -113,6 +108,8 @@ vnoremap gd V$%d<bar>:call feedkeys(col('$') == 1 ? 'dd' : '')<cr>
 nnoremap <silent> - :call ToggleRelative()<cr>
 " Toggle relative number in visual select
 vnoremap <silent> - <esc>:call ToggleRelative()<cr>gv
+" Sets the filetype of the current buffer
+nnoremap <c-f>t :exec 'setf ' . input('ft: ')<cr>
 
 " Plugins
 
