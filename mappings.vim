@@ -81,11 +81,11 @@ nnoremap <c-i> <c-i>zz
 " Misc
 
 " Commit vim config changes to vimrc git repo
-nnoremap <silent> <leader>cv :call CommitChanges()<cr>
+nnoremap <silent> <leader>cv :call CommitAndPush()<cr>
 " Open vimrc for edit
-nnoremap <silent> <leader>v :call EditVimConf()<cr>
+nnoremap <silent> <leader>v :call Configure()<cr>
 " Open vimrc for edit and split
-nnoremap <silent> <leader>V :vs <bar> call EditVimConf()<cr>
+nnoremap <silent> <leader>V :vs <bar> call Configure()<cr>
 " Insert two lines above
 nnoremap <silent> <leader>o o<esc>o
 " Insert two lines below

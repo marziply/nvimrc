@@ -80,15 +80,8 @@ fun! SetColours ()
   endif
 endfun
 
-" Get character at given pos distance away from the cursor
-fun! GetChar (pos)
-  let this_char = getline(".")[col(".") - a:pos:]
-
-  return strcharpart(this_char, 0, 1)
-endfun
-
 " Edit a selected Vim config file
-fun! EditVimConf ()
+fun! Configure ()
   let options = [
     \ 'Vars',
     \ 'Utils',
@@ -107,7 +100,7 @@ fun! EditVimConf ()
 endfun
 
 " Commits and pushes all tracked changes to the Vim config files
-fun! CommitChanges ()
+fun! CommitAndPush ()
   call inputsave()
 
   let msg = input('commit message: ')
@@ -143,11 +136,4 @@ fun! ToggleRelative ()
       au!
     endif
   aug end
-endfun
-
-" Sets the file type of the current buffer
-fun! SetFileType ()
-  let l:filetype = input('ft: ')
-
-  setf l:filetype
 endfun
