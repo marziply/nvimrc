@@ -88,7 +88,7 @@ fun! GetChar (pos)
 endfun
 
 " Edit a selected Vim config file
-fun! EditVimConf (split)
+fun! EditVimConf ()
   let options = [
     \ 'Vars',
     \ 'Utils',
@@ -101,9 +101,8 @@ fun! EditVimConf (split)
 
   if sel > 0
     let file = sel == 5 ? 'init.vim' : g:imports[sel - 1]
-    let edit = a:split == 1 ? 'vs' : 'e'
 
-    exec edit . " $NVIM_DIR/" . file
+    exec "e $NVIM_DIR/" . file
   endif
 endfun
 
