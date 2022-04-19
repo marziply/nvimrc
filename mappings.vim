@@ -15,18 +15,16 @@ inoremap <c-s> <esc>:w<cr>
 nnoremap <silent> <leader>r :call Init(0)<cr>
 
 " Move line up/down
-nnoremap <c-pagedown> :m .+1<cr>==
-nnoremap <c-pageup> :m .-2<cr>==
-inoremap <c-pagedown> <esc>:m .+1<cr>==gi
-inoremap <c-pageup> <esc>:m .-2<cr>==gi
-vnoremap <c-pagedown> :m '>+1<cr>gv=gv
-vnoremap <c-pageup> :m '<-2<cr>gv=gv
+nnoremap <c-g>u :m .-2<cr>==
+nnoremap <c-g>d :m .+1<cr>==
+inoremap <c-g>u <esc>:m .-2<cr>==gi
+inoremap <c-g>d <esc>:m .+1<cr>==gi
+vnoremap <c-g>u :m '<-2<cr>gv=gv
+vnoremap <c-g>d :m '>+1<cr>gv=gv
 
-" Move pane up/down/left/right
+" Move pane up/down
 nnoremap <c-k> 10<c-y>
 nnoremap <c-j> 10<c-e>
-noremap <c-h> 10zh
-noremap <c-l> 10zl
 
 " Buffers
 
