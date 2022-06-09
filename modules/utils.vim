@@ -1,3 +1,5 @@
+" 1
+
 com! -nargs=0 -range Vcp norm! gv"ay
 com! -nargs=1 -complete=buffer Vsb vert sb <args>
 com! -nargs=1 Cman vert Man 3 <args>
@@ -22,14 +24,6 @@ fun! FormatJSON ()
 
   norm! gv
   norm! "cp
-endfun
-
-" Folds all Open API JSDoc comments
-fun! FoldApiBlocks (global)
-  let g_str = a:global == 1 ? 'g' : ''
-  let top_str = a:global == 1 ? 'gg' : ''
-
-  exec 'silent!' . g_str . ' /@openapi/,/\n[ ]\+\*\//fo | norm ' . top_str . 'zM'
 endfun
 
 " Folds all available code blocks within the current buffer
@@ -78,25 +72,50 @@ fun! SetColours ()
     call one#highlight("CursorLine", "", "32353c", "none")
     call one#highlight("NonText", "8d93a1", "", "none")
   endif
+
+  if exists(':AirlineRefresh')
+    AirlineRefresh
+  endif
+endfun
+
+fun! Configure (files)
+  let l:names = a:files
+    \ ->copy()
+    \ ->map("v:val->split('/')->get(-1)->split('\\.')->get(0)")
+    " \ ->map("v:val->matchstr(':[word]:\\.vim')")
+  let l:choices = l:names
+    \ ->copy()
+    \ ->map('"&" . v:val')
+    \ ->join("\n")
+  let l:sel = confirm("choose config", l:choices) - 1
+
+  if l:sel >= 0
+    exec "e" . a:files->get(l:sel)
+  endif
 endfun
 
 " Edit a selected Vim config file
-fun! Configure ()
-  let options = [
-    \ 'Vars',
-    \ 'Utils',
-    \ 'Mappings',
-    \ 'Settings',
-    \ 'Init'
+fun! ConfigureNvim ()
+  let l:files = g:modules->add(expand('$NVIM_DIR/init.vim'))
+
+  call Configure(l:files)
+endfun
+
+" Edit a selected Vim config file
+fun! ConfigureZsh ()
+  let l:names = [
+    \ 'aliases',
+    \ 'env',
+    \ 'init',
+    \ 'login',
+    \ 'theme',
+    \ 'utils'
   \]
-  let choices = join(map(options, '"&" . v:val'), "\n")
-  let sel = confirm("Choose Vim config", choices)
+  let l:files = l:names
+    \ ->copy()
+    \ ->map('expand(printf("$ZSH_DIR/%s.zsh", v:val))')
 
-  if sel > 0
-    let file = sel == 5 ? 'init.vim' : g:imports[sel - 1]
-
-    exec "e $NVIM_DIR/" . file
-  endif
+  call Configure(l:files)
 endfun
 
 " Commits and pushes all tracked changes to the Vim config files

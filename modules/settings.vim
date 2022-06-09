@@ -1,3 +1,5 @@
+" 3
+
 set runtimepath^=$NVIM_DIR/plug/coc.nvim
 set shadafile=$NVIM_CACHE_DIR/session.shada
 set directory=$NVIM_CACHE_DIR/tmp//
@@ -63,17 +65,13 @@ syn on
 
 aug aug
   au!
-  au VimEnter * call SetColours()
-  au FileType qf nnoremap <buffer> <cr> <cr>:ccl<cr>
-  au BufReadPost *.mjs call FoldApiBlocks(1)
-  au BufWritePost */nvim/*.vim call Init(1)
+  au BufWritePost */nvim/{modules/*.vim,init.vim} exec 'source $NVIM_DIR/init.vim'
+  au BufWritePost */zsh/*.zsh silent !source "$ZSH_DIR/init.zsh"
+  au BufWritePost */tmux/*.conf silent !tmux source "$TMUX_DIR/tmux.conf"
   au BufWritePost */sway/*.sway silent !swaymsg reload
-  au BufWritePost */zsh/*.zsh silent !source "$XDG_CONFIG_HOME/zsh/init.zsh"
-  au BufWritePost */tmux.conf silent !tmux source-file "$XDG_CONFIG_HOME/tmux/tmux.conf"
   au BufEnter,InsertLeave * syn sync fromstart
-  au BufEnter,InsertLeave * syn match jsDocTags contained "@\(openapi\)\>"
-  au BufEnter,BufReadPost .env.* set ft=sh
   au BufEnter,BufReadPost *.{njk,tera}.html,*.html.tera set ft=htmldjango
+  au BufEnter,BufReadPost .env.* set ft=sh
   au BufEnter,BufReadPost *.sway set ft=i3config
   au BufEnter,BufReadPost *.jq set ft=jq
   au BufEnter,BufReadPost *.rs set shiftwidth=2
