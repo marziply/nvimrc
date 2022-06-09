@@ -130,9 +130,6 @@ Plug 'shougo/context_filetype.vim'
 " Comment/uncomment lines
 " https://github.com/tomtom/tcomment_vim
 Plug 'tomtom/tcomment_vim'
-" Move lines up/down/left/right
-" https://github.com/matze/vim-move
-Plug 'matze/vim-move'
 
 
 " Services
@@ -149,6 +146,9 @@ Plug 'rottencandy/vimkubectl'
 " Vue syntax and indent
 " https://github.com/leafoftree/vim-vue-plugin
 " Plug 'leafoftree/vim-vue-plugin'
+" Move lines up/down/left/right
+" https://github.com/matze/vim-move
+" Plug 'matze/vim-move'
 
 call plug#end()
 

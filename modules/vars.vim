@@ -6,18 +6,15 @@ let s:fn_reg = '\(\(\(get\|set\|\(\(async\s\+\)*function\)\)\s\+\)*\)'
 let s:body_reg = '([0-9A-Za-z_ \t,.{}\[\]]*)\s*{'
 
 let g:ignore_dirs = [
+  \ '.git',
+  \ '.git-crypt',
   \ 'node_modules',
   \ 'vendor',
   \ 'public',
   \ 'coverage',
   \ 'tmp',
   \ 'build',
-  \ 'target',
-  \ '.git'
-\]
-let g:gotofile_extensions = [
-  \ 'js',
-  \ 'vue'
+  \ 'target'
 \]
 let g:block_reg = '^\s*' . s:fn_reg . '[0-9A-Za-z_]\+\s*' . s:body_reg . '$'
 let g:wild_ignore_dirs = map(g:ignore_dirs, '"*/" . v:val . "/*"')
