@@ -105,6 +105,7 @@ endfun
 fun! ConfigureZsh ()
   let l:names = [
     \ 'aliases',
+    \ 'private',
     \ 'env',
     \ 'init',
     \ 'login',
