@@ -124,15 +124,11 @@ let g:ale_ft_opts = {
     \ 'rust-analyzer',
   \ ],
 \}
-let g:ale_linter_aliases = {
-  \ 'vue': [
-    \ 'javascript',
-    \ 'html',
-    \ 'scss'
-  \]
-\}
-let g:ale_fixers = g:ale_ft_opts
 let g:ale_linters = g:ale_ft_opts
+let g:ale_fixers = g:ale_ft_opts
+let g:ale_fixers['rust'] = ['rustfmt']
+" let g:ale_fixers['go'] = ['golines']
+" let g:ale_go_golines_options = '-m 80 -t 2'
 let g:ale_lint_on_text_changed = 'normal'
 let g:ale_c_uncrustify_options = '-c format.cfg'
 let g:ale_sign_column_always = 1
