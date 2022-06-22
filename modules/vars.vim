@@ -65,6 +65,7 @@ let g:ctrlp_working_path_mode = 0
 
 " CtrlSF
 " https://github.com/dyng/ctrlsf.vim
+let g:ctrlsf_ignore_dir = g:wild_ignore_dirs
 let g:ctrlsf_context = '-C 10'
 let g:ctrlsf_default_view_mode = 'compact'
 let g:ctrlsf_search_mode = 'async'

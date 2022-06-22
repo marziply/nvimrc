@@ -66,7 +66,6 @@ syn on
 aug aug
   au!
   au BufWritePost */nvim/{modules/*.vim,init.vim} exec 'source $NVIM_DIR/init.vim'
-  " au BufWritePost */zsh/*.zsh silent !source "$ZSH_DIR/init.zsh"
   au BufWritePost */tmux/*.conf silent !tmux source "$TMUX_DIR/tmux.conf"
   au BufWritePost */sway/*.sway silent !swaymsg reload
   au BufEnter,InsertLeave * syn sync fromstart

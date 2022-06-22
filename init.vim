@@ -6,11 +6,11 @@ if empty($NVIM_DIR)
   let $NVIM_DIR = glob("$XDG_CONFIG_HOME/nvim")
 endif
 
+let g:hop_init = ":lua require('hop').setup()"
 let g:modules = glob('$NVIM_DIR/modules/*.vim', 0, 1)
   \ ->map('readfile(v:val, "", 1)->add(v:val)')
   \ ->sort({a, b -> a->get(0) > b->get(0)})
   \ ->map('v:val->get(1)')
-let g:hop_init = ":lua require('hop').setup()"
 
 let s:auto_dir = "$NVIM_DIR/autoload"
 let s:plug_file = s:auto_dir . "/plug.vim"

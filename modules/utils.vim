@@ -96,7 +96,9 @@ endfun
 
 " Edit a selected Vim config file
 fun! ConfigureNvim ()
-  let l:files = g:modules->add(expand('$NVIM_DIR/init.vim'))
+  let l:files = g:modules
+    \ ->copy()
+    \ ->add(expand('$NVIM_DIR/init.vim'))
 
   call Configure(l:files)
 endfun
