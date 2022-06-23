@@ -38,6 +38,11 @@ let g:one_allow_italics = 1
 let g:javascript_plugin_jsdoc = 1
 let g:javascript_sql_dialect = 'pgsql'
 
+" SQL
+" https://github.com/lifepillar/pgsql.vim
+let g:sql_type_default = 'pgsql'
+let g:ftplugin_sql_omni_key = '<c-z>'
+
 " Mundo
 " https://github.com/simnalamburt/vim-mundo
 let g:mundo_close_on_revert = 1
