@@ -165,7 +165,7 @@ nnoremap <silent> gT :HopWordBC<cr>
 " Hop downwards, each word by it's first character
 nnoremap <silent> gt :HopWordAC<cr>
 " Hop anywhere, on any window, search two characters
-nnoremap <silent> s :HopChar2MW<cr>
+nnoremap s :HopChar2MW<cr>
 " Hop upwards, beginning of each line
 nnoremap <silent> <leader>k :HopLineStartBC<cr>
 " Hop downwards, beginning of each line

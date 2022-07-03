@@ -14,7 +14,9 @@ let g:ignore_dirs = [
   \ 'coverage',
   \ 'tmp',
   \ 'build',
-  \ 'target'
+  \ 'target',
+  \ 'deps',
+  \ 'dependencies'
 \]
 let g:block_reg = '^\s*' . s:fn_reg . '[0-9A-Za-z_]\+\s*' . s:body_reg . '$'
 let g:wild_ignore_dirs = map(g:ignore_dirs, '"*/" . v:val . "/*"')
@@ -132,6 +134,9 @@ let g:ale_ft_opts = {
   \ 'sql': [
     \ 'pgformatter',
   \ ],
+  \ 'proto': [
+    \ 'buf-format',
+  \ ],
 \}
 let g:ale_linters = g:ale_ft_opts
 let g:ale_fixers = g:ale_ft_opts
@@ -140,7 +145,8 @@ let g:ale_fixers['rust'] = ['rustfmt']
 " let g:ale_go_golines_options = '-m 80 -t 2'
 let g:ale_lint_on_text_changed = 'normal'
 let g:ale_c_uncrustify_options = '-c format.cfg'
-let g:ale_sql_pgformatter_options = '-s 2 -f 2 -U 2'
+" let g:ale_sql_pgformatter_options = '-s 2 -f 2 -U 2 -p \(\n(\s+'[a-z0-9-]+'(,?)\n)+\s+\)'
+let g:ale_sql_pgformatter_options = '-s 2 -f 2 -U 2 -w 80'
 let g:ale_sign_column_always = 1
 let g:ale_lint_on_insert_leave = 1
 let g:ale_fix_on_save = 1
