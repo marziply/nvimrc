@@ -13,6 +13,7 @@ set clipboard=unnamedplus
 set cinoptions+=:0
 set formatoptions-=ro
 set shortmess+=I
+set laststatus=3
 set softtabstop=2
 set laststatus=2
 set shiftwidth=2
