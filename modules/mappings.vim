@@ -130,13 +130,13 @@ nnoremap <c-f>x :set synmaxcol=5000<cr>
 " Search by snippets
 inoremap <silent> <c-f> <c-r>=coc#start({ 'source': 'snippets' })<cr>
 " Pastes the selected text from the autocomplete list
-inoremap <expr> <cr> pumvisible() ? "\<c-y>" : "\<c-g>u\<cr>"
+inoremap <silent><expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<c-g>u\<cr>"
 " Pastes the selected text from the autocomplete list
-inoremap <expr> <esc> pumvisible() ? "\<c-y>" : "\<esc>"
+inoremap <silent><expr> <esc> coc#pum#visible() ? coc#pum#confirm() : "\<esc>"
 " Move down a row in the autocomplete list
-inoremap <silent><expr> <tab> pumvisible() ? "\<c-n>" : HandleWhitespace()
+inoremap <silent><expr> <tab> coc#pum#visible() ? coc#pum#next(1) : HandleWhitespace()
 " Move up a row in the autocomplete list
-inoremap <expr><s-tab> pumvisible() ? "\<c-p>" : "\<c-h>"
+inoremap <expr><s-tab> coc#pum#visible() ? coc#pum#prev(1) : "\<c-h>"
 " Find implementation of word, beginning at cursor
 nnoremap <silent> gi <plug>(coc-implementation)
 " Find references of word, beginning at cursor
@@ -167,9 +167,9 @@ nnoremap <silent> gt :HopWordAC<cr>
 " Hop anywhere, on any window, search two characters
 nnoremap s :HopChar2MW<cr>
 " Hop upwards, beginning of each line
-nnoremap <silent> <leader>k :HopLineStartBC<cr>
+nnoremap <silent> <leader>k :HopVerticalBC<cr>
 " Hop downwards, beginning of each line
-nnoremap <silent> <leader>j :HopLineStartAC<cr>
+nnoremap <silent> <leader>j :HopVerticalAC<cr>
 " Hop leftwards, beginning of each word
 nnoremap <silent> <leader>h :HopWordCurrentLineBC<cr>
 " Hop righwards, beginning of each word

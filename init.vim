@@ -53,7 +53,7 @@ Plug 'tpope/vim-surround'
 " https://github.com/jiangmiao/auto-pairs
 Plug 'jiangmiao/auto-pairs'
 " Copilot AI autocomplete
-Plug 'github/copilot.vim'
+" Plug 'github/copilot.vim'
 
 " GIT
 "
