@@ -20,6 +20,7 @@ let g:ignore_dirs = [
 \]
 let g:block_reg = '^\s*' . s:fn_reg . '[0-9A-Za-z_]\+\s*' . s:body_reg . '$'
 let g:wild_ignore_dirs = map(g:ignore_dirs, '"*/" . v:val . "/*"')
+let g:loaded_perl_provider = 0
 
 " Gutter for git
 " https://github.com/airblade/vim-gitgutter
