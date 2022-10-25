@@ -74,5 +74,6 @@ aug aug
   au BufEnter,BufReadPost .env.* set ft=sh
   au BufEnter,BufReadPost *.sway set ft=i3config
   au BufEnter,BufReadPost *.jq set ft=jq
+  au BufEnter,BufReadPost *.h set ft=c
   au BufEnter,BufReadPost *.rs set shiftwidth=2
 aug end

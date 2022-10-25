@@ -144,8 +144,16 @@ let g:ale_fixers = extend(deepcopy(g:ale_ft_opts), {
     \ 'rustfmt',
   \ ],
 \})
-let g:ale_linters = deepcopy(g:ale_ft_opts)
+let g:ale_linters = extend(deepcopy(g:ale_ft_opts), {
+  \ 'c': [
+    \ 'cc',
+  \ ],
+  \ 'h': [
+    \ 'cc',
+  \ ],
+\})
 let g:ale_c_uncrustify_options = '-c format.cfg'
+let g:ale_c_cc_options = '-std=c2x'
 let g:ale_sql_pgformatter_options = '-s 2 -f 2 -U 2 -w 80'
 let g:ale_sign_column_always = 1
 let g:ale_lint_on_insert_leave = 1
