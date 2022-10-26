@@ -1,23 +1,25 @@
 if empty($XDG_CONFIG_HOME)
-  let $XDG_CONFIG_HOME = glob("$HOME/.config")
+  let $XDG_CONFIG_HOME = glob($HOME . "/.config")
 endif
 
 if empty($NVIM_DIR)
-  let $NVIM_DIR = glob("$XDG_CONFIG_HOME/nvim")
+  let $NVIM_DIR = glob($XDG_CONFIG_HOME . "/nvim")
 endif
 
 let g:hop_init = ":lua require('hop').setup()"
-let g:modules = glob('$NVIM_DIR/modules/*.vim', 0, 1)
+let g:modules = glob($NVIM_DIR . "/modules/*.vim", 0, 1)
   \ ->map('readfile(v:val, "", 1)->add(v:val)')
   \ ->sort({a, b -> a->get(0) > b->get(0)})
-  \ ->map('v:val->get(1)')
+  \ ->map("v:val->get(1)")
 
-let s:auto_dir = "$NVIM_DIR/autoload"
+let s:auto_dir = $NVIM_DIR . "/autoload"
 let s:plug_file = s:auto_dir . "/plug.vim"
 let s:plug_url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
 
 if empty(glob(s:plug_file))
-  if empty(glob(s:auto_dir)) | silent exec "!mkdir " . s:auto_dir | endif
+  if empty(glob(s:auto_dir))
+    silent exec "!mkdir " . s:auto_dir
+  endif
 
   exec "!curl -fLo " . s:plug_file . " --create-dirs " . s:plug_url
 
@@ -157,8 +159,8 @@ for config in g:modules
   exec "so" config
 endfor
 
-lua require('hop').setup({
-  \ keys = 'asdghjklqweryuiop'
+lua require("hop").setup({
+  \ keys = "asdghjklqweryuiop"
 \ })
 
 call SetColours()

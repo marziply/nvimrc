@@ -5,10 +5,10 @@ com! -nargs=1 -complete=buffer Vsb vert sb <args>
 com! -nargs=1 Cman vert Man 3 <args>
 
 " Searchs globally in the current directory byt he currently selected text
-fun! VisualSearch (num, chars = '')
-  exec 'Vcp'
+fun! VisualSearch (num, chars = "")
+  exec "Vcp"
 
-  call feedkeys(':%s/' . @a . '//g' . a:chars)
+  call feedkeys(":%s/" . @a . "//g" . a:chars)
 
   " Moves the cursor left `num` times such that subsequent key presses are
   " for the replacement section of the command
@@ -20,7 +20,7 @@ endfun
 " Formats JavaScript objects to raw JSON
 fun! FormatJSON ()
   let @b = system('node -p "JSON.stringify(' . @a . ')"')
-  let @c = system('jq', getreg('b'))
+  let @c = system("jq", getreg("b"))
 
   norm! gv
   norm! "cp
@@ -48,8 +48,8 @@ endfun
 
 " Handles whitespace in CoC dropdown suggestion list
 fun! HandleWhitespace ()
-  let l:col = col('.') - 1
-  let l:line = getline('.')
+  let l:col = col(".") - 1
+  let l:line = getline(".")
 
   if !l:col || l:line[l:col - 1] =~# '\s'
     return "\<tab>"
@@ -106,13 +106,13 @@ endfun
 " Edit a selected Vim config file
 fun! ConfigureZsh ()
   let l:names = [
-    \ 'aliases',
-    \ 'private',
-    \ 'env',
-    \ 'init',
-    \ 'login',
-    \ 'theme',
-    \ 'utils'
+    \ "aliases",
+    \ "private",
+    \ "env",
+    \ "init",
+    \ "login",
+    \ "theme",
+    \ "utils"
   \]
   let l:files = l:names
     \ ->copy()
@@ -131,16 +131,16 @@ fun! CommitAndPush ()
 
   let cmd = [
     \ "!cd $NVIM_DIR",
-    \ 'git add .',
+    \ "git add .",
     \ 'git commit -am "' . msg . '"',
-    \ 'git push'
+    \ "git push"
   \]
 
-  silent exec join(cmd, ' && ')
+  silent exec join(cmd, " && ")
 
   redraw!
 
-  echo 'committed and pushed'
+  echo "committed and pushed"
 endfun
 
 " Toggles relative line numbers to make movements up and down easier
