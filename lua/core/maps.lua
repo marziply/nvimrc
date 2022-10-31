@@ -23,8 +23,20 @@ nmap('<esc>', ':noh<cr>', {
 	silent = true
 })
 nmap('<c-s>', ':w<cr>')
+nmap('<c-k>', '10<c-y>')
+nmap('<c-j>', '10<c-e>')
+nmap('<c-o>', '<c-o>zz')
+nmap('<c-i>', '<c-i>zz')
+nmap('*', '*zz')
+nmap('n', 'nzz')
+nmap('N', 'Nzz')
 nmap('H', 'Hzz')
 nmap('L', 'Lzz')
+nmap('G', 'Gzz')
+nmap('mo', 'o<esc>')
+nmap('mO', 'O<esc>')
+nmap('<c-m>o', 'o<esc>o')
+nmap('<c-m>O', 'O<esc>O')
 
 -- Barbar
 nmap('<c-b>', '<cmd>BufferPick<cr>')

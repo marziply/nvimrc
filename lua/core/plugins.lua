@@ -55,27 +55,6 @@ packer.startup {
 				}
 			end
 		}
-		-- use {
-		-- 	'hrsh7th/nvim-cmp',
-		-- 	config = function()
-		-- 		plug {
-		-- 			'cmp',
-		-- 			init = function(cmp)
-		-- 				cmp.setup {
-		-- 					sources = cmp.config.sources({
-		-- 						{
-		-- 							name = 'nvim_lsp'
-		-- 						}
-		-- 					}, {
-		-- 						{
-		-- 							-- name = 'buffer'
-		-- 						}
-		-- 					})
-		-- 				}
-		-- 			end
-		-- 		}
-		-- 	end
-		-- }
 		use {
 			'neovim/nvim-lspconfig',
 			config = function()
@@ -83,6 +62,7 @@ packer.startup {
 					'lspconfig',
 					init = function(lsp)
 						lsp.rust_analyzer.setup({})
+						lsp.sumneko_lua.setup({})
 					end
 				}
 			end
