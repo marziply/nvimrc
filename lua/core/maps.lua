@@ -50,6 +50,13 @@ nmap('Q', '<cmd>BufferClose<cr>')
 nmap('<c-f>p', '<cmd>Telescope find_files<cr>')
 nmap('<c-f>f', '<cmd>Telescope live_grep<cr>')
 
+-- Renamer
+nmap_with('<c-f>r', function()
+	local renamer = require('renamer')
+
+	renamer.rename()
+end)
+
 return {
 	nmap = nmap,
 	vmap = vmap,

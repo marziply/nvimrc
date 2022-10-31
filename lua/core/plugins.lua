@@ -83,6 +83,10 @@ packer.startup {
 			config = function() plug('Comment') end
 		}
 		use {
+			'gbprod/cutlass.nvim',
+			config = function() plug('cutlass') end
+		}
+		use {
 			'gbprod/stay-in-place.nvim',
 			config = function() plug('stay-in-place') end
 		}
