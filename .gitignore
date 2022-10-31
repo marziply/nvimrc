@@ -1,8 +1,1 @@
-/*
-
-!.git*
-!*.json
-!*.vim
-!modules/
-!LICENSE.md
-!README.md
+plugin/packer_compiled.lua
