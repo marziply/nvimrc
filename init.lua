@@ -1,5 +1,0 @@
-require('options')
-require('auto')
-require('core.bootstrap')
-require('core.plugins')
-require('core.maps')

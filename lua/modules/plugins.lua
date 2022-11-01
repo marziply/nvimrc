@@ -22,7 +22,7 @@ function plug(input)
 	if input.init == nil then
 		return mod.setup(input.config or {})
 	else
-		local maps = require('core.maps')
+		local maps = require('modules.maps')
 
 		return input.init(mod, maps)
 	end
@@ -35,8 +35,25 @@ packer.startup {
 		use 'nvim-treesitter/nvim-treesitter'
 		use 'nvim-treesitter/nvim-treesitter-context'
 		use 'nvim-treesitter/nvim-treesitter-textobjects'
-		use 'ms-jpq/coq_nvim'
 		-- use 'ms-jpq/coq.artifacts'
+		use {
+			'ms-jpq/coq_nvim',
+			config = function()
+				plug {
+					'coq',
+					init = function()
+						vim.api.nvim_set_var('coq_settings', {
+							auto_start = 'shut-up',
+							clients = {
+								snippets = {
+									warn = {}
+								}
+							}
+						})
+					end
+				}
+			end
+		}
 		use {
 			'williamboman/mason.nvim',
 			config = function() plug('mason') end
@@ -63,6 +80,7 @@ packer.startup {
 					init = function(lsp)
 						lsp.rust_analyzer.setup({})
 						lsp.sumneko_lua.setup({})
+						lsp.clangd.setup({})
 					end
 				}
 			end
@@ -82,10 +100,10 @@ packer.startup {
 			'numToStr/Comment.nvim',
 			config = function() plug('Comment') end
 		}
-		use {
-			'gbprod/cutlass.nvim',
-			config = function() plug('cutlass') end
-		}
+		-- use {
+		-- 	'gbprod/cutlass.nvim',
+		-- 	config = function() plug('cutlass') end
+		-- }
 		use {
 			'gbprod/stay-in-place.nvim',
 			config = function() plug('stay-in-place') end
@@ -258,5 +276,10 @@ packer.startup {
 		-- 		alpha.setup(dash.config)
 		-- 	end
 		-- }
-	end
+	end,
+	config = {
+		ensure_dependencies = true,
+		autoclean = true,
+		autoremove = true
+	}
 }
