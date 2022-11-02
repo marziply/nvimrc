@@ -1,8 +1,4 @@
-set shadafile=$NVIM_CACHE_DIR/session.shada
-set directory=$NVIM_CACHE_DIR/tmp//
-set backupdir=$NVIM_CACHE_DIR/backup//
-set undodir=$NVIM_CACHE_DIR/undo//
-
+" General
 set signcolumn=yes
 set cmdheight=2
 
@@ -11,6 +7,7 @@ set shiftwidth=2
 set tabstop=2
 set softtabstop=2
 
+" Lists
 set completeopt=menu,menuone,noselect
 set backspace=indent,eol,start
 
@@ -32,3 +29,8 @@ set nohlsearch
 set noswapfile
 set nobackup
 set nowritebackup
+
+call SetWith('shadafile', g:nvim_cache_dir . '/session.shada')
+call SetWith('directory', g:nvim_cache_dir . '/tmp//')
+call SetWith('backupdir', g:nvim_cache_dir . '/backup//')
+call SetWith('undodir', g:nvim_cache_dir . '/undo//')

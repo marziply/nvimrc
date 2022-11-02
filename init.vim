@@ -1,15 +1,18 @@
 " Executes if/else clause for setting defaults on env vars.
 " Will probably move this to Lua at some point.
-fun! SetDefault(env_name, default_value)
-  let l:var_name = tolower(a:env_name)
-	let l:var_assignment = 'let g:' . l:var_name . ' = '
+fun! SetDefault(env_name, glob_path)
+	let l:var_assignment = 'let g:' . tolower(a:env_name) . ' = '
 	let l:if_clause = 'if empty($' . a:env_name . ')'
-	let l:then_scope = var_assignment . 'glob("' . a:default_value . '")'
-  let l:else_scope_1 = var_assignment . '$' . a:env_name
-  let l:else_scope_2 = 'let $' . a:env_name . ' = g:' . l:var_name
-  let l:else_scope = l:else_scope_1 . ' | ' . l:else_scope_2
+	let l:then_scope = var_assignment . 'glob("' . a:glob_path . '")'
+	let l:else_scope = var_assignment . '$' . a:env_name
 
 	exec l:if_clause . ' | ' . l:then_scope . ' | else | ' . l:else_scope . ' | endif'
+endfun
+
+fun! SetWith(set_name, set_value)
+  let l:lhs_expr = 'set ' . a:set_name
+
+  exec l:lhs_expr . '=' . a:set_value
 endfun
 
 call SetDefault('XDG_CONFIG_HOME', $HOME . '/.config')
