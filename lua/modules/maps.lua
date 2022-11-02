@@ -23,6 +23,7 @@ nmap('<esc>', ':noh<cr>', {
 	silent = true
 })
 nmap('<c-s>', ':w<cr>')
+nmap('<c-q>', ':bd<cr>')
 nmap('<c-k>', '10<c-y>')
 nmap('<c-j>', '10<c-e>')
 nmap('<c-o>', '<c-o>zz')

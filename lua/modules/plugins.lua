@@ -81,6 +81,7 @@ packer.startup {
 						lsp.rust_analyzer.setup({})
 						lsp.sumneko_lua.setup({})
 						lsp.clangd.setup({})
+						lsp.tsserver.setup({})
 					end
 				}
 			end
