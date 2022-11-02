@@ -16,7 +16,7 @@ augroup packer_config
 	autocmd BufWritePost *.lua so % | PackerCompile
 augroup end
 
-augroup packer_hooks
-	autocmd!
-	autocmd User PackerComplete lua src('lua/options.lua')
-augroup end
+" augroup packer_hooks
+" 	autocmd!
+" 	autocmd User PackerComplete lua src('lua/options.lua')
+" augroup end
