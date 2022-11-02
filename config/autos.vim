@@ -1,3 +1,11 @@
+augroup filetypes
+	autocmd!
+	autocmd BufEnter,BufReadPost *.{njk,tera}.html,*.html.tera set ft=htmldjango
+	autocmd BufEnter,BufReadPost *.sway set ft=i3config
+	autocmd BufEnter,BufReadPost *.env* set ft=sh
+	autocmd BufEnter,BufReadPost *.rs set shiftwidth=2
+augroup end
+
 augroup vim_config
 	autocmd!
 	autocmd BufWritePost */nvim/config/*.vim lua src('init.vim')
