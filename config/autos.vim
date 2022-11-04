@@ -6,6 +6,12 @@ augroup filetypes
 	autocmd BufEnter,BufReadPost *.rs set shiftwidth=2
 augroup end
 
+augroup linters
+  autocmd!
+  " autocmd BufWritePost * lua vim.lsp.buf.format()
+  " autocmd BufWritePost * FormatWrite
+augroup end
+
 augroup vim_config
 	autocmd!
 	autocmd BufWritePost */nvim/config/*.vim lua src('init.vim')

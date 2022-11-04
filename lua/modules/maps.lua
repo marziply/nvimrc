@@ -39,12 +39,13 @@ nmap('mO', 'O<esc>')
 nmap('<c-m>o', 'o<esc>o')
 nmap('<c-m>O', 'O<esc>O')
 
--- Barbar
+-- Barbar / buffers
 nmap('<c-b>', '<cmd>BufferPick<cr>')
 nmap('<c-n>', '<cmd>BufferNext<cr>')
 nmap('<c-p>', '<cmd>BufferPrevious<cr>')
 nmap('<a->>', '<cmd>BufferMoveNext<cr>')
 nmap('<a-<>', '<cmd>BufferMovePrevious<cr>')
+nmap('<c-f>q', ':bufdo bd<cr>')
 nmap('Q', '<cmd>BufferClose<cr>')
 
 -- Telescope

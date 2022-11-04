@@ -1,5 +1,6 @@
 " General
 set signcolumn=yes
+" set virtualedit=none
 set cmdheight=2
 
 " Tabs
@@ -25,6 +26,7 @@ set expandtab
 set hidden
 set autoread
 set showcmd
+set linebreak
 set nohlsearch
 set noswapfile
 set nobackup
