@@ -287,11 +287,12 @@ packer.startup {
       config = function()
         plug {
           'onedark',
-          init = function(m)
-            m.setup {
+          init = function(onedark)
+            onedark.setup {
               style = 'warmer'
             }
-            m.load()
+
+            onedark.load()
           end
         }
       end

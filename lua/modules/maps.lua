@@ -51,6 +51,7 @@ nmap('Q', '<cmd>BufferClose<cr>')
 -- Telescope
 nmap('<c-f>p', '<cmd>Telescope find_files<cr>')
 nmap('<c-f>f', '<cmd>Telescope live_grep<cr>')
+nmap('<c-f>*', '<cmd>Telescope grep_string<cr>')
 
 -- Renamer
 nmap_with('<c-f>r', function()
