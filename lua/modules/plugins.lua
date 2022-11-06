@@ -233,7 +233,16 @@ packer.startup {
     }
     use {
       'lukas-reineke/indent-blankline.nvim',
-      config = function() plug('indent_blankline') end
+      config = function()
+        plug {
+          'indent_blankline',
+          config = {
+            filetype_exclude = {
+              'dashboard'
+            }
+          }
+        }
+      end
     }
     use {
       'nvim-lualine/lualine.nvim',
@@ -371,17 +380,30 @@ packer.startup {
     }
     use {
       'windwp/nvim-autopairs',
+      config = function() plug('nvim-autopairs') end
+    }
+    use {
+    	'goolord/alpha-nvim',
       config = function()
         plug {
-          'nvim-autopairs',
-          config = {
-            -- map_cr = true,
-            -- map_bs = true
-          }
+          'alpha',
+          init = function(alpha)
+            local db = require('alpha.themes.dashboard')
+
+            db.section.buttons.val = {
+              db.button('e', 'New file', ':enew <bar> startinsert <cr>'),
+              db.button('q', 'Quit', ':qa<cr>')
+            }
+
+            alpha.setup(db.config)
+          end
         }
       end
     }
-    -- use 'ms-jpq/coq_nvim'
+    -- use {
+    -- 	'gbprod/cutlass.nvim',
+    -- 	config = function() plug('cutlass') end
+    -- }
     -- use {
     -- 	'folke/trouble.nvim',
     -- 	config = function()
@@ -392,10 +414,6 @@ packer.startup {
     -- 			}
     -- 		}
     -- 	end
-    -- }
-    -- use {
-    -- 	'gbprod/cutlass.nvim',
-    -- 	config = function() plug('cutlass') end
     -- }
     -- use {
     -- 	'sunjon/shade.nvim',
@@ -409,15 +427,6 @@ packer.startup {
     -- 				}
     -- 			}
     -- 		}
-    -- 	end
-    -- }
-    -- use {
-    -- 	'goolord/alpha-nvim',
-    -- 	config = function()
-    -- 		local alpha = require('alpha')
-    -- 		local dash = require('alpha.themes.dashboard')
-
-    -- 		alpha.setup(dash.config)
     -- 	end
     -- }
   end,
