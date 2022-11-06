@@ -28,7 +28,7 @@ function nmap_with(bind, fn)
 end
 
 -- General
-nmap('<esc>', ':noh<cr>', {
+nmap('<esc>', ':echo<cr>', {
 	silent = true
 })
 nmap('<c-s>', ':w<cr>')

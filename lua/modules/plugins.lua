@@ -203,7 +203,7 @@ packer.startup {
       'mfussenegger/nvim-dap',
       config = function()
         plug {
-          'dag',
+          'dap',
           init = function(dap)
             -- Configure language debuggers here...
           end
