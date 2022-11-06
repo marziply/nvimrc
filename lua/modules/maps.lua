@@ -54,7 +54,7 @@ nmap('<c-n>', '<cmd>BufferNext<cr>')
 nmap('<c-p>', '<cmd>BufferPrevious<cr>')
 nmap('<a->>', '<cmd>BufferMoveNext<cr>')
 nmap('<a-<>', '<cmd>BufferMovePrevious<cr>')
-nmap('<c-a>q', ':bufdo bd<cr>')
+nmap('<c-g>q', ':bufdo bd<cr>')
 nmap('Q', '<cmd>BufferClose<cr>')
 
 -- Telescope
@@ -75,8 +75,11 @@ map_telescope('gc', 'git_commits')
 map_telescope('gb', 'git_branches')
 map_telescope('gs', 'git_status')
 
+-- ToggleTerm
+nmap('<c-g>t', '<cmd>ToggleTerm<cr>')
+
 -- Renamer
-nmap_with('<c-a>r', function()
+nmap_with('<c-g>r', function()
   utils.exec_from('renamer', function(r) r.rename() end)
 end)
 

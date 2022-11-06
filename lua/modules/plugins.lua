@@ -1,6 +1,6 @@
 local packer = require('packer')
 
-local plugins = {
+plugins = {
   'wbthomason/packer.nvim',
   'nvim-treesitter/nvim-treesitter',
   'nvim-treesitter/nvim-treesitter-context',
@@ -10,7 +10,14 @@ local plugins = {
   'hrsh7th/cmp-nvim-lsp',
   'hrsh7th/cmp-buffer',
   'hrsh7th/cmp-path',
-  'hrsh7th/cmp-cmdline'
+  'hrsh7th/cmp-cmdline',
+  'rcarriga/nvim-notify'
+}
+servers = {
+  'rust_analyzer',
+  'sumneko_lua',
+  'clangd',
+  'tsserver'
 }
 
 local function check(name)
@@ -78,10 +85,11 @@ packer.startup {
               cmp.default_capabilities()
             )
 
-            lsp.rust_analyzer.setup({})
-            lsp.sumneko_lua.setup({})
-            lsp.clangd.setup({})
-            lsp.tsserver.setup({})
+            for _, name in ipairs(servers) do
+              local server = lsp[name]
+
+              server.setup({})
+            end
           end
         }
       end
@@ -100,19 +108,18 @@ packer.startup {
               behavior = cmp.SelectBehavior.Insert
             }
             local function jump_map(x)
-              return cmp.mapping(
-                function(fallback)
-                  if snip.jumpable(x) then
-                    snip.jump(x)
-                  else
-                    fallback()
-                  end
-                end,
-                {
-                  'i',
-                  's'
-                }
-              )
+              local function jump(fallback)
+                if snip.jumpable(x) then
+                  snip.jump(x)
+                else
+                  fallback()
+                end
+              end
+
+              return cmp.mapping(jump, {
+                'i',
+                's'
+              })
             end
 
             snip_loaders.lazy_load()
@@ -193,6 +200,21 @@ packer.startup {
       end
     }
     use {
+      'akinsho/toggleterm.nvim',
+      config = function()
+        plug {
+          'toggleterm',
+          config = {
+            direction = 'float',
+            float_opts = {
+              width = 200,
+              height = 50
+            }
+          }
+        }
+      end
+    }
+    use {
       'numToStr/Comment.nvim',
       config = function() plug('Comment') end
     }
@@ -237,6 +259,14 @@ packer.startup {
                   path = 1
                 }
               }
+            },
+            inactive_sections = {
+              lualine_c = {
+                {
+                  'filename',
+                  path = 1
+                }
+              }
             }
           }
         }
@@ -252,22 +282,17 @@ packer.startup {
       config = function()
         plug {
           'telescope',
-          init = function(telescope)
-            -- local actions = require('telescope.actions')
-
-            telescope.setup {
-              defaults = {
-                mappings = {
-                  i = {
-                    -- ['<c-j>'] = actions.file_edit
-                    ['<c-j>'] = function()
-                      vim.cmd("call feedkeys('<cr>')")
-                    end
-                  }
+          config = {
+            defaults = {
+              mappings = {
+                i = {
+                  ['<c-j>'] = function()
+                    vim.api.nvim_input('<cr>')
+                  end
                 }
               }
             }
-          end
+          }
         }
       end
     }
@@ -356,7 +381,19 @@ packer.startup {
     }
     use {
       'filipdutescu/renamer.nvim',
-      config = function() plug('renamer') end
+      config = function()
+        plug {
+          'renamer',
+          config = {
+            empty = true,
+            mappings = {
+              ['<c-c>'] = function()
+                vim.api.nvim_input('<esc>')
+              end
+            }
+          }
+        }
+      end
     }
     use {
       'windwp/nvim-autopairs',
