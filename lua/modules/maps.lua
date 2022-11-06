@@ -1,5 +1,14 @@
+local utils = require('modules.utils')
+
 local function map(kind, bind, cmd, opts)
 	return vim.api.nvim_set_keymap(kind, bind, cmd, opts or {})
+end
+
+local function map_telescope(char, opt)
+  local bind = '<c-f>' .. char
+  local cmd = '<cmd>Telescope ' .. opt .. '<cr>'
+
+  nmap(bind, cmd)
 end
 
 function nmap(bind, cmd, opts)
@@ -45,19 +54,30 @@ nmap('<c-n>', '<cmd>BufferNext<cr>')
 nmap('<c-p>', '<cmd>BufferPrevious<cr>')
 nmap('<a->>', '<cmd>BufferMoveNext<cr>')
 nmap('<a-<>', '<cmd>BufferMovePrevious<cr>')
-nmap('<c-f>q', ':bufdo bd<cr>')
+nmap('<c-a>q', ':bufdo bd<cr>')
 nmap('Q', '<cmd>BufferClose<cr>')
 
 -- Telescope
-nmap('<c-f>p', '<cmd>Telescope find_files<cr>')
-nmap('<c-f>f', '<cmd>Telescope live_grep<cr>')
-nmap('<c-f>*', '<cmd>Telescope grep_string<cr>')
+map_telescope('p', 'find_files')
+map_telescope('f', 'live_grep theme=dropdown')
+map_telescope('h', 'command_history theme=dropdown')
+map_telescope('s', 'search_history theme=dropdown')
+map_telescope('c', 'spell_suggest theme=get_cursor')
+map_telescope('m', 'man_pages')
+map_telescope('r', 'registers theme=dropdown')
+map_telescope('*', 'grep_string')
+map_telescope('lD', 'diagnostics')
+map_telescope('ld', 'diagnostics bufnr=0')
+map_telescope('lr', 'lsp_references')
+map_telescope('li', 'lsp_implementations')
+map_telescope('lt', 'lsp_definitions')
+map_telescope('gc', 'git_commits')
+map_telescope('gb', 'git_branches')
+map_telescope('gs', 'git_status')
 
 -- Renamer
-nmap_with('<c-f>r', function()
-	local renamer = require('renamer')
-
-	renamer.rename()
+nmap_with('<c-a>r', function()
+  utils.exec_from('renamer', function(r) r.rename() end)
 end)
 
 return {

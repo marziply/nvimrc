@@ -1,5 +1,18 @@
 local packer = require('packer')
 
+local plugins = {
+  'wbthomason/packer.nvim',
+  'nvim-treesitter/nvim-treesitter',
+  'nvim-treesitter/nvim-treesitter-context',
+  'nvim-treesitter/nvim-treesitter-textobjects',
+  'L3MON4D3/LuaSnip',
+  'saadparwaiz1/cmp_luasnip',
+  'hrsh7th/cmp-nvim-lsp',
+  'hrsh7th/cmp-buffer',
+  'hrsh7th/cmp-path',
+  'hrsh7th/cmp-cmdline'
+}
+
 local function check(name)
   local ok, _ = pcall(require, name)
 
@@ -22,18 +35,16 @@ function plug(input)
   if input.init == nil then
     return mod.setup(input.config or {})
   else
-    local maps = require('modules.maps')
-
-    return input.init(mod, maps)
+    return input.init(mod, require('modules.maps'))
   end
 end
 
 packer.startup {
   function(use)
-    use 'wbthomason/packer.nvim'
-    use 'nvim-treesitter/nvim-treesitter'
-    use 'nvim-treesitter/nvim-treesitter-context'
-    use 'nvim-treesitter/nvim-treesitter-textobjects'
+    for _, path in ipairs(plugins) do
+      use(path)
+    end
+
     use {
       'williamboman/mason.nvim',
       config = function() plug('mason') end
@@ -75,12 +86,6 @@ packer.startup {
         }
       end
     }
-    use 'L3MON4D3/LuaSnip'
-    use 'saadparwaiz1/cmp_luasnip'
-    use 'hrsh7th/cmp-nvim-lsp'
-    use 'hrsh7th/cmp-buffer'
-    use 'hrsh7th/cmp-path'
-    use 'hrsh7th/cmp-cmdline'
     use {
       'hrsh7th/nvim-cmp',
       config = function()
@@ -187,34 +192,6 @@ packer.startup {
         }
       end
     }
-    -- use {
-    --   'mfussenegger/nvim-lint',
-    --   init = function(lint)
-    --     lint.linters_by_ft = {
-    --       typescript = {
-    --         'eslint'
-    --       }
-    --     }
-    --     lint.linters.rustfmt = {
-    --       cmd = 'rustcmd'
-    --     }
-    --   end
-    -- }
-    -- use {
-    --   'jose-elias-alvarez/null-ls.nvim',
-    --   config = function()
-    --     plug {
-    --       'null-ls',
-    --       init = function(null)
-    --         null.setup {
-    --           sources = {
-    --             null.builtins
-    --           }
-    --         }
-    --       end
-    --     }
-    --   end
-    -- }
     use {
       'numToStr/Comment.nvim',
       config = function() plug('Comment') end
@@ -276,13 +253,16 @@ packer.startup {
         plug {
           'telescope',
           init = function(telescope)
-            local actions = require('telescope.actions')
+            -- local actions = require('telescope.actions')
 
             telescope.setup {
               defaults = {
                 mappings = {
                   i = {
-                    ['<c-j>'] = actions.file_edit
+                    -- ['<c-j>'] = actions.file_edit
+                    ['<c-j>'] = function()
+                      vim.cmd("call feedkeys('<cr>')")
+                    end
                   }
                 }
               }
@@ -400,6 +380,34 @@ packer.startup {
         }
       end
     }
+    -- use {
+    --   'mfussenegger/nvim-lint',
+    --   init = function(lint)
+    --     lint.linters_by_ft = {
+    --       typescript = {
+    --         'eslint'
+    --       }
+    --     }
+    --     lint.linters.rustfmt = {
+    --       cmd = 'rustcmd'
+    --     }
+    --   end
+    -- }
+    -- use {
+    --   'jose-elias-alvarez/null-ls.nvim',
+    --   config = function()
+    --     plug {
+    --       'null-ls',
+    --       init = function(null)
+    --         null.setup {
+    --           sources = {
+    --             null.builtins
+    --           }
+    --         }
+    --       end
+    --     }
+    --   end
+    -- }
     -- use {
     -- 	'gbprod/cutlass.nvim',
     -- 	config = function() plug('cutlass') end
