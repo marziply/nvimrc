@@ -200,6 +200,17 @@ packer.startup {
       end
     }
     use {
+      'mfussenegger/nvim-dap',
+      config = function()
+        plug {
+          'dag',
+          init = function(dap)
+            -- Configure language debuggers here...
+          end
+        }
+      end
+    }
+    use {
       'akinsho/toggleterm.nvim',
       config = function()
         plug {
@@ -418,61 +429,8 @@ packer.startup {
       end
     }
     -- use {
-    --   'mfussenegger/nvim-lint',
-    --   init = function(lint)
-    --     lint.linters_by_ft = {
-    --       typescript = {
-    --         'eslint'
-    --       }
-    --     }
-    --     lint.linters.rustfmt = {
-    --       cmd = 'rustcmd'
-    --     }
-    --   end
-    -- }
-    -- use {
-    --   'jose-elias-alvarez/null-ls.nvim',
-    --   config = function()
-    --     plug {
-    --       'null-ls',
-    --       init = function(null)
-    --         null.setup {
-    --           sources = {
-    --             null.builtins
-    --           }
-    --         }
-    --       end
-    --     }
-    --   end
-    -- }
-    -- use {
     -- 	'gbprod/cutlass.nvim',
     -- 	config = function() plug('cutlass') end
-    -- }
-    -- use {
-    -- 	'folke/trouble.nvim',
-    -- 	config = function()
-    -- 		plug {
-    -- 			'trouble',
-    -- 			config = {
-    -- 				icons = false
-    -- 			}
-    -- 		}
-    -- 	end
-    -- }
-    -- use {
-    -- 	'sunjon/shade.nvim',
-    -- 	config = function()
-    -- 		plug {
-    -- 			'shade',
-    -- 			config = {
-    -- 				overlay_opacity = 75,
-    -- 				keys = {
-    -- 					toggle = '<c-f>s'
-    -- 				}
-    -- 			}
-    -- 		}
-    -- 	end
     -- }
   end,
   config = {
