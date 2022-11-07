@@ -248,7 +248,12 @@ packer.startup {
           'indent_blankline',
           config = {
             filetype_exclude = {
-              'dashboard'
+              'dashboard',
+              'help',
+              'lspinfo',
+              'checkhealth',
+              'man',
+              'packer'
             }
           }
         }
@@ -261,14 +266,32 @@ packer.startup {
           'lualine',
           config = {
             options = {
-              icons_enabled = false
+              icons_enabled = false,
+              refresh = {
+                statusline = 250,
+                tabline = 250,
+                winbar = 250
+              }
             },
             sections = {
+              lualine_b = {
+                'branch',
+                'diff'
+              },
               lualine_c = {
                 {
                   'filename',
                   path = 1
                 }
+              },
+              lualine_x = {
+                'filetype'
+              },
+              lualine_y = {
+                'diagnostics',
+              },
+              lualine_z = {
+                'location'
               }
             },
             inactive_sections = {
@@ -277,6 +300,9 @@ packer.startup {
                   'filename',
                   path = 1
                 }
+              },
+              lualine_x = {
+                'diagnostics'
               }
             }
           }
