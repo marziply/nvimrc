@@ -48,6 +48,11 @@ nmap('mO', 'O<esc>')
 nmap('<c-m>o', 'o<esc>o')
 nmap('<c-m>O', 'O<esc>O')
 
+-- LSP
+nmap_with('<c-g>d', function() vim.diagnostic.open_float() end)
+nmap_with('[d', function() vim.diagnostic.goto_prev() end)
+nmap_with(']d', function() vim.diagnostic.goto_next() end)
+
 -- Barbar / buffers
 nmap('<c-b>', '<cmd>BufferPick<cr>')
 nmap('<c-n>', '<cmd>BufferNext<cr>')
