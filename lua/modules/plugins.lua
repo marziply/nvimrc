@@ -15,10 +15,35 @@ plugins = {
   'AndrewRadev/splitjoin.vim'
 }
 servers = {
-  'rust_analyzer',
-  'sumneko_lua',
-  'clangd',
-  'tsserver'
+  {
+    name = 'rust_analyzer',
+  },
+  {
+    name = 'sumneko_lua',
+    config = {
+      settings = {
+        Lua = {
+          diagnostics = {
+            globals = {
+              'vim'
+            }
+          },
+          workspace = {
+            library = vim.api.nvim_get_runtime_file('', true)
+          },
+          telemetry = {
+            enabled = false
+          }
+        }
+      }
+    }
+  },
+  {
+    name = 'clangd',
+  },
+  {
+    name = 'tsserver',
+  }
 }
 
 local function check(name)
@@ -86,10 +111,10 @@ packer.startup {
               cmp.default_capabilities()
             )
 
-            for _, name in ipairs(servers) do
-              local server = lsp[name]
+            for _, opt in ipairs(servers) do
+              local server = lsp[opt.name]
 
-              server.setup({})
+              server.setup(opt.config or {})
             end
           end
         }
