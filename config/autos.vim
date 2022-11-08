@@ -1,3 +1,8 @@
+augroup general
+  autocmd!
+  autocmd BufNewFile * startinsert
+augroup end
+
 augroup filetypes
 	autocmd!
 	autocmd BufEnter,BufReadPost *.{njk,tera}.html,*.html.tera set ft=htmldjango
