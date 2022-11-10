@@ -12,7 +12,8 @@ plugins = {
   'hrsh7th/cmp-path',
   'hrsh7th/cmp-cmdline',
   'rcarriga/nvim-notify',
-  'AndrewRadev/splitjoin.vim'
+  'AndrewRadev/splitjoin.vim',
+  'MunifTanjim/nui.nvim'
 }
 servers = {
   {
@@ -24,6 +25,9 @@ servers = {
       settings = {
         Lua = {
           diagnostics = {
+            disable = {
+              'lowercase-global'
+            },
             globals = {
               'vim'
             }
@@ -90,7 +94,8 @@ packer.startup {
           config = {
             automatic_installation = true,
             ensure_installed = {
-              'rust_analyzer'
+              'rust_analyzer',
+              'tsserver'
             }
           }
         }
@@ -103,7 +108,30 @@ packer.startup {
           'lspconfig',
           init = function(lsp)
             local cmp = require('cmp_nvim_lsp')
+            local treesitter = require('nvim-treesitter.configs')
             local defaults = lsp.util.default_config
+
+            treesitter.setup {
+              auto_install = true,
+              ensure_installed = {
+                'rust',
+                'lua',
+                'javascript',
+                'tsx',
+                'json',
+                'html',
+                'css'
+              },
+              highlight = {
+                enable = true
+              },
+              textobjects = {
+                select = {
+                  enable = true,
+                  lookahead = true
+                }
+              }
+            }
 
             defaults.capabilities = vim.tbl_deep_extend(
               'force',
@@ -230,7 +258,7 @@ packer.startup {
       config = function()
         plug {
           'dap',
-          init = function(dap)
+          init = function()
             -- Configure language debuggers here...
           end
         }
@@ -253,7 +281,14 @@ packer.startup {
     }
     use {
       'numToStr/Comment.nvim',
-      config = function() plug('Comment') end
+      config = function()
+        plug {
+          'Comment',
+          config = {
+            sticky = true
+          }
+        }
+      end
     }
     use {
       'gbprod/stay-in-place.nvim',
@@ -341,21 +376,29 @@ packer.startup {
         {
           'nvim-lua/plenary.nvim'
         }
+        -- {
+        --   'nvim-telescope/telescope-fzf-native.nvim',
+        --   run = 'make',
+        -- }
       },
       config = function()
         plug {
           'telescope',
-          config = {
-            defaults = {
-              mappings = {
-                i = {
-                  ['<c-j>'] = function()
-                    vim.api.nvim_input('<cr>')
-                  end
+          init = function(telescope)
+            telescope.setup { 
+              defaults = {
+                mappings = {
+                  i = {
+                    ['<c-j>'] = function()
+                      vim.api.nvim_input('<cr>')
+                    end
+                  }
                 }
               }
             }
-          }
+
+            -- telescope.load_extension('fzf')
+          end
         }
       end
     }

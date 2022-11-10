@@ -48,6 +48,9 @@ nmap('mO', 'O<esc>')
 nmap('<c-m>o', 'o<esc>o')
 nmap('<c-m>O', 'O<esc>O')
 
+-- Utils
+nmap_with('<c-a>z', function() utils.configure_zsh() end)
+
 -- LSP
 nmap_with('<c-g>d', function() vim.diagnostic.open_float() end)
 nmap_with('[d', function() vim.diagnostic.goto_prev() end)

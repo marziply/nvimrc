@@ -1,12 +1,13 @@
 " General
 set signcolumn=yes
-" set virtualedit=none
 set cmdheight=2
+set clipboard+=unnamedplus
 
 " Tabs
-set shiftwidth=2
 set tabstop=2
 set softtabstop=2
+set shiftwidth=2
+set smarttab
 
 " Lists
 set completeopt=menu,menuone,noselect
