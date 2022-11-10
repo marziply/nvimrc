@@ -8,6 +8,7 @@ plugins = {
   'L3MON4D3/LuaSnip',
   'saadparwaiz1/cmp_luasnip',
   'hrsh7th/cmp-nvim-lsp',
+  'hrsh7th/cmp-nvim-lsp-signature-help',
   'hrsh7th/cmp-buffer',
   'hrsh7th/cmp-path',
   'hrsh7th/cmp-cmdline',
@@ -177,6 +178,7 @@ packer.startup {
             end
 
             snip_loaders.lazy_load()
+
             cmp.event:on('confirm_done', ap.on_confirm_done {
               filetypes = {
                 ['*'] = {
@@ -203,14 +205,17 @@ packer.startup {
                   name = 'nvim_lsp'
                 },
                 {
-                  name = "luasnip"
+                  name = 'nvim_lsp_signature_help'
+                },
+                {
+                  name = 'luasnip'
                 },
                 {
                   name = 'path'
                 },
                 {
-                  name = 'buffer'
-                },
+                  name = 'cmd'
+                }
               },
               mapping = cmp.mapping.preset.insert {
                 ['<c-n>'] = jump_map(1),
@@ -221,6 +226,18 @@ packer.startup {
                 ['<s-tab>'] = cmp.mapping.select_prev_item(select_opts),
                 ['<esc>'] = cmp.mapping.abort(),
                 ['<cr>'] = cmp.mapping.confirm()
+              },
+              formatting = {
+                format = function(_, item)
+                  local label = item.abbr
+                  local trunc = vim.fn.strcharpart(label, 0, 120)
+
+                  if trunc ~= label then
+                    item.abbr = trunc .. '...'
+                  end
+
+                  return item
+                end
               }
             }
           end
