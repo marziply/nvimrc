@@ -56,6 +56,37 @@ function configure_zsh()
   configure(files)
 end
 
+function popup_substitute(old_value)
+  local input = require('nui.input')
+  local ui = input({
+    relative = 'cursor',
+    position = {
+      row = 2,
+      col = 1
+    },
+    size = {
+      width = 60
+    },
+    border = {
+      style = 'single',
+      text = {
+        top = '[Substitute]',
+        top_align = 'center'
+      }
+    },
+    win_options = {
+      winhighlight = 'Normal:Normal,FloatBorder:Normal'
+    }
+  }, {
+    prompt = '> ',
+    on_submit = function(new_value)
+      vim.cmd('%s/' .. old_value .. '/' .. new_value)
+    end
+  })
+
+  ui:mount()
+end
+
 function exec_from(path, fn)
   local mod = require(path)
 
@@ -65,5 +96,6 @@ end
 return {
   -- configure_nvim = configure_nvim,
   configure_zsh = configure_zsh,
+  popup_substitute = popup_substitute,
   exec_from = exec_from
 }

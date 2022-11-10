@@ -228,6 +228,7 @@ packer.startup {
                 ['<cr>'] = cmp.mapping.confirm()
               },
               formatting = {
+                -- Fixes: nvim-cmp/discussions/609#discussioncomment-1844480
                 format = function(_, item)
                   local label = item.abbr
                   local trunc = vim.fn.strcharpart(label, 0, 120)

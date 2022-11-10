@@ -27,6 +27,10 @@ function nmap_with(bind, fn)
 	return vim.keymap.set('n', bind, fn)
 end
 
+function vmap_with(bind, fn)
+  return vim.keymap.set('v', bind, fn)
+end
+
 -- General
 nmap('<esc>', ':echo<cr>', {
 	silent = true
@@ -89,6 +93,18 @@ nmap('<c-g>t', '<cmd>ToggleTerm<cr>')
 -- Renamer
 nmap_with('<c-g>r', function()
   utils.exec_from('renamer', function(r) r.rename() end)
+end)
+
+nmap_with('<c-g>s', function()
+  local word = vim.fn.expand('<cword>')
+
+  utils.popup_substitute(word)
+end)
+
+vmap_with('<c-r>', function()
+  vim.cmd('normal! "vy"')
+
+  utils.popup_substitute(vim.fn.getreg('v'))
 end)
 
 return {
