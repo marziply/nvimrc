@@ -1,10 +1,6 @@
 local packer = require('packer')
 
 plugins = {
-  'wbthomason/packer.nvim',
-  'nvim-treesitter/nvim-treesitter',
-  'nvim-treesitter/nvim-treesitter-context',
-  'nvim-treesitter/nvim-treesitter-textobjects',
   'L3MON4D3/LuaSnip',
   'saadparwaiz1/cmp_luasnip',
   'hrsh7th/cmp-nvim-lsp',
@@ -17,9 +13,6 @@ plugins = {
   'MunifTanjim/nui.nvim'
 }
 servers = {
-  {
-    name = 'rust_analyzer',
-  },
   {
     name = 'sumneko_lua',
     config = {
@@ -42,6 +35,9 @@ servers = {
         }
       }
     }
+  },
+  {
+    name = 'rust_analyzer',
   },
   {
     name = 'clangd',
@@ -70,37 +66,91 @@ function plug(input)
 
   local mod = require(name)
 
-  if input.init == nil then
-    return mod.setup(input.config or {})
+  if input.init then
+    return input.init(mod, {
+      maps = require('modules.maps'),
+      utils = require('modules.utils')
+    })
   else
-    return input.init(mod, require('modules.maps'))
+    return mod.setup(input.config or {})
   end
 end
 
 packer.startup {
   function(use)
+    use('wbthomason/packer.nvim')
+
     for _, path in ipairs(plugins) do
       use(path)
     end
 
     use {
-      'williamboman/mason.nvim',
-      config = function() plug('mason') end
-    }
-    use {
-      'williamboman/mason-lspconfig.nvim',
+      'navarasu/onedark.nvim',
       config = function()
         plug {
-          'mason-lspconfig',
-          config = {
-            automatic_installation = true,
-            ensure_installed = {
-              'rust_analyzer',
-              'tsserver'
+          'onedark',
+          init = function(onedark)
+            onedark.setup {
+              style = 'warmer'
+            }
+
+            onedark.load()
+          end
+        }
+      end
+    }
+    use {
+      'nvim-treesitter/nvim-treesitter',
+      requires = {
+        'nvim-treesitter/nvim-treesitter-context',
+        'nvim-treesitter/nvim-treesitter-textobjects'
+      },
+      config = function()
+        local treesitter_configs = require('nvim-treesitter.configs')
+
+        treesitter_configs.setup {
+          auto_install = true,
+          ensure_installed = {
+            'rust',
+            'lua',
+            'javascript',
+            'tsx',
+            'json',
+            'html',
+            'css'
+          },
+          highlight = {
+            enable = true
+          },
+          textobjects = {
+            select = {
+              enable = true,
+              lookahead = true
             }
           }
         }
       end
+    }
+    use {
+      'williamboman/mason.nvim',
+      config = function() plug('mason') end,
+      requires = {
+        {
+          'williamboman/mason-lspconfig.nvim',
+          config = function()
+            plug {
+              'mason-lspconfig',
+              config = {
+                automatic_installation = true,
+                ensure_installed = {
+                  'rust_analyzer',
+                  'tsserver'
+                }
+              }
+            }
+          end
+        }
+      }
     }
     use {
       'neovim/nvim-lspconfig',
@@ -109,34 +159,11 @@ packer.startup {
           'lspconfig',
           init = function(lsp)
             local cmp = require('cmp_nvim_lsp')
-            local treesitter = require('nvim-treesitter.configs')
-            local defaults = lsp.util.default_config
+            local defs = lsp.util.default_config
 
-            treesitter.setup {
-              auto_install = true,
-              ensure_installed = {
-                'rust',
-                'lua',
-                'javascript',
-                'tsx',
-                'json',
-                'html',
-                'css'
-              },
-              highlight = {
-                enable = true
-              },
-              textobjects = {
-                select = {
-                  enable = true,
-                  lookahead = true
-                }
-              }
-            }
-
-            defaults.capabilities = vim.tbl_deep_extend(
+            defs.capabilities = vim.tbl_deep_extend(
               'force',
-              defaults.capabilities,
+              defs.capabilities,
               cmp.default_capabilities()
             )
 
@@ -162,8 +189,8 @@ packer.startup {
             local select_opts = {
               behavior = cmp.SelectBehavior.Insert
             }
-            local function jump_map(x)
-              local function jump(fallback)
+            local function jump(x)
+              local function callback(fallback)
                 if snip.jumpable(x) then
                   snip.jump(x)
                 else
@@ -171,7 +198,7 @@ packer.startup {
                 end
               end
 
-              return cmp.mapping(jump, {
+              return cmp.mapping(callback, {
                 'i',
                 's'
               })
@@ -218,8 +245,8 @@ packer.startup {
                 }
               },
               mapping = cmp.mapping.preset.insert {
-                ['<c-n>'] = jump_map(1),
-                ['<c-p>'] = jump_map(-1),
+                ['<c-n>'] = jump(1),
+                ['<c-p>'] = jump(-1),
                 ['<c-d>'] = cmp.mapping.scroll_docs(4),
                 ['<c-u>'] = cmp.mapping.scroll_docs(-4),
                 ['<tab>'] = cmp.mapping.select_next_item(select_opts),
@@ -391,47 +418,22 @@ packer.startup {
     use {
       'nvim-telescope/telescope.nvim',
       requires = {
-        {
-          'nvim-lua/plenary.nvim'
-        }
-        -- {
-        --   'nvim-telescope/telescope-fzf-native.nvim',
-        --   run = 'make',
-        -- }
+        'nvim-lua/plenary.nvim'
       },
       config = function()
         plug {
           'telescope',
-          init = function(telescope)
-            telescope.setup { 
-              defaults = {
-                mappings = {
-                  i = {
-                    ['<c-j>'] = function()
-                      vim.api.nvim_input('<cr>')
-                    end
-                  }
+          config = {
+            defaults = {
+              mappings = {
+                i = {
+                  ['<c-j>'] = function()
+                    vim.api.nvim_input('<cr>')
+                  end
                 }
               }
             }
-
-            -- telescope.load_extension('fzf')
-          end
-        }
-      end
-    }
-    use {
-      'navarasu/onedark.nvim',
-      config = function()
-        plug {
-          'onedark',
-          init = function(onedark)
-            onedark.setup {
-              style = 'warmer'
-            }
-
-            onedark.load()
-          end
+          }
         }
       end
     }
@@ -441,7 +443,7 @@ packer.startup {
       config = function()
         plug {
           'hop',
-          init = function(hop, maps)
+          init = function(hop, mods)
             local hints = require('hop.hint')
             local dirs = hints.HintDirection
 
@@ -450,43 +452,45 @@ packer.startup {
               uppercase_labels = true
             }
 
-            maps.nmap_with('T', function()
-              hop.hint_char2 {
-                direction = dirs.BEFORE_CURSOR
-              }
-            end)
-            maps.nmap_with('t', function()
-              hop.hint_char2 {
-                direction = dirs.AFTER_CURSOR
-              }
-            end)
-            maps.nmap_with('s', function()
-              hop.hint_char2 {
-                multi_windows = true
-              }
-            end)
-            maps.nmap_with('<c-t>k', function()
-              hop.hint_vertical {
-                direction = dirs.BEFORE_CURSOR
-              }
-            end)
-            maps.nmap_with('<c-t>j', function()
-              hop.hint_vertical {
-                direction = dirs.AFTER_CURSOR
-              }
-            end)
-            maps.nmap_with('<c-t>h', function()
-              hop.hint_words {
-                direction = dirs.BEFORE_CURSOR,
-                current_line_only = true
-              }
-            end)
-            maps.nmap_with('<c-t>l', function()
-              hop.hint_words {
-                direction = dirs.AFTER_CURSOR,
-                current_line_only = true
-              }
-            end)
+            mods.maps.nmap_with_all {
+              ['T'] = function()
+                hop.hint_char2 {
+                  direction = dirs.BEFORE_CURSOR
+                }
+              end,
+              ['t'] = function()
+                hop.hint_char2 {
+                  direction = dirs.AFTER_CURSOR
+                }
+              end,
+              ['s'] = function()
+                hop.hint_char2 {
+                  multi_windows = true
+                }
+              end,
+              ['<c-t>k'] = function()
+                hop.hint_vertical {
+                  direction = dirs.BEFORE_CURSOR
+                }
+              end,
+              ['<c-t>j'] = function()
+                hop.hint_vertical {
+                  direction = dirs.AFTER_CURSOR
+                }
+              end,
+              ['<c-t>h'] = function()
+                hop.hint_words {
+                  direction = dirs.BEFORE_CURSOR,
+                  current_line_only = true
+                }
+              end,
+              ['<c-t>l'] = function()
+                hop.hint_words {
+                  direction = dirs.AFTER_CURSOR,
+                  current_line_only = true
+                }
+              end
+            }
           end
         }
       end
@@ -497,8 +501,9 @@ packer.startup {
         plug {
           'bufferline',
           config = {
-            icons = false,
-            closable = false
+            animation = false,
+            closable = false,
+            icons = false
           }
         }
       end

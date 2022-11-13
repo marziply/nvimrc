@@ -23,6 +23,18 @@ function imap(bind, cmd, opts)
 	return map('i', bind, cmd, opts)
 end
 
+function nmap_all(binds)
+  for bind, cmd in pairs(binds) do
+    nmap(bind, cmd)
+  end
+end
+
+function nmap_with_all(binds)
+  for bind, fn in pairs(binds) do
+    nmap_with(bind, fn)
+  end
+end
+
 function nmap_with(bind, fn)
 	return vim.keymap.set('n', bind, fn)
 end
@@ -35,24 +47,28 @@ end
 nmap('<esc>', ':echo<cr>', {
 	silent = true
 })
+nmap('<c-f>', '<nop>')
 nmap('<c-s>', ':w<cr>')
 nmap('<c-q>', ':bd<cr>')
 nmap('<c-k>', '10<c-y>')
 nmap('<c-j>', '10<c-e>')
 nmap('<c-o>', '<c-o>zz')
 nmap('<c-i>', '<c-i>zz')
-nmap('*', '*zz')
+nmap('<c-m>o', 'o<esc>o')
+nmap('<c-m>O', 'O<esc>O')
+nmap('Y', 'i_<esc>r')
 nmap('n', 'nzz')
 nmap('N', 'Nzz')
 nmap('H', 'Hzz')
 nmap('L', 'Lzz')
 nmap('G', 'Gzz')
-nmap('vg', 'V$%')
-nmap('vG', '$%V%o')
+nmap('*', '*zz')
+nmap('v[', 'V$%o$')
+nmap('v]', '$%V%o$')
 nmap('mo', 'o<esc>')
 nmap('mO', 'O<esc>')
-nmap('<c-m>o', 'o<esc>o')
-nmap('<c-m>O', 'O<esc>O')
+nmap('gcs', 'v[gc')
+nmap('gcS', 'v]gc')
 
 -- Utils
 nmap_with('<c-a>z', function() utils.configure_zsh() end)
@@ -113,5 +129,7 @@ return {
 	nmap = nmap,
 	vmap = vmap,
 	imap = imap,
-	nmap_with = nmap_with
+  nmap_all = nmap_all,
+	nmap_with = nmap_with,
+  nmap_with_all = nmap_with_all
 }
