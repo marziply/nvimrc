@@ -1,3 +1,42 @@
+Interface = {
+  -- menu = require('nui.menu'),
+  -- input = require('nui.input'),
+  windows = {
+    list = {
+      relative = 'cursor',
+      position = {
+        row = 1,
+        col = 0
+      }
+    },
+    input = {
+      relative = 'cursor',
+      position = {
+        row = 2,
+        col = 1
+      },
+      size = {
+        width = 60
+      },
+      border = {
+        style = 'single',
+        text = {
+          top = '[Substitute]',
+          top_align = 'center'
+        }
+      },
+      win_options = {
+        winhighlight = 'Normal:Normal,FloatBorder:Normal'
+      }
+    }
+  },
+
+  choose = function()
+  end,
+  substitute = function()
+  end
+}
+
 local function configure(files)
   local menu = require('nui.menu')
   local menu_items = {}

@@ -336,6 +336,10 @@ packer.startup {
       end
     }
     use {
+      'lewis6991/gitsigns.nvim',
+      config = function() plug('gitsigns') end
+    }
+    use {
       'gbprod/stay-in-place.nvim',
       config = function() plug('stay-in-place') end
     }
