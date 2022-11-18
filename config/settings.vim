@@ -1,6 +1,7 @@
 " General
-set signcolumn=yes
 set cmdheight=2
+set timeoutlen=3000
+set signcolumn=yes
 set clipboard+=unnamedplus
 
 " Tabs

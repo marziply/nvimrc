@@ -71,7 +71,7 @@ nmap('gcs', 'v[gc')
 nmap('gcS', 'v]gc')
 
 -- Utils
-nmap_with('<c-a>z', function() utils.configure_zsh() end)
+nmap_with('<c-g>z', function() utils.configure_zsh() end)
 
 -- LSP
 nmap_with('<c-g>d', function() vim.diagnostic.open_float() end)
@@ -84,8 +84,8 @@ nmap('<c-n>', '<cmd>BufferNext<cr>')
 nmap('<c-p>', '<cmd>BufferPrevious<cr>')
 nmap('<a->>', '<cmd>BufferMoveNext<cr>')
 nmap('<a-<>', '<cmd>BufferMovePrevious<cr>')
-nmap('<c-g>q', ':bufdo bd<cr>')
-nmap('Q', '<cmd>BufferClose<cr>')
+nmap('<c-g>q', ':bufdo bd!<cr>')
+nmap('Q', '<cmd>BufferClose!<cr>')
 
 -- Telescope
 map_telescope('p', 'find_files')

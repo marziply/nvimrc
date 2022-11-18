@@ -286,11 +286,8 @@ packer.startup {
                 -- lua = {
                 --   lua_fmt.stylua
                 -- },
-                ts = {
-                  ts_fmt.eslint
-                },
                 typescript = {
-                  ts_fmt.eslint
+                  ts_fmt.eslint_d
                 }
               }
             }
@@ -337,7 +334,27 @@ packer.startup {
     }
     use {
       'lewis6991/gitsigns.nvim',
-      config = function() plug('gitsigns') end
+      config = function()
+        plug {
+          'gitsigns',
+          config = {
+            signs = {
+              delete = {
+                hl = 'GitSignsDelete',
+                numhl = 'GitSignsDeleteNr',
+                linehl = 'GitSignsDeleteLn',
+                text = 'ᐯ'
+              },
+              topdelete = {
+                hl = 'GitSignsDelete',
+                numhl = 'GitSignsDeleteNr',
+                linehl = 'GitSignsDeleteLn',
+                text = 'ᐱ'
+              }
+            }
+          }
+        }
+      end
     }
     use {
       'gbprod/stay-in-place.nvim',
@@ -507,7 +524,8 @@ packer.startup {
           config = {
             animation = false,
             closable = false,
-            icons = false
+            icons = false,
+            no_name_title = '*'
           }
         }
       end

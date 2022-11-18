@@ -22,8 +22,8 @@ augroup packer_config
 	autocmd BufWritePost */nvim/*.lua so % | PackerCompile
 augroup end
 
-" augroup linters
-"   autocmd!
-"   autocmd BufWritePost * lua vim.lsp.buf.format()
-"   autocmd BufWritePost * FormatWrite
-" augroup end
+augroup linters
+  autocmd!
+  " autocmd BufWritePost * lua vim.lsp.buf.format()
+  autocmd BufWritePost * FormatWrite
+augroup end
