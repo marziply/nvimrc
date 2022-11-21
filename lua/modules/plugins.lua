@@ -10,7 +10,8 @@ plugins = {
   'hrsh7th/cmp-cmdline',
   'rcarriga/nvim-notify',
   'AndrewRadev/splitjoin.vim',
-  'MunifTanjim/nui.nvim'
+  'MunifTanjim/nui.nvim',
+  -- 'jubnzv/virtual-types.nvim'
 }
 servers = {
   {
@@ -27,7 +28,8 @@ servers = {
             }
           },
           workspace = {
-            library = vim.api.nvim_get_runtime_file('', true)
+            library = vim.api.nvim_get_runtime_file('', true),
+            checkThirdParty = false
           },
           telemetry = {
             enabled = false
@@ -37,17 +39,35 @@ servers = {
     }
   },
   {
-    name = 'rust_analyzer',
-  },
-  {
     name = 'clangd',
+    config = {
+      filetypes = {
+        'c',
+        'h',
+        'cc',
+        'cpp',
+        'hpp'
+      }
+    }
   },
   {
-    name = 'tsserver',
+    name = 'rust_analyzer'
+  },
+  {
+    name = 'tsserver'
+  },
+  {
+    name = 'bufls'
   }
 }
 
-local function check(name)
+function on_attach(...)
+  local vt = require('virtualtypes')
+
+  return vt.on_attach(...)
+end
+
+function check(name)
   local ok, _ = pcall(require, name)
 
   if not ok then
@@ -169,8 +189,11 @@ packer.startup {
 
             for _, opt in ipairs(servers) do
               local server = lsp[opt.name]
+              local config = opt.config or {}
 
-              server.setup(opt.config or {})
+              -- config.on_attach = on_attach
+
+              server.setup(config)
             end
           end
         }
@@ -238,6 +261,9 @@ packer.startup {
                   name = 'luasnip'
                 },
                 {
+                  name = 'crates'
+                },
+                {
                   name = 'path'
                 },
                 {
@@ -279,19 +305,38 @@ packer.startup {
           'formatter',
           init = function(fmt)
             local ts_fmt = require('formatter.filetypes.typescript')
+            local rs_fmt = require('formatter.filetypes.rust')
             -- local lua_fmt = require('formatter.filetypes.lua')
 
             fmt.setup {
               filetype = {
+                typescript = {
+                  ts_fmt.eslint_d
+                },
+                rust = {
+                  rs_fmt.rustfmt
+                }
                 -- lua = {
                 --   lua_fmt.stylua
                 -- },
-                typescript = {
-                  ts_fmt.eslint_d
-                }
               }
             }
           end
+        }
+      end
+    }
+    use {
+      'vuki656/package-info.nvim',
+      config = function()
+        plug {
+          'package-info',
+          config = {
+            package_manager = 'npm',
+            autostart = true,
+            icons = {
+              enable = false
+            }
+          }
         }
       end
     }
