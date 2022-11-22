@@ -10,8 +10,7 @@ plugins = {
   'hrsh7th/cmp-cmdline',
   'rcarriga/nvim-notify',
   'AndrewRadev/splitjoin.vim',
-  'MunifTanjim/nui.nvim',
-  -- 'jubnzv/virtual-types.nvim'
+  'MunifTanjim/nui.nvim'
 }
 servers = {
   {
@@ -60,12 +59,6 @@ servers = {
     name = 'bufls'
   }
 }
-
-function on_attach(...)
-  local vt = require('virtualtypes')
-
-  return vt.on_attach(...)
-end
 
 function check(name)
   local ok, _ = pcall(require, name)
@@ -189,11 +182,8 @@ packer.startup {
 
             for _, opt in ipairs(servers) do
               local server = lsp[opt.name]
-              local config = opt.config or {}
 
-              -- config.on_attach = on_attach
-
-              server.setup(config)
+              server.setup(opt.config or {})
             end
           end
         }
@@ -268,6 +258,9 @@ packer.startup {
                 },
                 {
                   name = 'cmd'
+                },
+                {
+                  name = 'buffer'
                 }
               },
               mapping = cmp.mapping.preset.insert {
