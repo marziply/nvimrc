@@ -75,8 +75,16 @@ nmap_with('<c-g>z', function() utils.configure_zsh() end)
 
 -- LSP
 nmap_with('<c-g>d', function() vim.diagnostic.open_float() end)
-nmap_with('[d', function() vim.diagnostic.goto_prev() end)
-nmap_with(']d', function() vim.diagnostic.goto_next() end)
+nmap_with('[d', function()
+  vim.diagnostic.goto_prev {
+    severity = vim.diagnostic.severity.ERROR
+  }
+end)
+nmap_with(']d', function()
+  vim.diagnostic.goto_next {
+    severity = vim.diagnostic.severity.ERROR
+  }
+end)
 
 -- Barbar / buffers
 nmap('<c-b>', '<cmd>BufferPick<cr>')
