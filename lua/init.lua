@@ -8,14 +8,9 @@ function src(path)
 	vim.cmd('so ' .. vim.g.nvim_dir .. '/' .. path)
 end
 
-vim.api.nvim_set_var('coq_settings', {
-  auto_start = 'shut-up',
-  clients = {
-    snippets = {
-      warn = {}
-    }
-  }
-})
+vim.diagnostic.config {
+  update_in_insert = true
+}
 
 for _, name in ipairs(modules) do
 	local path = dir .. '.' .. name

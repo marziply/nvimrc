@@ -10,7 +10,8 @@ plugins = {
   'hrsh7th/cmp-cmdline',
   'rcarriga/nvim-notify',
   'AndrewRadev/splitjoin.vim',
-  'MunifTanjim/nui.nvim'
+  'MunifTanjim/nui.nvim',
+  'cstrahan/vim-capnp'
 }
 servers = {
   {
@@ -28,6 +29,7 @@ servers = {
           },
           workspace = {
             library = vim.api.nvim_get_runtime_file('', true),
+            check_third_party = false,
             checkThirdParty = false
           },
           telemetry = {

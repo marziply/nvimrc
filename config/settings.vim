@@ -1,6 +1,7 @@
 " General
 set cmdheight=2
 set timeoutlen=3000
+set updatetime=250
 set signcolumn=yes
 set clipboard+=unnamedplus
 

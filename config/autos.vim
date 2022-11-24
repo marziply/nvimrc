@@ -1,3 +1,12 @@
+fun! Diagnostic()
+  lua << EOF
+    vim.diagnostic.open_float(nil, {
+      focus = false,
+      scope = "cursor"
+    })
+EOF
+endfun
+
 augroup general
   autocmd!
   autocmd BufNewFile * startinsert
@@ -6,6 +15,7 @@ augroup end
 augroup filetypes
 	autocmd!
 	autocmd BufEnter,BufReadPost *.{njk,tera}.html,*.html.tera setl ft=htmldjango
+	autocmd BufEnter,BufReadPost *.capnp setl ft=capnp
 	autocmd BufEnter,BufReadPost *.sway setl ft=i3config
 	autocmd BufEnter,BufReadPost *.env* setl ft=sh
 	autocmd BufEnter,BufReadPost *.rs setl shiftwidth=2
@@ -22,8 +32,13 @@ augroup packer_config
 	autocmd BufWritePost */nvim/*.lua so % | PackerCompile
 augroup end
 
+augroup diagnostics
+  autocmd!
+  autocmd CursorHold,CursorHoldI * call Diagnostic()
+augroup end
+
 augroup linters
   autocmd!
-  " autocmd BufWritePost * lua vim.lsp.buf.format()
   autocmd BufWritePost * FormatWrite
+  " autocmd BufWritePost * lua vim.lsp.buf.format()
 augroup end

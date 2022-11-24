@@ -132,9 +132,42 @@ function exec_from(path, fn)
   return fn(mod)
 end
 
+function toggle_relative()
+  local rn = vim.o.relativenumber
+
+  vim.o.relativenumber = not rn
+
+  -- local id = vim.api.nvim_create_augroup('toggle_rnu')
+  --
+  -- vim.api.nvim_create_autocmd('CursorMoved', {
+  --   group = id,
+  --   pattern = '*',
+  --   once = true,
+  --   callback = function()
+  --     if vim.o.relativenumber == 0 then
+  --     else
+  --       vim.api.nvim_del_augroup_by_id(id)
+  --     end
+  --   end
+  -- })
+
+  vim.cmd [[
+    augroup toggle_rnu
+      autocmd!
+
+      if &relativenumber == 0
+        autocmd CursorMoved * ++once lua require('modules.utils').toggle_relative()
+      else
+        autocmd!
+      endif
+    augroup end
+  ]]
+end
+
 return {
   -- configure_nvim = configure_nvim,
   configure_zsh = configure_zsh,
   popup_substitute = popup_substitute,
-  exec_from = exec_from
+  exec_from = exec_from,
+  toggle_relative = toggle_relative,
 }
