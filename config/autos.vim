@@ -2,7 +2,8 @@ fun! Diagnostic()
   lua << EOF
     vim.diagnostic.open_float(nil, {
       focus = false,
-      scope = "cursor"
+      scope = "cursor",
+      -- severity = vim.diagnostic.severity.ERROR
     })
 EOF
 endfun

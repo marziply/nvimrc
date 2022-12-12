@@ -11,7 +11,8 @@ plugins = {
   'rcarriga/nvim-notify',
   'AndrewRadev/splitjoin.vim',
   'MunifTanjim/nui.nvim',
-  'cstrahan/vim-capnp'
+  'cstrahan/vim-capnp',
+  'sheerun/vim-polyglot'
 }
 servers = {
   {
@@ -52,13 +53,69 @@ servers = {
     }
   },
   {
+    name = 'volar',
+    config = function()
+      local lsp = require('lspconfig')
+
+      return {
+        root_dir = lsp.util.root_pattern('vite.config.ts'),
+        filetypes = {
+          'typescript',
+          'vue',
+          'json'
+        }
+      }
+    end
+  },
+  {
+    name = 'tsserver',
+    config = function()
+      local lsp = require('lspconfig')
+      local vite_exists = io.open('vite.config.ts', 'r') ~= nil
+
+      return {
+        root_dir = lsp.util.root_pattern('package.json'),
+        autostart = not vite_exists
+      }
+    end
+  },
+  {
+    name = 'denols',
+    config = function()
+      local lsp = require('lspconfig')
+
+      return {
+        root_dir = lsp.util.root_pattern('deno.json'),
+        init_options = {
+          enable = true,
+          lint = true,
+          suggest = {
+            autoImports = true,
+            imports = {
+              autoDiscover = true
+            }
+          }
+        }
+      }
+    end
+  },
+  {
     name = 'rust_analyzer'
   },
   {
-    name = 'tsserver'
+    name = 'bufls'
   },
   {
-    name = 'bufls'
+    name = 'tflint'
+  },
+  {
+    name = 'yamlls'
+  },
+  {
+    name = 'bashls'
+  },
+  {
+    name = "sqlls"
   }
 }
 
@@ -121,10 +178,15 @@ packer.startup {
         'nvim-treesitter/nvim-treesitter-textobjects'
       },
       config = function()
-        local treesitter_configs = require('nvim-treesitter.configs')
+        local ts_config = require('nvim-treesitter.configs')
 
-        treesitter_configs.setup {
+        ts_config.setup {
           auto_install = true,
+          additional_vim_regex_highlighting = true,
+          ignore_install = {
+            'proto',
+            'sql'
+          },
           ensure_installed = {
             'rust',
             'lua',
@@ -183,9 +245,16 @@ packer.startup {
             )
 
             for _, opt in ipairs(servers) do
-              local server = lsp[opt.name]
+              local server_mod = lsp[opt.name]
+              local function server_config()
+                if type(opt.config) == 'function' then
+                  return opt.config() or {}
+                end
 
-              server.setup(opt.config or {})
+                return opt.config or {}
+              end
+
+              server_mod.setup(server_config())
             end
           end
         }
@@ -246,9 +315,9 @@ packer.startup {
                 {
                   name = 'nvim_lsp'
                 },
-                {
-                  name = 'nvim_lsp_signature_help'
-                },
+                -- {
+                --   name = 'nvim_lsp_signature_help'
+                -- },
                 {
                   name = 'luasnip'
                 },

@@ -74,7 +74,14 @@ nmap('gcS', 'v]gc')
 nmap_with('<c-g>z', function() utils.configure_zsh() end)
 
 -- LSP
-nmap_with('<c-g>d', function() vim.diagnostic.open_float() end)
+nmap_with('<c-g>d', function()
+  vim.diagnostic.open_float {
+    severity = vim.diagnostic.severity.HINT
+  }
+  vim.diagnostic.open_float {
+    severity = vim.diagnostic.severity.WARN
+  }
+end)
 nmap_with('[d', function()
   vim.diagnostic.goto_prev {
     severity = vim.diagnostic.severity.ERROR
@@ -83,6 +90,16 @@ end)
 nmap_with(']d', function()
   vim.diagnostic.goto_next {
     severity = vim.diagnostic.severity.ERROR
+  }
+end)
+nmap_with('[D', function()
+  vim.diagnostic.goto_prev {
+    severity = vim.diagnostic.severity.HINT
+  }
+end)
+nmap_with(']D', function()
+  vim.diagnostic.goto_next {
+    severity = vim.diagnostic.severity.HINT
   }
 end)
 
