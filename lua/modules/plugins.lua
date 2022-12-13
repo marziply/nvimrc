@@ -431,6 +431,12 @@ packer.startup {
       end
     }
     use {
+      'nvim-pack/nvim-spectre',
+      config = function()
+        plug 'spectre'
+      end
+    }
+    use {
       'numToStr/Comment.nvim',
       config = function()
         plug {
