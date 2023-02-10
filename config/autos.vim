@@ -33,6 +33,11 @@ augroup packer_config
 	autocmd BufWritePost */nvim/*.lua so % | PackerCompile
 augroup end
 
+augroup cargo_config
+	autocmd!
+	autocmd BufWritePost Cargo.toml LspRestart
+augroup end
+
 augroup diagnostics
   autocmd!
   autocmd CursorHold,CursorHoldI * call Diagnostic()
