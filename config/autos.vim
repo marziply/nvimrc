@@ -8,43 +8,44 @@ fun! Diagnostic()
 EOF
 endfun
 
-augroup general
-  autocmd!
-  autocmd BufNewFile * startinsert
-augroup end
+aug general
+  au!
+  au BufNewFile * startinsert
+aug end
 
-augroup filetypes
-	autocmd!
-	autocmd BufEnter,BufReadPost *.{njk,tera}.html,*.html.tera setl ft=htmldjango
-	autocmd BufEnter,BufReadPost *.capnp setl ft=capnp
-	autocmd BufEnter,BufReadPost *.sway setl ft=i3config
-	autocmd BufEnter,BufReadPost *.env* setl ft=sh
-	autocmd BufEnter,BufReadPost *.rs setl shiftwidth=2
-	autocmd BufEnter,BufReadPost *.ts setl shiftwidth=4
-augroup end
+aug filetypes
+	au!
+	au BufEnter,BufReadPost,BufWritePost *.{njk,tera}.html,*.html.tera setl ft=htmldjango
+	au BufEnter,BufReadPost,BufWritePost *.capnp setl ft=capnp
+	au BufEnter,BufReadPost,BufWritePost *.sway setl ft=i3config
+	au BufEnter,BufReadPost,BufWritePost *.env* setl ft=sh
+	au BufEnter,BufReadPost,BufWritePost *.h setl ft=c
+	au BufEnter,BufReadPost,BufWritePost *.rs setl shiftwidth=2
+	au BufEnter,BufReadPost,BufWritePost *.ts setl shiftwidth=4
+aug end
 
-augroup vim_config
-	autocmd!
-	autocmd BufWritePost */nvim/config/*.vim lua src('init.vim')
-augroup end
+aug vim_config
+	au!
+	au BufWritePost */nvim/config/*.vim lua src('init.vim')
+aug end
 
-augroup packer_config
-	autocmd!
-	autocmd BufWritePost */nvim/*.lua so % | PackerCompile
-augroup end
+aug packer_config
+	au!
+	au BufWritePost */nvim/*.lua so % | PackerCompile
+aug end
 
-augroup cargo_config
-	autocmd!
-	autocmd BufWritePost Cargo.toml LspRestart
-augroup end
+aug cargo_config
+	au!
+	au BufWritePost Cargo.toml LspRestart
+aug end
 
-augroup diagnostics
-  autocmd!
-  autocmd CursorHold,CursorHoldI * call Diagnostic()
-augroup end
+aug diagnostics
+  au!
+  au CursorHold,CursorHoldI * call Diagnostic()
+aug end
 
-augroup linters
-  autocmd!
-  autocmd BufWritePost * FormatWrite
-  " autocmd BufWritePost * lua vim.lsp.buf.format()
-augroup end
+aug linters
+  au!
+  au BufWritePost * FormatWrite
+  " au BufWritePost * lua vim.lsp.buf.format()
+aug end

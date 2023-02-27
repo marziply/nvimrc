@@ -16,7 +16,7 @@ plugins = {
 }
 servers = {
   {
-    name = 'sumneko_lua',
+    name = 'lua_ls',
     config = {
       settings = {
         Lua = {
@@ -42,15 +42,20 @@ servers = {
   },
   {
     name = 'clangd',
-    config = {
-      filetypes = {
-        'c',
-        'h',
-        'cc',
-        'cpp',
-        'hpp'
+    config = function()
+      local lsp = require('lspconfig')
+
+      return {
+        root_dir = lsp.util.root_pattern('.git', 'format.cfg'),
+        filetypes = {
+          'c',
+          'h',
+          'cc',
+          'cpp',
+          'hpp'
+        }
       }
-    }
+    end
   },
   {
     name = 'volar',
@@ -101,6 +106,9 @@ servers = {
   },
   {
     name = 'rust_analyzer'
+  },
+  {
+    name = 'gopls'
   },
   {
     name = 'bufls'
@@ -370,6 +378,7 @@ packer.startup {
           init = function(fmt)
             local ts_fmt = require('formatter.filetypes.typescript')
             local rs_fmt = require('formatter.filetypes.rust')
+            local go_fmt = require('formatter.filetypes.go')
             -- local lua_fmt = require('formatter.filetypes.lua')
 
             fmt.setup {
@@ -379,6 +388,9 @@ packer.startup {
                 },
                 rust = {
                   rs_fmt.rustfmt
+                },
+                go = {
+                  go_fmt.gofmt
                 }
                 -- lua = {
                 --   lua_fmt.stylua
