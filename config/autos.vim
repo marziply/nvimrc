@@ -21,7 +21,7 @@ aug filetypes
 	au BufEnter,BufReadPost,BufWritePost *.env* setl ft=sh
 	au BufEnter,BufReadPost,BufWritePost *.h setl ft=c
 	au BufEnter,BufReadPost,BufWritePost *.rs setl shiftwidth=2
-	au BufEnter,BufReadPost,BufWritePost *.ts setl shiftwidth=4
+	" au BufEnter,BufReadPost,BufWritePost *.ts setl shiftwidth=4
 aug end
 
 aug vim_config

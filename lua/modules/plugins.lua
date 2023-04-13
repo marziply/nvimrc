@@ -61,6 +61,8 @@ servers = {
     name = 'volar',
     config = function()
       local lsp = require('lspconfig')
+      local nvm_lib = os.getenv("NVM_LIB")
+      local ts_path = string.format('%s/node_modules/typescript', nvm_lib)
 
       return {
         root_dir = lsp.util.root_pattern('vite.config.ts'),
@@ -68,6 +70,11 @@ servers = {
           'typescript',
           'vue',
           'json'
+        },
+        init_options = {
+          typescript = {
+            tsdk = ts_path
+          }
         }
       }
     end
@@ -77,10 +84,11 @@ servers = {
     config = function()
       local lsp = require('lspconfig')
       local vite_exists = io.open('vite.config.ts', 'r') ~= nil
+      local deno_exists = io.open('deno.json', 'r') ~= nil
 
       return {
         root_dir = lsp.util.root_pattern('package.json'),
-        autostart = not vite_exists
+        autostart = not vite_exists and not deno_exists
       }
     end
   },
@@ -105,6 +113,16 @@ servers = {
     end
   },
   {
+    name = 'yamlls',
+    config = {
+      settings = {
+        yaml = {
+          keyOrdering = false
+        }
+      }
+    }
+  },
+  {
     name = 'rust_analyzer'
   },
   {
@@ -117,13 +135,7 @@ servers = {
     name = 'tflint'
   },
   {
-    name = 'yamlls'
-  },
-  {
     name = 'bashls'
-  },
-  {
-    name = "sqlls"
   }
 }
 
@@ -193,7 +205,6 @@ packer.startup {
           additional_vim_regex_highlighting = true,
           ignore_install = {
             'proto',
-            'sql'
           },
           ensure_installed = {
             'rust',
@@ -202,7 +213,9 @@ packer.startup {
             'tsx',
             'json',
             'html',
-            'css'
+            'css',
+            'scss',
+            'sql'
           },
           highlight = {
             enable = true
@@ -222,18 +235,7 @@ packer.startup {
       requires = {
         {
           'williamboman/mason-lspconfig.nvim',
-          config = function()
-            plug {
-              'mason-lspconfig',
-              config = {
-                automatic_installation = true,
-                ensure_installed = {
-                  'rust_analyzer',
-                  'tsserver'
-                }
-              }
-            }
-          end
+          config = function() plug('mason-lspconfig') end
         }
       }
     }
@@ -376,7 +378,9 @@ packer.startup {
         plug {
           'formatter',
           init = function(fmt)
-            local ts_fmt = require('formatter.filetypes.typescript')
+            -- local ts_fmt = require('formatter.filetypes.typescript')
+            local ts_fmt = require('formatter.defaults.prettier')
+            local vue_fmt = require('formatter.filetypes.vue')
             local rs_fmt = require('formatter.filetypes.rust')
             local go_fmt = require('formatter.filetypes.go')
             -- local lua_fmt = require('formatter.filetypes.lua')
@@ -384,13 +388,17 @@ packer.startup {
             fmt.setup {
               filetype = {
                 typescript = {
-                  ts_fmt.eslint_d
+                  ts_fmt
+                  -- ts_fmt.eslint_d
                 },
                 rust = {
                   rs_fmt.rustfmt
                 },
                 go = {
                   go_fmt.gofmt
+                },
+                vue = {
+                  vue_fmt.prettier
                 }
                 -- lua = {
                 --   lua_fmt.stylua
@@ -650,9 +658,13 @@ packer.startup {
           'bufferline',
           config = {
             animation = false,
-            closable = false,
-            icons = false,
-            no_name_title = '*'
+            no_name_title = '*',
+            icons = {
+              button = false,
+              filetype = {
+                enabled = false
+              }
+            }
           }
         }
       end
@@ -694,6 +706,14 @@ packer.startup {
           end
         }
       end
+    }
+    use {
+      'simrat39/rust-tools.nvim',
+      config = function() plug('rust-tools') end
+    }
+    use {
+      'sigmasd/deno-nvim',
+      config = function() plug('deno-nvim') end
     }
     -- use {
     -- 	'gbprod/cutlass.nvim',

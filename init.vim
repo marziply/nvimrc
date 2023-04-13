@@ -25,3 +25,5 @@ lua require('init')
 for module in glob(g:nvim_dir . '/config/*.vim', 0, 1)
 	exec 'so' module
 endfor
+
+let g:omni_sql_no_default_maps = 1
