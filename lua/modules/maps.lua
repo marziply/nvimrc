@@ -43,37 +43,69 @@ function vmap_with(bind, fn)
   return vim.keymap.set('v', bind, fn)
 end
 
--- General
+-- ## General ##
+
+-- Reset CMD output
 nmap('<esc>', ':echo<cr>', {
 	silent = true
 })
+-- Unbind default <c-f> binding
 nmap('<c-f>', '<nop>')
+-- Save buffer
 nmap('<c-s>', ':w<cr>')
+-- Quit buffer
 nmap('<c-q>', ':bd<cr>')
+-- Scroll up
 nmap('<c-k>', '10<c-y>')
+-- Scroll down
 nmap('<c-j>', '10<c-e>')
+-- Center buffer after previous jump
 nmap('<c-o>', '<c-o>zz')
+-- Center buffer after next jump
 nmap('<c-i>', '<c-i>zz')
+-- Insert two lines up
 nmap('<c-m>o', 'o<esc>o')
+-- Insert two lines down
 nmap('<c-m>O', 'O<esc>O')
-nmap('Y', 'i_<esc>r')
-nmap('n', 'nzz')
-nmap('N', 'Nzz')
-nmap('H', 'Hzz')
-nmap('L', 'Lzz')
-nmap('G', 'Gzz')
-nmap('*', '*zz')
-nmap('v[', 'V$%o$')
-nmap('v]', '$%V%o$')
+-- Restart LSP
+nmap('<c-g>R', ':LspRestart<cr>')
+-- Show LSP info on buffer
+nmap('<c-g>I', ':LspInfo<cr>')
+-- Insert one line up
 nmap('mo', 'o<esc>')
+-- Insert one line down
 nmap('mO', 'O<esc>')
+-- Insert one character and return to normal mode
+nmap('Y', 'i_<esc>r')
+-- Jump to next search result and center buffer
+nmap('n', 'nzz')
+-- Jump to previous search result and center buffer
+nmap('N', 'Nzz')
+-- Switch to left buffer and center buffer
+nmap('H', 'Hzz')
+-- Switch to right buffer and center buffer
+nmap('L', 'Lzz')
+-- Scroll to bottom of buffer and center buffer
+nmap('G', 'Gzz')
+-- Jump to next search of word at cursor and center buffer
+nmap('*', '*zz')
+-- Select block forward
+nmap('v[', 'V$%o$')
+-- Select block backward
+nmap('v]', '$%V%o$')
+-- Comment toggle block forward
 nmap('gcs', 'v[gc')
+-- Comment toggle block backward
 nmap('gcS', 'v]gc')
 
--- Utils
+-- ## Utils ##
+
+-- Open ZSH config
 nmap_with('<c-g>z', function() utils.configure_zsh() end)
 
--- LSP
+-- ## LSP ##
+
+-- Open diagnostics window
 nmap_with('<c-g>d', function()
   vim.diagnostic.open_float {
     severity = vim.diagnostic.severity.HINT
@@ -82,68 +114,99 @@ nmap_with('<c-g>d', function()
     severity = vim.diagnostic.severity.WARN
   }
 end)
+-- Jump to previous diagnostic error
 nmap_with('[d', function()
   vim.diagnostic.goto_prev {
     severity = vim.diagnostic.severity.ERROR
   }
 end)
+-- Jump to next diagnostic error
 nmap_with(']d', function()
   vim.diagnostic.goto_next {
     severity = vim.diagnostic.severity.ERROR
   }
 end)
+-- Jump to previous diagnostic hint
 nmap_with('[D', function()
   vim.diagnostic.goto_prev {
     severity = vim.diagnostic.severity.HINT
   }
 end)
+-- Jump to next diagnostic hint
 nmap_with(']D', function()
   vim.diagnostic.goto_next {
     severity = vim.diagnostic.severity.HINT
   }
 end)
 
--- Barbar / buffers
+-- ## Buffers ##
+
+-- Switch to highlighted buffer
 nmap('<c-b>', '<cmd>BufferPick<cr>')
-nmap('<c-n>', '<cmd>BufferNext<cr>')
+-- Switch to previous/left buffer
 nmap('<c-p>', '<cmd>BufferPrevious<cr>')
-nmap('<a->>', '<cmd>BufferMoveNext<cr>')
+-- Switch to next/right buffer
+nmap('<c-n>', '<cmd>BufferNext<cr>')
+-- Shift current buffer to the left
 nmap('<a-<>', '<cmd>BufferMovePrevious<cr>')
+-- Shift current buffer to the right
+nmap('<a->>', '<cmd>BufferMoveNext<cr>')
+-- Quit all buffers
 nmap('<c-g>q', ':bufdo bd!<cr>')
+-- Close current buffer
 nmap('Q', '<cmd>BufferClose!<cr>')
 
--- Telescope
+-- ## Telescope ##
+
+-- Open file discovery window
 map_telescope('p', 'find_files')
+-- Open live grep window
 map_telescope('f', 'live_grep theme=dropdown')
+-- Open command history window
 map_telescope('h', 'command_history theme=dropdown')
+-- Open search history window
 map_telescope('s', 'search_history theme=dropdown')
+-- Open spell suggest window
 map_telescope('c', 'spell_suggest theme=get_cursor')
+-- Open manual pages discovery window
 map_telescope('m', 'man_pages')
+-- Open active regsiters window
 map_telescope('r', 'registers theme=dropdown')
+-- Open live grep window using the word at cursor as a search term
 map_telescope('*', 'grep_string')
+-- Open global diagnostics discovery window
 map_telescope('lD', 'diagnostics')
+-- Open buffer diagnostics discovery window
 map_telescope('ld', 'diagnostics bufnr=0')
+-- Jump to symbol references at cursor
 map_telescope('lr', 'lsp_references')
+-- Jump to symbol implementations at cursor
 map_telescope('li', 'lsp_implementations')
+-- Jump to symbol definition at cursor
 map_telescope('lg', 'lsp_definitions')
+-- Open git commits window
 map_telescope('gc', 'git_commits')
+-- Open git branches window
 map_telescope('gb', 'git_branches')
+-- Open git status window
 map_telescope('gs', 'git_status')
 
--- ToggleTerm
+-- Open terminal window
 nmap('<c-g>t', '<cmd>ToggleTerm<cr>')
 
--- Renamer
+-- Rename symbol at cursor
 nmap_with('<c-g>r', function()
   utils.exec_from('renamer', function(r) r.rename() end)
 end)
 
+-- Substitude word at cursor
 nmap_with('<c-g>s', function()
   local word = vim.fn.expand('<cword>')
 
   utils.popup_substitute(word)
 end)
 
+-- Substitude current visual selection
 vmap_with('<c-r>', function()
   vim.cmd('normal! "vy"')
 

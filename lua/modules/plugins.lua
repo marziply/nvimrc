@@ -96,9 +96,11 @@ servers = {
     name = 'denols',
     config = function()
       local lsp = require('lspconfig')
+      local tsconfig_exists = io.open('tsconfig.json', 'r') ~= nil
 
       return {
         root_dir = lsp.util.root_pattern('deno.json'),
+        autostart = not tsconfig_exists,
         init_options = {
           enable = true,
           lint = true,
@@ -378,12 +380,12 @@ packer.startup {
         plug {
           'formatter',
           init = function(fmt)
+            -- local lua_fmt = require('formatter.filetypes.lua')
             -- local ts_fmt = require('formatter.filetypes.typescript')
             local ts_fmt = require('formatter.defaults.prettier')
             local vue_fmt = require('formatter.filetypes.vue')
             local rs_fmt = require('formatter.filetypes.rust')
             local go_fmt = require('formatter.filetypes.go')
-            -- local lua_fmt = require('formatter.filetypes.lua')
 
             fmt.setup {
               filetype = {
