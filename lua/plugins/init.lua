@@ -25,5 +25,6 @@ return vim.list_extend(uses, {
   "AndrewRadev/splitjoin.vim",
   "MunifTanjim/nui.nvim",
   "cstrahan/vim-capnp",
-  "sheerun/vim-polyglot"
+  "sheerun/vim-polyglot",
+  "jghauser/mkdir.nvim"
 })
