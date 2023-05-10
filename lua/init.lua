@@ -1,21 +1,44 @@
-local dir = 'modules'
-local modules = {
-	'bootstrap',
-	'plugins',
+local manager = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+
+local function init()
+  local lazy = require("lazy")
+
+  return lazy.setup("plugins", {
+    lockfile = vim.fn.stdpath("config") .. "/lock.json",
+    concurrency = 10,
+		change_detection = {
+			notify = false
+		}
+  })
+end
+
+if not vim.loop.fs_stat(manager) then
+	vim.fn.system {
+		"git",
+		"clone",
+		"--filter=blob:none",
+		"https://github.com/folke/lazy.nvim",
+		"--branch=stable",
+		manager
+	}
+end
+
+vim.opt.rtp:prepend(manager)
+
+vim.diagnostic.config {
+  update_in_insert = true
 }
 
-function src(path)
-	vim.cmd('so ' .. vim.g.nvim_dir .. '/' .. path)
-end
+vim.g.markdown_fenced_languages = {
+  "ft=typescript"
+}
 
-for _, name in ipairs(modules) do
-	local path = dir .. '.' .. name
-	local ok, err = pcall(require, path)
-	local report = vim.api.nvim_error_writeln
+vim.api.nvim_create_autocmd("LspAttach", {
+	callback = function(args)
+		local client = vim.lsp.get_client_by_id(args.data.client_id)
 
-	if ok then
-		require(path)
-	else
-		report('Error in module "' .. path .. '": ' .. err .. '\n\n')
+		client.server_capabilities.semanticTokensProvider = nil
 	end
-end
+})
+
+return init()

@@ -71,6 +71,10 @@ nmap('<c-m>O', 'O<esc>O')
 nmap('<c-g>R', ':LspRestart<cr>')
 -- Show LSP info on buffer
 nmap('<c-g>I', ':LspInfo<cr>')
+-- Sync Packer
+nmap('<c-g>S', ':PackerSync<cr>')
+-- Update packages via Packer
+nmap('<c-g>U', ':PackerUpdate<cr>')
 -- Insert one line up
 nmap('mo', 'o<esc>')
 -- Insert one line down

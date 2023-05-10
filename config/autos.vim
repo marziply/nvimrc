@@ -29,16 +29,6 @@ aug vim_config
 	au BufWritePost */nvim/config/*.vim lua src('init.vim')
 aug end
 
-aug packer_config
-	au!
-	au BufWritePost */nvim/*.lua so % | PackerCompile
-aug end
-
-aug cargo_config
-	au!
-	au BufWritePost Cargo.toml LspRestart
-aug end
-
 aug diagnostics
   au!
   au CursorHold,CursorHoldI * call Diagnostic()
