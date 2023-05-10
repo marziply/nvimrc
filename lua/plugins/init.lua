@@ -5,14 +5,16 @@ local uses = {
 	"kylechui/nvim-surround",
 	"nvim-pack/nvim-spectre",
 	"simrat39/rust-tools.nvim",
-	"sigmasd/deno-nvim"
+	"sigmasd/deno-nvim",
+  "j-hui/fidget.nvim"
 }
 
 for i, value in ipairs(uses) do
   table.remove(uses, i)
   table.insert(uses, i, {
     value,
-    config = true
+    config = true,
+    priority = 100
   })
 end
 
