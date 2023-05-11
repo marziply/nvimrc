@@ -1,4 +1,5 @@
 local manager = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+local utils = require("modules.utils")
 
 require("modules.maps")
 
@@ -41,6 +42,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 		client.server_capabilities.semanticTokensProvider = nil
 	end
+})
+
+vim.api.nvim_create_user_command("Reload", utils.reload, {
+	nargs = 1
 })
 
 return init()

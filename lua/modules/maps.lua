@@ -49,6 +49,10 @@ end
 nmap("<esc>", ":echo<cr>", {
 	silent = true
 })
+-- Remap ctrl c to escape in norm/vis
+map("", "<c-c>", "<esc>")
+-- Remap ctrl c to escape in ins/cmd
+map("!", "<c-c>", "<esc>")
 -- Unbind default <c-f> binding
 nmap("<c-f>", "<nop>")
 -- Save buffer
