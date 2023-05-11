@@ -1,3 +1,6 @@
-# Vim configuration
+# Neovim Configuration
 
-Personal Vim configuration, for use with Neovim. Feel free to use or modify for your own use.
+My personal configuration setup for Neovim. Included are various plugins for
+emulating a similar experience to an IDE. Packager manager of choice is
+[lazy.nvim](https://github.com/folke/lazy.nvim) with Neovim's native
+[LSP module](https://github.com/neovim/nvim-lspconfig).
