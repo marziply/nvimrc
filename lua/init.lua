@@ -45,7 +45,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 
 vim.api.nvim_create_user_command("Reload", utils.reload, {
-	nargs = 1
+	nargs = 1,
+	complete = function()
+		local config = require("lazy.core.config")
+
+		return vim.tbl_keys(config.plugins)
+	end
 })
 
 return init()
