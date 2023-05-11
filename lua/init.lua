@@ -1,5 +1,7 @@
 local manager = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
+require("modules.maps")
+
 local function init()
   local lazy = require("lazy")
 

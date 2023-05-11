@@ -26,5 +26,6 @@ return vim.list_extend(uses, {
   "MunifTanjim/nui.nvim",
   "cstrahan/vim-capnp",
   "sheerun/vim-polyglot",
-  "jghauser/mkdir.nvim"
+  "jghauser/mkdir.nvim",
+  "sitiom/nvim-numbertoggle"
 })

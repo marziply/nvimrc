@@ -68,13 +68,15 @@ nmap("<c-m>o", "o<esc>o")
 -- Insert two lines down
 nmap("<c-m>O", "O<esc>O")
 -- Restart LSP
-nmap("<c-g>R", ":LspRestart<cr>")
+nmap("<c-g>lR", ":LspRestart<cr>")
 -- Show LSP info on buffer
-nmap("<c-g>I", ":LspInfo<cr>")
--- Sync Packer
+nmap("<c-g>lI", ":LspInfo<cr>")
+-- Sync Lazy
 nmap("<c-g>S", ":Lazy sync<cr>")
--- Update packages via Packer
+-- Update packages via Lazy
 nmap("<c-g>U", ":Lazy update<cr>")
+-- Show Lazy UI
+nmap("<c-g>I", ":Lazy show<cr>")
 -- Insert one line up
 nmap("mo", "o<esc>")
 -- Insert one line down
@@ -101,6 +103,21 @@ nmap("v]", "$%V%o$")
 nmap("gcs", "v[gc")
 -- Comment toggle block backward
 nmap("gcS", "v]gc")
+-- Reload all plugins
+-- nmap_with("<c-g>R", function()
+--   local config = require("lazy.core.config")
+--   local loader = require("lazy.core.loader")
+--
+--   for name, plugin in pairs(config.plugins) do
+--     local ok = pcall(loader.reload, plugin)
+--
+--     if ok then
+--       print("Reloaded " .. name)
+--     end
+--   end
+--
+--   print("All plugins reloaded")
+-- end)
 
 -- ## Utils ##
 
