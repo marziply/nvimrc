@@ -1,3 +1,20 @@
+local function mapper(value)
+	return {
+		name = value
+	}
+end
+local buf_sources = vim.tbl_map(mapper, {
+	"nvim_lsp",
+	"nvim_lsp_signature_help",
+	"luasnip",
+	"crates",
+	"path",
+	"cmd"
+})
+local win_sources = vim.tbl_map(mapper, {
+	"buffer"
+})
+
 local function jump(cmp, x)
 	local snip = require("luasnip")
 
@@ -46,6 +63,19 @@ return {
 			})
 
 			return {
+				sources = cmp.config.sources(buf_sources, win_sources),
+				enabled = function()
+					local ctx = require("cmp.config.context")
+					local mode = vim.api.nvim_get_mode()
+					local cap = ctx.in_treesitter_capture("comment")
+					local syn = ctx.in_syntax_group("Comment")
+
+					if mode.mode == "c" then
+						return true
+					else
+						return not cap and not syn
+					end
+				end,
 				snippet = {
 					expand = function(args)
 						snip.lsp_expand(args.body)
@@ -54,29 +84,6 @@ return {
 				window = {
 					documentation = cmp.config.window.bordered()
 				},
-				sources = cmp.config.sources {
-					{
-						name = "nvim_lsp"
-					},
-					-- {
-						--   name = "nvim_lsp_signature_help"
-					-- },
-					{
-						name = "luasnip"
-					},
-					{
-						name = "crates"
-					},
-					{
-						name = "path"
-					},
-					{
-						name = "cmd"
-					},
-					{
-						name = "buffer"
-					}
-				},
 				mapping = map.preset.insert {
 					["<c-n>"] = jump(cmp, 1),
 					["<c-p>"] = jump(cmp, -1),
@@ -84,7 +91,6 @@ return {
 					["<c-u>"] = map.scroll_docs(-4),
 					["<tab>"] = map.select_next_item(select_opts),
 					["<s-tab>"] = map.select_prev_item(select_opts),
-					["<esc>"] = map.abort(),
 					["<cr>"] = map.confirm()
 				},
 				formatting = {
