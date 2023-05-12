@@ -4,7 +4,7 @@ return {
     opts = {
       style = "warmer"
     },
-		init = function(onedark)
+		init = function()
       local onedark = require("onedark")
 
 			onedark.load()

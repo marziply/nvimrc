@@ -5,7 +5,8 @@ local servers = {
   "bashls"
 }
 
-local function extend_caps(cmp, defs)
+local function extend_caps(defs)
+	local cmp = require("cmp_nvim_lsp")
 	local caps = cmp.default_capabilities()
 
 	return vim.tbl_deep_extend("force", defs.capabilities, caps)
@@ -16,12 +17,11 @@ return {
 		"neovim/nvim-lspconfig",
 		init = function()
       local lsp = require("lspconfig")
-			local cmp = require("cmp_nvim_lsp")
-			local defs = lsp.util.default_config
 			local path = vim.fn.stdpath("config") .. "/lua/servers"
 			local files = io.popen("ls -A " .. path)
+			local defs = lsp.util.default_config
 
-			defs.capabilities = extend_caps(cmp, defs)
+			defs.capabilities = extend_caps(defs)
 
 			if files ~= nil then
 				for name in files:lines() do

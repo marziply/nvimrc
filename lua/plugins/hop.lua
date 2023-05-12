@@ -1,3 +1,21 @@
+local function map_fn(fn, dir, opts)
+	return function()
+		local arg = vim.tbl_extend("keep", opts or {}, {
+			direction = dir
+		})
+
+		return fn(arg)
+	end
+end
+
+local function map_line(fn, opts)
+	local hints = require("hop.hint")
+	local dirs = hints.HintDirection
+	local before, after = dirs.BEFORE_CURSOR, dirs.AFTER_CURSOR
+
+	return map_fn(fn, before, opts), map_fn(fn, after, opts)
+end
+
 return {
 	{
 		-- "phaazon/hop.nvim",
@@ -9,47 +27,24 @@ return {
 			uppercase_labels = true
 		},
 		init = function()
-      local maps = require("modules.maps")
       local hop = require("hop")
-			local hints = require("hop.hint")
-			local dirs = hints.HintDirection
+      local maps = require("modules.maps")
+			local up_char, down_char = map_line(hop.hint_char2)
+			local up_vert, down_vert = map_line(hop.hint_vertical)
+			local left_horiz, right_horiz = map_line(hop.hint_words, {
+				current_line_only = true
+			})
 
 			maps.nmap_with_all {
-				["T"] = function()
-					hop.hint_char2 {
-						direction = dirs.BEFORE_CURSOR
-					}
-				end,
-				["t"] = function()
-					hop.hint_char2 {
-						direction = dirs.AFTER_CURSOR
-					}
-				end,
+				["T"] = up_char,
+				["t"] = down_char,
+				["<c-t>k"] = up_vert,
+				["<c-t>j"] = down_vert,
+				["<c-t>h"] = left_horiz,
+				["<c-t>l"] = right_horiz,
 				["s"] = function()
 					hop.hint_char2 {
 						multi_windows = true
-					}
-				end,
-				["<c-t>k"] = function()
-					hop.hint_vertical {
-						direction = dirs.BEFORE_CURSOR
-					}
-				end,
-				["<c-t>j"] = function()
-					hop.hint_vertical {
-						direction = dirs.AFTER_CURSOR
-					}
-				end,
-				["<c-t>h"] = function()
-					hop.hint_words {
-						direction = dirs.BEFORE_CURSOR,
-						current_line_only = true
-					}
-				end,
-				["<c-t>l"] = function()
-					hop.hint_words {
-						direction = dirs.AFTER_CURSOR,
-						current_line_only = true
 					}
 				end
 			}

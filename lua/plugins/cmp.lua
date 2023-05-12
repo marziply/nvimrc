@@ -15,7 +15,8 @@ local win_sources = vim.tbl_map(mapper, {
 	"buffer"
 })
 
-local function jump(cmp, x)
+local function jump(x)
+	local cmp = require("cmp")
 	local snip = require("luasnip")
 
 	local function callback(fallback)
@@ -38,37 +39,18 @@ return {
 		opts = function()
       local cmp = require("cmp")
 			local snip = require("luasnip")
-			local loaders = require("luasnip.loaders.from_vscode")
-			local handlers = require("nvim-autopairs.completion.handlers")
-			local pairs = require("nvim-autopairs.completion.cmp")
 			local map = cmp.mapping
-			local select_opts = {
+			local select = {
 				behavior = cmp.SelectBehavior.Insert
 			}
-
-			loaders.lazy_load()
-
-			cmp.event:on("confirm_done", pairs.on_confirm_done {
-				filetypes = {
-					["*"] = {
-						["("] = {
-							handler = handlers["*"],
-							kind = {
-								cmp.lsp.CompletionItemKind.Function,
-								cmp.lsp.CompletionItemKind.Method
-							}
-						}
-					}
-				}
-			})
 
 			return {
 				sources = cmp.config.sources(buf_sources, win_sources),
 				enabled = function()
 					local ctx = require("cmp.config.context")
-					local mode = vim.api.nvim_get_mode()
 					local cap = ctx.in_treesitter_capture("comment")
 					local syn = ctx.in_syntax_group("Comment")
+					local mode = vim.api.nvim_get_mode()
 
 					if mode.mode == "c" then
 						return true
@@ -85,12 +67,12 @@ return {
 					documentation = cmp.config.window.bordered()
 				},
 				mapping = map.preset.insert {
-					["<c-n>"] = jump(cmp, 1),
-					["<c-p>"] = jump(cmp, -1),
+					["<c-n>"] = jump(1),
+					["<c-p>"] = jump(-1),
 					["<c-d>"] = map.scroll_docs(4),
 					["<c-u>"] = map.scroll_docs(-4),
-					["<tab>"] = map.select_next_item(select_opts),
-					["<s-tab>"] = map.select_prev_item(select_opts),
+					["<tab>"] = map.select_next_item(select),
+					["<s-tab>"] = map.select_prev_item(select),
 					["<cr>"] = map.confirm()
 				},
 				formatting = {
@@ -108,12 +90,34 @@ return {
 				}
 			}
 		end,
+		init = function()
+      local cmp = require("cmp")
+			local loaders = require("luasnip.loaders.from_vscode")
+			local handlers = require("nvim-autopairs.completion.handlers")
+			local pairs = require("nvim-autopairs.completion.cmp")
+
+			loaders.lazy_load()
+
+			cmp.event:on("confirm_done", pairs.on_confirm_done {
+				filetypes = {
+					["*"] = {
+						["("] = {
+							handler = handlers["*"],
+							kind = {
+								cmp.lsp.CompletionItemKind.Function,
+								cmp.lsp.CompletionItemKind.Method
+							}
+						}
+					}
+				}
+			})
+		end,
 		dependencies = {
 			"hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/cmp-nvim-lsp-signature-help",
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-path",
-			"hrsh7th/cmp-cmdline",
+			"hrsh7th/cmp-cmdline"
 		}
-	},
+	}
 }
