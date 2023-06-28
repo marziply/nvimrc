@@ -2,11 +2,8 @@ return {
 	{
 		"mhartington/formatter.nvim",
 		opts = function()
-			-- local lua_fmt = require("formatter.filetypes.lua")
-			-- local ts_fmt = require("formatter.filetypes.typescript")
 			local ts_fmt = require("formatter.defaults.prettier")
 			local vue_fmt = require("formatter.filetypes.vue")
-			local rs_fmt = require("formatter.filetypes.rust")
 			local go_fmt = require("formatter.filetypes.go")
 
 			return {
@@ -16,7 +13,16 @@ return {
 						-- ts_fmt.eslint_d
 					},
 					rust = {
-						rs_fmt.rustfmt
+						function()
+							return {
+								exe = "rustfmt",
+								stdin = true,
+								args = {
+									"+nightly",
+									"--edition 2021"
+								}
+							}
+						end
 					},
 					go = {
 						go_fmt.gofmt

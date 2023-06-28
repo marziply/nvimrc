@@ -55,8 +55,10 @@ map("", "<c-c>", "<esc>")
 imap("<c-c>", "<esc>")
 -- Unbind default <c-f> binding
 nmap("<c-f>", "<nop>")
--- Save buffer
+-- Save buffer in normal mode
 nmap("<c-s>", ":w<cr>")
+-- Save buffer in insert mode
+imap("<c-s>", "<esc>:w<cr>")
 -- Quit buffer
 nmap("<c-q>", ":bd<cr>")
 -- Scroll up
