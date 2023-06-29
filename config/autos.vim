@@ -1,11 +1,5 @@
 fun! Diagnostic()
-  lua << EOF
-    vim.diagnostic.open_float(nil, {
-      focus = false,
-      scope = "cursor",
-      -- severity = vim.diagnostic.severity.ERROR
-    })
-EOF
+  lua vim.diagnostic.open_float(nil, { focus = false, scope = "cursor" })
 endfun
 
 aug general
@@ -16,18 +10,17 @@ aug end
 aug filetypes
 	au!
 	au BufEnter,BufReadPost,BufWritePost *.{njk,tera}.html,*.html.tera setl ft=htmldjango
-	au BufEnter,BufReadPost,BufWritePost *.rs setl shiftwidth=2
-	au BufEnter,BufReadPost,BufWritePost *.ts setl shiftwidth=2
+	au BufEnter,BufReadPost,BufWritePost *.rs,*.ts setl shiftwidth=2
+	au BufEnter,BufReadPost,BufWritePost *.env*,*.zsh setl ft=sh
 	au BufEnter,BufReadPost,BufWritePost *.capnp setl ft=capnp
-	au BufEnter,BufReadPost,BufWritePost *.sway setl ft=i3config
-	au BufEnter,BufReadPost,BufWritePost *.env* setl ft=sh
 	au BufEnter,BufReadPost,BufWritePost *.rasi setl ft=rasi
+	au BufEnter,BufReadPost,BufWritePost *.sway setl ft=i3config
 	au BufEnter,BufReadPost,BufWritePost *.h setl ft=c
 aug end
 
 aug vim_config
 	au!
-	au BufWritePost */nvim/config/*.vim lua src('init.vim')
+	au BufWritePost */nvim/config/*.vim so <sfile>
 aug end
 
 aug diagnostics
