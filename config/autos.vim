@@ -10,6 +10,7 @@ aug end
 aug filetypes
 	au!
 	au BufEnter,BufReadPost,BufWritePost *.{njk,tera}.html,*.html.tera setl ft=htmldjango
+	au BufEnter,BufReadPost,BufWritePost *.dockerfile setl ft=dockerfile
 	au BufEnter,BufReadPost,BufWritePost *.rs,*.ts setl shiftwidth=2
 	au BufEnter,BufReadPost,BufWritePost *.env*,*.zsh setl ft=sh
 	au BufEnter,BufReadPost,BufWritePost *.capnp setl ft=capnp

@@ -8,24 +8,24 @@ return {
 			-- 		highlight = "NoText"
 			-- 	}
 			-- }
-			server = {
-				settings = {
-					["rust-analyzer"] = {
-						rustfmt = {
-							extraArgs = {
-								"+nightly"
-							}
-						}
-					}
-				},
-				["rust-analyzer"] = {
-					rustfmt = {
-						extraArgs = {
-							"+nightly"
-						}
-					}
-				}
-			}
+			-- server = {
+			-- 	settings = {
+			-- 		["rust-analyzer"] = {
+			-- 			rustfmt = {
+			-- 				extraArgs = {
+			-- 					"+nightly"
+			-- 				}
+			-- 			}
+			-- 		}
+			-- 	},
+			-- 	["rust-analyzer"] = {
+			-- 		rustfmt = {
+			-- 			extraArgs = {
+			-- 				"+nightly"
+			-- 			}
+			-- 		}
+			-- 	}
+			-- }
 		},
 		dependencies = {
 			"saecki/crates.nvim",

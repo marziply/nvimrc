@@ -5,10 +5,10 @@ local function map(kind, bind, cmd, opts)
 end
 
 local function map_telescope(char, opt)
-  local bind = "<c-f>" .. char
-  local cmd = "<cmd>Telescope " .. opt .. "<cr>"
+	local bind = "<c-t>" .. char
+	local cmd = "<cmd>Telescope " .. opt .. "<cr>"
 
-  nmap(bind, cmd)
+	nmap(bind, cmd)
 end
 
 function nmap(bind, cmd, opts)
@@ -24,15 +24,15 @@ function imap(bind, cmd, opts)
 end
 
 function nmap_all(binds)
-  for bind, cmd in pairs(binds) do
-    nmap(bind, cmd)
-  end
+	for bind, cmd in pairs(binds) do
+		nmap(bind, cmd)
+	end
 end
 
 function nmap_with_all(binds)
-  for bind, fn in pairs(binds) do
-    nmap_with(bind, fn)
-  end
+	for bind, fn in pairs(binds) do
+		nmap_with(bind, fn)
+	end
 end
 
 function nmap_with(bind, fn)
@@ -40,14 +40,14 @@ function nmap_with(bind, fn)
 end
 
 function vmap_with(bind, fn)
-  return vim.keymap.set("v", bind, fn)
+	return vim.keymap.set("v", bind, fn)
 end
 
 -- ## General ##
 
 -- Reset CMD output
 nmap("<esc>", ":echo<cr>", {
-	silent = true
+	silent = true,
 })
 -- Remap ctrl c to escape in norm/vis
 map("", "<c-c>", "<esc>")
@@ -128,42 +128,51 @@ nmap("gcS", "v]gc")
 -- ## Utils ##
 
 -- Open ZSH config
-nmap_with("<c-g>z", function() utils.configure_zsh() end)
+nmap_with("<c-g>z", function()
+	utils.configure_zsh()
+end)
+
+-- Open Spectre window
+nmap_with("<c-g>R", function()
+	local spectre = require("spectre")
+
+	spectre.open()
+end)
 
 -- ## LSP ##
 
 -- Open diagnostics window
 nmap_with("<c-g>d", function()
-  vim.diagnostic.open_float {
-    severity = vim.diagnostic.severity.HINT
-  }
-  vim.diagnostic.open_float {
-    severity = vim.diagnostic.severity.WARN
-  }
+	vim.diagnostic.open_float({
+		severity = vim.diagnostic.severity.HINT,
+	})
+	vim.diagnostic.open_float({
+		severity = vim.diagnostic.severity.WARN,
+	})
 end)
 -- Jump to previous diagnostic error
 nmap_with("[d", function()
-  vim.diagnostic.goto_prev {
-    severity = vim.diagnostic.severity.ERROR
-  }
+	vim.diagnostic.goto_prev({
+		severity = vim.diagnostic.severity.ERROR,
+	})
 end)
 -- Jump to next diagnostic error
 nmap_with("]d", function()
-  vim.diagnostic.goto_next {
-    severity = vim.diagnostic.severity.ERROR
-  }
+	vim.diagnostic.goto_next({
+		severity = vim.diagnostic.severity.ERROR,
+	})
 end)
 -- Jump to previous diagnostic hint
 nmap_with("[D", function()
-  vim.diagnostic.goto_prev {
-    severity = vim.diagnostic.severity.HINT
-  }
+	vim.diagnostic.goto_prev({
+		severity = vim.diagnostic.severity.HINT,
+	})
 end)
 -- Jump to next diagnostic hint
 nmap_with("]D", function()
-  vim.diagnostic.goto_next {
-    severity = vim.diagnostic.severity.HINT
-  }
+	vim.diagnostic.goto_next({
+		severity = vim.diagnostic.severity.HINT,
+	})
 end)
 
 -- ## Buffers ##
@@ -190,27 +199,29 @@ map_telescope("p", "find_files")
 -- Open live grep window
 map_telescope("f", "live_grep theme=dropdown")
 -- Open command history window
-map_telescope("h", "command_history theme=dropdown")
+map_telescope("c", "command_history theme=dropdown")
 -- Open search history window
 map_telescope("s", "search_history theme=dropdown")
 -- Open spell suggest window
-map_telescope("c", "spell_suggest theme=get_cursor")
+map_telescope("S", "spell_suggest theme=get_cursor")
 -- Open manual pages discovery window
-map_telescope("m", "man_pages")
+map_telescope("M", "man_pages")
+-- Open marks window
+map_telescope("m", "marks")
 -- Open active regsiters window
 map_telescope("r", "registers theme=dropdown")
+-- Open undo window
+map_telescope("u", "undo")
 -- Open live grep window using the word at cursor as a search term
 map_telescope("*", "grep_string")
--- Open global diagnostics discovery window
-map_telescope("lD", "diagnostics")
 -- Open buffer diagnostics discovery window
-map_telescope("ld", "diagnostics bufnr=0")
+map_telescope("lD", "diagnostics bufnr=0")
 -- Jump to symbol references at cursor
 map_telescope("lr", "lsp_references")
 -- Jump to symbol implementations at cursor
 map_telescope("li", "lsp_implementations")
 -- Jump to symbol definition at cursor
-map_telescope("lg", "lsp_definitions")
+map_telescope("ld", "lsp_definitions")
 -- Open git commits window
 map_telescope("gc", "git_commits")
 -- Open git branches window
@@ -223,28 +234,30 @@ nmap("<c-g>t", "<cmd>ToggleTerm<cr>")
 
 -- Rename symbol at cursor
 nmap_with("<c-g>r", function()
-  utils.exec_from("renamer", function(r) r.rename() end)
+	utils.exec_from("renamer", function(r)
+		r.rename()
+	end)
 end)
 
 -- Substitude word at cursor
 nmap_with("<c-g>s", function()
-  local word = vim.fn.expand("<cword>")
+	local word = vim.fn.expand("<cword>")
 
-  utils.popup_substitute(word)
+	utils.popup_substitute(word)
 end)
 
 -- Substitude current visual selection
 vmap_with("<c-r>", function()
-  vim.cmd[[normal! "vy"]]
+	vim.cmd([[normal! "vy"]])
 
-  utils.popup_substitute(vim.fn.getreg("v"))
+	utils.popup_substitute(vim.fn.getreg("v"))
 end)
 
 return {
 	nmap = nmap,
 	vmap = vmap,
 	imap = imap,
-  nmap_all = nmap_all,
+	nmap_all = nmap_all,
 	nmap_with = nmap_with,
-  nmap_with_all = nmap_with_all
+	nmap_with_all = nmap_with_all,
 }

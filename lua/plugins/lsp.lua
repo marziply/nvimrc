@@ -2,7 +2,8 @@ local servers = {
   "gopls",
   "bufls",
   "tflint",
-  "bashls"
+  "bashls",
+	"jsonnet_ls"
 }
 
 local function extend_caps(defs)

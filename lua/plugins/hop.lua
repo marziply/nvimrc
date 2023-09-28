@@ -1,7 +1,7 @@
 local function map_fn(fn, dir, opts)
 	return function()
 		local arg = vim.tbl_extend("keep", opts or {}, {
-			direction = dir
+			direction = dir,
 		})
 
 		return fn(arg)
@@ -18,36 +18,35 @@ end
 
 return {
 	{
-		-- "phaazon/hop.nvim",
-		-- branch = 'v2',
-		"aznhe21/hop.nvim",
-		branch = "fix-some-bugs",
+		"smoka7/hop.nvim",
 		opts = {
 			jump_on_sole_occurence = true,
-			uppercase_labels = true
+			uppercase_labels = true,
 		},
 		init = function()
-      local hop = require("hop")
-      local maps = require("modules.maps")
+			local hop = require("hop")
+			local maps = require("modules.maps")
 			local up_char, down_char = map_line(hop.hint_char2)
-			local up_vert, down_vert = map_line(hop.hint_vertical)
-			local left_horiz, right_horiz = map_line(hop.hint_words, {
-				current_line_only = true
+			local up_v, down_v = map_line(hop.hint_vertical)
+			local left_h, right_h = map_line(hop.hint_words, {
+				current_line_only = true,
 			})
 
-			maps.nmap_with_all {
+			maps.nmap_with_all({
 				["T"] = up_char,
 				["t"] = down_char,
-				["<c-t>k"] = up_vert,
-				["<c-t>j"] = down_vert,
-				["<c-t>h"] = left_horiz,
-				["<c-t>l"] = right_horiz,
+				["<c-h>u"] = up_char,
+				["<c-h>d"] = down_char,
+				["<c-h>k"] = up_v,
+				["<c-h>j"] = down_v,
+				["<c-h>h"] = left_h,
+				["<c-h>l"] = right_h,
 				["s"] = function()
-					hop.hint_char2 {
-						multi_windows = true
-					}
-				end
-			}
-		end
-	}
+					hop.hint_char2({
+						multi_windows = true,
+					})
+				end,
+			})
+		end,
+	},
 }

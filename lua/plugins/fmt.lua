@@ -1,40 +1,56 @@
+function get_fmt(name, key)
+	local path = string.format("formatter.filetypes.%s", name)
+	local mod = require(path)
+
+	return {
+		mod[key],
+	}
+end
+
+function get_fmt_default(name)
+	local path = string.format("formatter.defaults.%s", name)
+
+	return {
+		require(path),
+	}
+end
+
 return {
 	{
 		"mhartington/formatter.nvim",
 		opts = function()
-			local ts_fmt = require("formatter.defaults.prettier")
-			local vue_fmt = require("formatter.filetypes.vue")
-			local go_fmt = require("formatter.filetypes.go")
-
 			return {
 				filetype = {
-					typescript = {
-						ts_fmt
-						-- ts_fmt.eslint_d
-					},
 					rust = {
 						function()
 							return {
-								exe = "rustfmt",
 								stdin = true,
+								exe = "rustfmt",
 								args = {
 									"+nightly",
-									"--edition 2021"
-								}
+									"--edition 2021",
+								},
 							}
-						end
+						end,
 					},
-					go = {
-						go_fmt.gofmt
+					jsonnet = {
+						function()
+							return {
+								stdin = true,
+								exe = "jsonnetfmt",
+								args = {
+									"--string-style d",
+									"-",
+								},
+							}
+						end,
 					},
-					vue = {
-						vue_fmt.prettier
-					}
-					-- lua = {
-						--   lua_fmt.stylua
-					-- },
-				}
+					typescript = get_fmt_default("prettier"),
+					go = get_fmt("go", "gofmt"),
+					vue = get_fmt("vue", "prettier"),
+					lua = get_fmt("lua", "stylua"),
+				},
 			}
-		end
-	}
+		end,
+	},
 }
