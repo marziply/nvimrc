@@ -1,9 +1,9 @@
 local servers = {
-  "gopls",
-  "bufls",
-  "tflint",
-  "bashls",
-	"jsonnet_ls"
+	"gopls",
+	"bufls",
+	"tflint",
+	"bashls",
+	"jsonnet_ls",
 }
 
 local function extend_caps(defs)
@@ -17,15 +17,23 @@ return {
 	{
 		"neovim/nvim-lspconfig",
 		init = function()
-      local lsp = require("lspconfig")
+			local lsp = require("lspconfig")
 			local path = vim.fn.stdpath("config") .. "/lua/servers"
 			local files = io.popen("ls -A " .. path)
-			local defs = lsp.util.default_config
+			-- local defs = lsp.util.default_config
 
-			defs.capabilities = extend_caps(defs)
+			-- defs.capabilities = extend_caps(defs)
+
+			-- local caps = cmp.default_capabilities(vim.lsp.protocol.make_client_capabilities())
+
+			-- caps.textDocument.completion.completionItem.snippetSupport = false
 
 			if files ~= nil then
 				for name in files:lines() do
+					if vim.tbl_contains(servers, name) then
+						error("Conflict in LSP server configuration")
+					end
+
 					local key = string.gsub(name, ".lua", "")
 					local mod = string.format("servers.%s", key)
 					local ok, config = pcall(require, mod)
@@ -48,6 +56,6 @@ return {
 
 				server.setup({})
 			end
-		end
-	}
+		end,
+	},
 }

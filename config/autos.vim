@@ -16,21 +16,26 @@ aug filetypes
 	au BufEnter,BufReadPost,BufWritePost *.capnp setl ft=capnp
 	au BufEnter,BufReadPost,BufWritePost *.rasi setl ft=rasi
 	au BufEnter,BufReadPost,BufWritePost *.sway setl ft=i3config
+	au BufEnter,BufReadPost,BufWritePost *.sql setl ft=pgsql
+	au BufEnter,BufReadPost,BufWritePost *.tmpl.* setl ft=gotmpl
 	au BufEnter,BufReadPost,BufWritePost *.h setl ft=c
+	au BufEnter,BufReadPost,BufWritePost *.tfvars,*.env*,*.md,*.json,*.yaml setl nowrap
+	au BufEnter,BufReadPost,BufWritePost *.tfvars,*.env*,*.md,*.json,*.yaml setl shiftwidth=2
+	au BufEnter,BufReadPost,BufWritePost *.tm.hcl call system("terramate generate")
+	au BufEnter,BufReadPost,BufWritePost Earthfile setl ft=Earthfile
 aug end
 
 aug vim_config
 	au!
 	au BufWritePost */nvim/config/*.vim so <sfile>
+	" au BufWritePost */nvim/lua/plugins/init.lua so <sfile>
+	" au BufWritePost */nvim/lua/plugins/*.lua exec printf(
+	" 	\ "Lazy reload %s",
+	" 	\	expand("<sfile>:t:r")
+	" \)
 aug end
 
 aug diagnostics
   au!
   au CursorHold,CursorHoldI * call Diagnostic()
-aug end
-
-aug linters
-  au!
-  au BufWritePost * FormatWrite
-  " au BufWritePost * lua vim.lsp.buf.format()
 aug end

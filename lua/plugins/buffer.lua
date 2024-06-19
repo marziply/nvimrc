@@ -10,30 +10,48 @@ return {
 			icons = {
 				button = false,
 				filetype = {
-					enabled = false
-				}
-			}
+					enabled = false,
+				},
+			},
 		},
 		dependencies = {
 			{
 				"lewis6991/gitsigns.nvim",
 				opts = {
 					signs = {
+						-- delete = {
+						-- 	hl = "GitSignsDelete",
+						-- 	numhl = "GitSignsDeleteNr",
+						-- 	linehl = "GitSignsDeleteLn",
+						-- 	text = "ᐯ",
+						-- },
+						-- topdelete = {
+						-- 	hl = "GitSignsDelete",
+						-- 	numhl = "GitSignsDeleteNr",
+						-- 	linehl = "GitSignsDeleteLn",
+						-- 	text = "ᐱ",
+						-- },
 						delete = {
-							hl = "GitSignsDelete",
-							numhl = "GitSignsDeleteNr",
-							linehl = "GitSignsDeleteLn",
-							text = "ᐯ"
+							text = "_",
 						},
 						topdelete = {
-							hl = "GitSignsDelete",
-							numhl = "GitSignsDeleteNr",
-							linehl = "GitSignsDeleteLn",
-							text = "ᐱ"
-						}
-					}
-				}
-			}
-		}
-	}
+							text = "‾",
+						},
+						add = {
+							text = "┃",
+						},
+						change = {
+							text = "┃",
+						},
+						changedelete = {
+							text = "~",
+						},
+						untracked = {
+							text = "┆",
+						},
+					},
+				},
+			},
+		},
+	},
 }

@@ -17,13 +17,8 @@ return vim.list_extend(uses, {
 	{
 		import = "plugins.lang",
 	},
-	-- "cstrahan/vim-capnp",
-	-- "MunifTanjim/nui.nvim",
-	"L3MON4D3/LuaSnip",
-	"saadparwaiz1/cmp_luasnip",
-	"rcarriga/nvim-notify",
 	"AndrewRadev/splitjoin.vim",
 	"sheerun/vim-polyglot",
-	"jghauser/mkdir.nvim",
 	"sitiom/nvim-numbertoggle",
+	"b0o/schemastore.nvim",
 })

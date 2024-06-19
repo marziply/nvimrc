@@ -5,10 +5,18 @@ local function sources()
 		}
 	end
 
+	local lsp_sources = {
+		{
+			name = "nvim_lsp",
+			entry_filter = function(entry)
+				local cmp = require("cmp")
+
+				return entry:get_kind() ~= cmp.lsp.CompletionItemKind.Snippet
+			end,
+		},
+	}
 	local buf_sources = vim.tbl_map(mapper, {
-		"nvim_lsp",
 		"nvim_lsp_signature_help",
-		"luasnip",
 		"crates",
 		"path",
 		"cmd",
@@ -17,22 +25,9 @@ local function sources()
 		"buffer",
 	})
 
-	return buf_sources, win_sources
-end
+	vim.list_extend(lsp_sources, buf_sources)
 
-local function jump(x)
-	local cmp = require("cmp")
-	local snip = require("luasnip")
-
-	local function callback(fallback)
-		if snip.jumpable(x) then
-			snip.jump(x)
-		else
-			fallback()
-		end
-	end
-
-	return cmp.mapping(callback, { "i", "s" })
+	return lsp_sources, win_sources
 end
 
 local function on_pairs_ready()
@@ -71,13 +66,20 @@ end
 local function cmp_key_binds()
 	local cmp = require("cmp")
 	local map = cmp.mapping
+	-- @NOTE: I don't know why this works.
+	local movement = cmp.mapping(function(cb)
+		cb()
+	end, {
+		"i",
+		"s",
+	})
 	local select = {
 		behavior = cmp.SelectBehavior.Insert,
 	}
 
 	return {
-		["<c-n>"] = jump(1),
-		["<c-p>"] = jump(-1),
+		["<c-n>"] = movement,
+		["<c-p>"] = movement,
 		["<c-d>"] = map.scroll_docs(4),
 		["<c-u>"] = map.scroll_docs(-4),
 		["<tab>"] = map.select_next_item(select),
@@ -86,18 +88,18 @@ local function cmp_key_binds()
 	}
 end
 
-local function expand_snip(args)
-	local snip = require("luasnip")
-
-	snip.lsp_expand(args.body)
-end
-
 local function cmp_fmt(item)
-	local label = item.abbr
-	local trunc = vim.fn.strcharpart(label, 0, 120)
+	local src_label = item.abbr or ""
+	local new_label = vim.fn.strcharpart(src_label, 0, 80)
+	local src_text = item.menu or ""
+	local new_text = vim.fn.strcharpart(src_text, 0, 80)
 
-	if trunc ~= label then
-		item.abbr = trunc .. "..."
+	if new_label ~= src_label then
+		item.abbr = new_label .. "..."
+	end
+
+	if new_text ~= src_text then
+		item.menu = new_text .. "..."
 	end
 
 	return item
@@ -108,18 +110,26 @@ return {
 		"hrsh7th/nvim-cmp",
 		opts = function()
 			local cmp = require("cmp")
+			-- local cmp_rs = require("cmp_lsp_rs")
 			local map = cmp.mapping
 			local buf_sources, win_sources = sources()
+			local win_opts = vim.tbl_extend("force", cmp.config.window.bordered(), {
+				max_width = 80,
+				max_height = 40,
+			})
+
+			-- for _, source in ipairs(buf_sources) do
+			-- 	cmp_rs.filter_out.entry_filter(source)
+			-- end
 
 			return {
 				enabled = is_cmp_enabled,
 				sources = cmp.config.sources(buf_sources, win_sources),
 				mapping = map.preset.insert(cmp_key_binds()),
-				snippet = {
-					expand = expand_snip,
-				},
+				preselect = cmp.PreselectMode.None,
 				window = {
-					documentation = cmp.config.window.bordered(),
+					completion = win_opts,
+					documentation = win_opts,
 				},
 				formatting = {
 					-- Fixes: nvim-cmp/discussions/609#discussioncomment-1844480
@@ -127,13 +137,18 @@ return {
 						return cmp_fmt(item)
 					end,
 				},
+				-- sorting = {
+				-- 	comparators = {
+				-- 		cmp.config.compare.exact,
+				-- 		cmp.config.compare.score,
+				-- 		cmp_rs.comparators.inscope_inherent_import,
+				-- 		cmp_rs.comparators.sort_by_label_but_underscore_last,
+				-- 	},
+				-- },
 			}
 		end,
 		init = function()
 			local cmp = require("cmp")
-			local loaders = require("luasnip.loaders.from_vscode")
-
-			loaders.lazy_load()
 
 			cmp.event:on("confirm_done", on_pairs_ready())
 		end,
@@ -143,6 +158,7 @@ return {
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-path",
 			"hrsh7th/cmp-cmdline",
+			-- "zjp-CN/nvim-cmp-lsp-rs",
 		},
 	},
 }

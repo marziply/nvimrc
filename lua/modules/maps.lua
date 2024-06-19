@@ -56,11 +56,15 @@ imap("<c-c>", "<esc>")
 -- Unbind default <c-f> binding
 nmap("<c-f>", "<nop>")
 -- Save buffer in normal mode
-nmap("<c-s>", ":w<cr>")
+nmap("<c-s>", ":w<cr>", {
+	silent = true,
+})
 -- Save buffer in insert mode
 imap("<c-s>", "<esc>:w<cr>")
 -- Quit buffer
-nmap("<c-q>", ":bd<cr>")
+nmap("<c-q>", ":bd<cr>", {
+	silent = true,
+})
 -- Scroll up
 nmap("<c-k>", "10<c-y>")
 -- Scroll down
@@ -83,6 +87,14 @@ nmap("<c-g>S", ":Lazy sync<cr>")
 nmap("<c-g>U", ":Lazy update<cr>")
 -- Show Lazy UI
 nmap("<c-g>I", ":Lazy show<cr>")
+-- Open terminal window
+nmap("<c-g>t", "<cmd>ToggleTerm<cr>")
+-- Source the current file
+nmap("<c-g>s", '<cmd>exec "source " . expand("%")<cr>')
+-- Git conflict take ours on all
+-- nmap("cO")
+-- Git conflict take ours theirs on all
+-- nmap("cT")
 -- Insert one line up
 nmap("mo", "o<esc>")
 -- Insert one line down
@@ -150,18 +162,6 @@ nmap_with("<c-g>d", function()
 		severity = vim.diagnostic.severity.WARN,
 	})
 end)
--- Jump to previous diagnostic error
-nmap_with("[d", function()
-	vim.diagnostic.goto_prev({
-		severity = vim.diagnostic.severity.ERROR,
-	})
-end)
--- Jump to next diagnostic error
-nmap_with("]d", function()
-	vim.diagnostic.goto_next({
-		severity = vim.diagnostic.severity.ERROR,
-	})
-end)
 -- Jump to previous diagnostic hint
 nmap_with("[D", function()
 	vim.diagnostic.goto_prev({
@@ -174,6 +174,31 @@ nmap_with("]D", function()
 		severity = vim.diagnostic.severity.HINT,
 	})
 end)
+-- Jump to previous warning hint
+nmap_with("[w", function()
+	vim.diagnostic.goto_prev({
+		severity = vim.diagnostic.severity.WARN,
+	})
+end)
+-- Jump to next arning hint
+nmap_with("]w", function()
+	vim.diagnostic.goto_next({
+		severity = vim.diagnostic.severity.WARN,
+	})
+end)
+-- Toggle inlay hints
+nmap_with("<c-g>i", function()
+	vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({}))
+end)
+
+-- ## Command line ##
+
+map("c", "<c-a>", "<home>")
+map("c", "<c-f>", "<right>")
+map("c", "<c-b>", "<left>")
+map("c", "<c-d>", "<del>")
+map("c", "<a-b>", "<s-left>")
+map("c", "<a-f>", "<s-right>")
 
 -- ## Buffers ##
 
@@ -208,6 +233,8 @@ map_telescope("S", "spell_suggest theme=get_cursor")
 map_telescope("M", "man_pages")
 -- Open marks window
 map_telescope("m", "marks")
+-- Open quick fixes
+map_telescope("q", "quickfix theme=dropdown")
 -- Open active regsiters window
 map_telescope("r", "registers theme=dropdown")
 -- Open undo window
@@ -228,9 +255,16 @@ map_telescope("gc", "git_commits")
 map_telescope("gb", "git_branches")
 -- Open git status window
 map_telescope("gs", "git_status")
+-- Open quick fixes
+nmap("<c-t>gC", "<cmd>GitConflictListQf<cr>")
+-- Open file browser in Neovim directory
+nmap_with("<c-t>c", function()
+	local telescope = require("telescope.builtin")
 
--- Open terminal window
-nmap("<c-g>t", "<cmd>ToggleTerm<cr>")
+	telescope.find_files({
+		cwd = string.format("%s/lua", vim.env.NVIM_DIR),
+	})
+end)
 
 -- Rename symbol at cursor
 nmap_with("<c-g>r", function()
@@ -240,11 +274,11 @@ nmap_with("<c-g>r", function()
 end)
 
 -- Substitude word at cursor
-nmap_with("<c-g>s", function()
-	local word = vim.fn.expand("<cword>")
-
-	utils.popup_substitute(word)
-end)
+-- nmap_with("<c-g>s", function()
+-- 	local word = vim.fn.expand("<cword>")
+--
+-- 	utils.popup_substitute(word)
+-- end)
 
 -- Substitude current visual selection
 vmap_with("<c-r>", function()

@@ -1,54 +1,96 @@
-function get_fmt(name, key)
-	local path = string.format("formatter.filetypes.%s", name)
-	local mod = require(path)
-
-	return {
-		mod[key],
-	}
-end
-
-function get_fmt_default(name)
-	local path = string.format("formatter.defaults.%s", name)
-
-	return {
-		require(path),
-	}
-end
-
 return {
 	{
-		"mhartington/formatter.nvim",
+		"stevearc/conform.nvim",
 		opts = function()
+			local util = require("conform.util")
+
 			return {
-				filetype = {
+				notify_on_error = true,
+				format_on_save = {
+					lsp_fallback = true,
+					timeout_ms = 500,
+				},
+				format_after_save = {
+					lsp_fallback = true,
+				},
+				formatters_by_ft = {
+					lua = {
+						"stylua",
+					},
+					vue = {
+						"prettier",
+					},
+					react = {
+						"prettier",
+					},
+					javascript = {
+						"prettier",
+					},
+					typescript = {
+						"prettier",
+					},
+					typescriptreact = {
+						"prettier",
+					},
 					rust = {
-						function()
-							return {
-								stdin = true,
-								exe = "rustfmt",
-								args = {
-									"+nightly",
-									"--edition 2021",
-								},
-							}
-						end,
+						"rustfmt_nightly",
+					},
+					sql = {
+						"pg_format",
+					},
+					python = {
+						"ruff",
+					},
+					pgsql = {
+						"pg_format",
+					},
+					json = {
+						"jq",
+					},
+					toml = {
+						"taplo",
+					},
+					terraform = {
+						"tofu",
+					},
+					c = {
+						"uncrustify",
+						"clang_format",
+					},
+				},
+				formatters = {
+					rustfmt_nightly = {
+						stdin = true,
+						command = "rustfmt",
+						args = "+nightly --edition 2021",
+						cwd = util.root_file({
+							"Cargo.toml",
+						}),
 					},
 					jsonnet = {
-						function()
-							return {
-								stdin = true,
-								exe = "jsonnetfmt",
-								args = {
-									"--string-style d",
-									"-",
-								},
-							}
-						end,
+						stdin = true,
+						command = "jsonnetfmt",
+						args = "--string-style d -",
 					},
-					typescript = get_fmt_default("prettier"),
-					go = get_fmt("go", "gofmt"),
-					vue = get_fmt("vue", "prettier"),
-					lua = get_fmt("lua", "stylua"),
+					uncrustify = {
+						stdin = true,
+						command = "uncrustify",
+						args = "-c format.cfg -l C",
+					},
+					pg_format = {
+						stdin = true,
+						command = "pg_format",
+						args = "-s 2 -w 80 -u 1 -U 1 -C --no-space-function -",
+					},
+					ruff = {
+						stdin = true,
+						command = "ruff format",
+					},
+					tofu = {
+						stdin = true,
+						command = "tofu",
+						args = "fmt -",
+					},
 				},
 			}
 		end,
