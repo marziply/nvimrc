@@ -1,7 +1,7 @@
 return {
 	{
 		"nvim-treesitter/nvim-treesitter",
-		main = 'nvim-treesitter.configs',
+		main = "nvim-treesitter.configs",
 		opts = {
 			auto_install = true,
 			additional_vim_regex_highlighting = true,
@@ -16,21 +16,24 @@ return {
 				"html",
 				"css",
 				"scss",
-				"sql"
+				"sql",
+				"go",
+				"rust",
+				"c",
 			},
 			highlight = {
-				enable = true
+				enable = true,
 			},
 			textobjects = {
 				select = {
 					enable = true,
-					lookahead = true
-				}
-			}
+					lookahead = true,
+				},
+			},
 		},
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter-context",
-			"nvim-treesitter/nvim-treesitter-textobjects"
-		}
-	}
+			"nvim-treesitter/nvim-treesitter-textobjects",
+		},
+	},
 }

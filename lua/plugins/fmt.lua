@@ -17,6 +17,9 @@ return {
 					lua = {
 						"stylua",
 					},
+					luau = {
+						"stylua",
+					},
 					vue = {
 						"prettier",
 					},
@@ -56,6 +59,9 @@ return {
 					c = {
 						"uncrustify",
 						"clang_format",
+					},
+					go = {
+						"gofmt",
 					},
 				},
 				formatters = {

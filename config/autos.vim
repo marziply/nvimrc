@@ -16,7 +16,7 @@ aug filetypes
 	au BufEnter,BufReadPost,BufWritePost *.capnp setl ft=capnp
 	au BufEnter,BufReadPost,BufWritePost *.rasi setl ft=rasi
 	au BufEnter,BufReadPost,BufWritePost *.sway setl ft=i3config
-	au BufEnter,BufReadPost,BufWritePost *.sql setl ft=pgsql
+	" au BufEnter,BufReadPost,BufWritePost *.sql setl ft=pgsql
 	au BufEnter,BufReadPost,BufWritePost *.tmpl.* setl ft=gotmpl
 	au BufEnter,BufReadPost,BufWritePost *.h setl ft=c
 	au BufEnter,BufReadPost,BufWritePost *.tfvars,*.env*,*.md,*.json,*.yaml setl nowrap

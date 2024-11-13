@@ -4,14 +4,8 @@ local servers = {
 	"tflint",
 	"bashls",
 	"jsonnet_ls",
+	"luau_lsp",
 }
-
-local function extend_caps(defs)
-	local cmp = require("cmp_nvim_lsp")
-	local caps = cmp.default_capabilities()
-
-	return vim.tbl_deep_extend("force", defs.capabilities, caps)
-end
 
 return {
 	{
@@ -20,13 +14,6 @@ return {
 			local lsp = require("lspconfig")
 			local path = vim.fn.stdpath("config") .. "/lua/servers"
 			local files = io.popen("ls -A " .. path)
-			-- local defs = lsp.util.default_config
-
-			-- defs.capabilities = extend_caps(defs)
-
-			-- local caps = cmp.default_capabilities(vim.lsp.protocol.make_client_capabilities())
-
-			-- caps.textDocument.completion.completionItem.snippetSupport = false
 
 			if files ~= nil then
 				for name in files:lines() do
