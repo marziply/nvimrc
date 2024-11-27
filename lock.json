@@ -40,7 +40,6 @@
   "renamer.nvim": { "branch": "develop", "commit": "1614d466df53899f11dd5395eaac3c09a275c384" },
   "rustaceanvim": { "branch": "master", "commit": "fee0aa094b0c9f93fffe5a385b3d5d2386c2b072" },
   "schemastore.nvim": { "branch": "main", "commit": "3944983d4194a29730742c908e58b48ad1f51cbf" },
-  "shade.nvim": { "branch": "master", "commit": "4286b5abc47d62d0c9ffb22a4f388b7bf2ac2461" },
   "splitjoin.vim": { "branch": "main", "commit": "f72d59c9f5d4c8b865e0abfeee98f85b47fe5a3a" },
   "stay-in-place.nvim": { "branch": "main", "commit": "0628b6db8970fc731abf9608d6f80659b58932c9" },
   "telescope-undo.nvim": { "branch": "main", "commit": "2971cc9f193ec09e0c5de3563f99cbea16b63f10" },

@@ -4,22 +4,42 @@ return {
 		config = function()
 			local telescope = require("telescope")
 			local undo_actions = require("telescope-undo.actions")
-			-- local default_actions = require("telescope.actions")
 
 			telescope.setup({
 				defaults = {
+					layout_config = {
+						horizontal = {
+							width = 0.6,
+							height = 0.7,
+							preview_width = 80,
+						},
+					},
 					mappings = {
 						i = {
 							["<c-j>"] = function()
 								vim.api.nvim_input("<cr>")
 							end,
-							-- ["<c-p"] = function()
-							-- 	default_actions.move_selection_previous()
-							-- end,
-							-- ["<c-n"] = function()
-							-- 	default_actions.move_selection_next()
-							-- end,
 						},
+					},
+				},
+				pickers = {
+					live_grep = {
+						theme = "dropdown",
+					},
+					command_history = {
+						theme = "dropdown",
+					},
+					search_history = {
+						theme = "dropdown",
+					},
+					spell_suggest = {
+						theme = "get_cursor",
+					},
+					quickfix = {
+						theme = "dropdown",
+					},
+					registers = {
+						theme = "dropdown",
 					},
 				},
 				extensions = {

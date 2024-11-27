@@ -1,4 +1,7 @@
 local utils = require("modules.utils")
+local silent = {
+	silent = true,
+}
 
 local function map(kind, bind, cmd, opts)
 	return vim.api.nvim_set_keymap(kind, bind, cmd, opts or {})
@@ -46,9 +49,7 @@ end
 -- ## General ##
 
 -- Reset CMD output
-nmap("<esc>", ":echo<cr>", {
-	silent = true,
-})
+nmap("<esc>", ":echo<cr>", silent)
 -- Remap ctrl c to escape in norm/vis
 map("", "<c-c>", "<esc>")
 -- Remap ctrl c to escape in ins/cmd
@@ -56,15 +57,11 @@ imap("<c-c>", "<esc>")
 -- Unbind default <c-f> binding
 nmap("<c-f>", "<nop>")
 -- Save buffer in normal mode
-nmap("<c-s>", ":w<cr>", {
-	silent = true,
-})
+nmap("<c-s>", ":w<cr>", silent)
 -- Save buffer in insert mode
 imap("<c-s>", "<esc>:w<cr>")
 -- Quit buffer
-nmap("<c-q>", ":bd<cr>", {
-	silent = true,
-})
+nmap("<c-q>", ":bd<cr>", silent)
 -- Scroll up
 nmap("<c-k>", "10<c-y>")
 -- Scroll down
@@ -78,23 +75,19 @@ nmap("<c-m>o", "o<esc>o")
 -- Insert two lines down
 nmap("<c-m>O", "O<esc>O")
 -- Restart LSP
-nmap("<c-g>lR", ":LspRestart<cr>")
+nmap("<c-g>LR", "<cmd>LspRestart<cr>")
 -- Show LSP info on buffer
-nmap("<c-g>lI", ":LspInfo<cr>")
+nmap("<c-g>LI", "<cmd>LspInfo<cr>")
 -- Sync Lazy
-nmap("<c-g>S", ":Lazy sync<cr>")
+nmap("<c-g>S", "<cmd>Lazy sync<cr>")
 -- Update packages via Lazy
-nmap("<c-g>U", ":Lazy update<cr>")
+nmap("<c-g>U", "<cmd>Lazy update<cr>")
 -- Show Lazy UI
-nmap("<c-g>I", ":Lazy show<cr>")
+nmap("<c-g>I", "<cmd>Lazy show<cr>")
 -- Open terminal window
 nmap("<c-g>t", "<cmd>ToggleTerm<cr>")
 -- Source the current file
 nmap("<c-g>s", '<cmd>exec "source " . expand("%")<cr>')
--- Git conflict take ours on all
--- nmap("cO")
--- Git conflict take ours theirs on all
--- nmap("cT")
 -- Insert one line up
 nmap("mo", "o<esc>")
 -- Insert one line down
@@ -144,6 +137,15 @@ nmap_with("<c-g>R", function()
 	local spectre = require("spectre")
 
 	spectre.open()
+end)
+-- Dismiss notifications
+nmap_with("<c-g>c", function()
+	local notify = require("notify")
+
+	notify.dismiss({
+		pending = true,
+		silent = true,
+	})
 end)
 
 -- ## LSP ##
@@ -217,21 +219,21 @@ nmap("Q", "<cmd>BufferClose!<cr>")
 -- Open file discovery window
 map_telescope("p", "find_files")
 -- Open live grep window
-map_telescope("f", "live_grep theme=dropdown")
+map_telescope("f", "live_grep")
 -- Open command history window
-map_telescope("c", "command_history theme=dropdown")
+map_telescope("c", "command_history")
 -- Open search history window
-map_telescope("s", "search_history theme=dropdown")
+map_telescope("s", "search_history")
 -- Open spell suggest window
-map_telescope("S", "spell_suggest theme=get_cursor")
+map_telescope("S", "spell_suggest")
 -- Open manual pages discovery window
 map_telescope("M", "man_pages")
 -- Open marks window
 map_telescope("m", "marks")
 -- Open quick fixes
-map_telescope("q", "quickfix theme=dropdown")
+map_telescope("q", "quickfix")
 -- Open active regsiters window
-map_telescope("r", "registers theme=dropdown")
+map_telescope("r", "registers")
 -- Open undo window
 map_telescope("u", "undo")
 -- Open live grep window using the word at cursor as a search term
@@ -253,7 +255,7 @@ map_telescope("gs", "git_status")
 -- Open quick fixes
 nmap("<c-t>gC", "<cmd>GitConflictListQf<cr>")
 -- Open file browser in Neovim directory
-nmap_with("<c-t>c", function()
+nmap_with("<c-t>C", function()
 	local telescope = require("telescope.builtin")
 
 	telescope.find_files({
