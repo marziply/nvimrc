@@ -1,11 +1,8 @@
 return {
 	{
-		"sunjon/shade.nvim",
+		"TaDaa/vimade",
 		opts = {
-			overlay_opacity = 75,
-			keys = {
-				toggle = "<c-g>D"
-			}
-		}
-	}
+			fadelevel = 0.7,
+		},
+	},
 }

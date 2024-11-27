@@ -1,6 +1,6 @@
 local servers = {
 	"gopls",
-	"bufls",
+	"buf_ls",
 	"tflint",
 	"bashls",
 	"jsonnet_ls",

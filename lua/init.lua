@@ -37,6 +37,20 @@ vim.g.markdown_fenced_languages = {
 	"ft=typescript",
 }
 
+vim.g.rustaceanvim = {
+	server = {
+		default_settings = {
+			["rust-analyzer"] = {
+				diagnostics = {
+					disabled = {
+						"inactive-code",
+					},
+				},
+			},
+		},
+	},
+}
+
 vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(args)
 		local client = vim.lsp.get_client_by_id(args.data.client_id)

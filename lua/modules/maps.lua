@@ -139,11 +139,6 @@ nmap("gcS", "v]gc")
 
 -- ## Utils ##
 
--- Open ZSH config
-nmap_with("<c-g>z", function()
-	utils.configure_zsh()
-end)
-
 -- Open Spectre window
 nmap_with("<c-g>R", function()
 	local spectre = require("spectre")
