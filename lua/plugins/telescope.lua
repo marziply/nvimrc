@@ -13,6 +13,9 @@ return {
 							height = 0.7,
 							preview_width = 80,
 						},
+						small = {
+							width = 0.1,
+						},
 					},
 					mappings = {
 						i = {
@@ -31,9 +34,11 @@ return {
 					},
 					search_history = {
 						theme = "dropdown",
+						layout_strategy = "small",
 					},
 					spell_suggest = {
-						theme = "get_cursor",
+						theme = "cursor",
+						layout_strategy = "small",
 					},
 					quickfix = {
 						theme = "dropdown",

@@ -88,6 +88,8 @@ nmap("<c-g>I", "<cmd>Lazy show<cr>")
 nmap("<c-g>t", "<cmd>ToggleTerm<cr>")
 -- Source the current file
 nmap("<c-g>s", '<cmd>exec "source " . expand("%")<cr>')
+-- Open quick fixes
+nmap("<c-g>gc", "<cmd>GitConflictListQf<cr>")
 -- Insert one line up
 nmap("mo", "o<esc>")
 -- Insert one line down
@@ -252,8 +254,6 @@ map_telescope("gc", "git_commits")
 map_telescope("gb", "git_branches")
 -- Open git status window
 map_telescope("gs", "git_status")
--- Open quick fixes
-nmap("<c-t>gC", "<cmd>GitConflictListQf<cr>")
 -- Open file browser in Neovim directory
 nmap_with("<c-t>C", function()
 	local telescope = require("telescope.builtin")

@@ -7,41 +7,41 @@ return {
 				refresh = {
 					statusline = 250,
 					tabline = 250,
-					winbar = 250
-				}
+					winbar = 250,
+				},
 			},
 			sections = {
 				lualine_b = {
 					"branch",
-					"diff"
+					"diff",
 				},
 				lualine_c = {
 					{
 						"filename",
-						path = 1
-					}
+						path = 1,
+					},
 				},
 				lualine_x = {
-					"filetype"
+					"filetype",
 				},
 				lualine_y = {
 					"diagnostics",
 				},
 				lualine_z = {
-					"location"
-				}
+					"location",
+				},
 			},
 			inactive_sections = {
 				lualine_c = {
 					{
 						"filename",
-						path = 1
-					}
+						path = 1,
+					},
 				},
 				lualine_x = {
-					"diagnostics"
-				}
-			}
-		}
-	}
+					"diagnostics",
+				},
+			},
+		},
+	},
 }
