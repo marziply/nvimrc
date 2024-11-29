@@ -41,22 +41,7 @@ return {
 			},
 		},
 		dependencies = {
-			{
-				"MunifTanjim/nui.nvim",
-			},
-			{
-				"rcarriga/nvim-notify",
-				dependencies = {
-					{
-						"mrded/nvim-lsp-notify",
-						opts = function()
-							return {
-								notify = require("notify"),
-							}
-						end,
-					},
-				},
-			},
+			"MunifTanjim/nui.nvim",
 		},
 	},
 }
