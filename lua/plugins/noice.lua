@@ -1,20 +1,10 @@
 return {
 	{
 		"folke/noice.nvim",
-		event = "VeryLazy",
 		opts = {
-			routes = {
-				{
-					view = "split",
-					filter = {
-						event = "notify",
-						min_height = 15,
-					},
-				},
-			},
 			lsp = {
 				progress = {
-					enabled = true,
+					enabled = false,
 				},
 			},
 			presets = {
@@ -56,8 +46,15 @@ return {
 			},
 			{
 				"rcarriga/nvim-notify",
-				opts = {
-					top_down = false,
+				dependencies = {
+					{
+						"mrded/nvim-lsp-notify",
+						opts = function()
+							return {
+								notify = require("notify"),
+							}
+						end,
+					},
 				},
 			},
 		},

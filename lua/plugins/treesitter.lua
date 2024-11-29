@@ -21,6 +21,9 @@ return {
 				"rust",
 				"c",
 			},
+			indent = {
+				enable = true,
+			},
 			highlight = {
 				enable = true,
 			},

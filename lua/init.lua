@@ -68,5 +68,11 @@ vim.api.nvim_create_user_command("Reload", utils.reload, {
 		return vim.tbl_keys(config.plugins)
 	end,
 })
+-- vim.api.nvim_create_autocmd("FileType", {
+-- 	pattern = "rust",
+-- 	callback = function()
+-- 		vim.treesitter.language.register("html", "rust")
+-- 	end,
+-- })
 
 return init()

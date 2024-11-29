@@ -44,6 +44,8 @@ aug vim_config
   "    \ */nvim/lua/plugins/*.lua
   "    \ exec printf("Lazy reload '%s'", expand("<afile>:t:r")) |
   "    \ exec printf("Reloaded %s", expand("<afile>:t:r"))
+
+  " Force Treesitter to recognize HTML within Rust files
 aug end
 
 aug diagnostics
