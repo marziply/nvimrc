@@ -4,10 +4,6 @@ return {
 		main = "nvim-treesitter.configs",
 		opts = {
 			auto_install = true,
-			additional_vim_regex_highlighting = true,
-			ignore_install = {
-				"proto",
-			},
 			ensure_installed = {
 				"lua",
 				"javascript",
