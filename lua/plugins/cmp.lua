@@ -10,8 +10,9 @@ local function sources()
 			name = "nvim_lsp",
 			entry_filter = function(entry)
 				local cmp = require("cmp")
+				local kind = cmp.lsp.CompletionItemKind[entry:get_kind()]
 
-				return entry:get_kind() ~= cmp.lsp.CompletionItemKind.Snippet
+				return kind ~= "Snippet" or kind ~= "Text"
 			end,
 		},
 	}
@@ -63,6 +64,23 @@ local function is_cmp_enabled()
 	return not cap and not syn
 end
 
+local has_words_before = function()
+	local line, col = table.unpack(vim.api.nvim_win_get_cursor(0))
+	local word = line[1]:sub(col, col):match("%s")
+
+	return col ~= 0 and word == nil
+end
+
+local handle_movement = function(fallback)
+	local cmp = require("cmp")
+
+	if vim.bo.buftype ~= "prompt" and has_words_before() then
+		cmp.complete()
+	else
+		fallback()
+	end
+end
+
 local function cmp_key_binds()
 	local cmp = require("cmp")
 	local map = cmp.mapping
@@ -73,18 +91,27 @@ local function cmp_key_binds()
 		"i",
 		"s",
 	})
-	local select = {
-		behavior = cmp.SelectBehavior.Insert,
-	}
 
 	return {
 		["<c-n>"] = movement,
 		["<c-p>"] = movement,
 		["<c-d>"] = map.scroll_docs(4),
 		["<c-u>"] = map.scroll_docs(-4),
-		["<tab>"] = map.select_next_item(select),
-		["<s-tab>"] = map.select_prev_item(select),
 		["<cr>"] = map.confirm(),
+		-- ["<tab>"] = map.select_next_item(select),
+		-- ["<s-tab>"] = map.select_prev_item(select),
+
+		["<tab>"] = function(fallback)
+			if not cmp.select_next_item() then
+				handle_movement(fallback)
+			end
+		end,
+
+		["<s-tab>"] = function(fallback)
+			if not cmp.select_prev_item() then
+				handle_movement(fallback)
+			end
+		end,
 	}
 end
 
@@ -137,14 +164,6 @@ return {
 						return cmp_fmt(item)
 					end,
 				},
-				-- sorting = {
-				-- 	comparators = {
-				-- 		cmp.config.compare.exact,
-				-- 		cmp.config.compare.score,
-				-- 		cmp_rs.comparators.inscope_inherent_import,
-				-- 		cmp_rs.comparators.sort_by_label_but_underscore_last,
-				-- 	},
-				-- },
 			}
 		end,
 		init = function()
@@ -158,7 +177,6 @@ return {
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-path",
 			"hrsh7th/cmp-cmdline",
-			-- "zjp-CN/nvim-cmp-lsp-rs",
 		},
 	},
 }

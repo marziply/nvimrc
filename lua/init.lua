@@ -15,7 +15,7 @@ local function init()
 	})
 end
 
-if not vim.loop.fs_stat(manager) then
+if not vim.uv.fs_stat(manager) then
 	vim.fn.system({
 		"git",
 		"clone",
@@ -39,6 +39,7 @@ vim.g.markdown_fenced_languages = {
 
 vim.g.rustaceanvim = {
 	server = {
+		capabilities = vim.lsp.protocol.make_client_capabilities(),
 		default_settings = {
 			["rust-analyzer"] = {
 				diagnostics = {
