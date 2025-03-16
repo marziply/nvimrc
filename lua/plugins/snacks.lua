@@ -21,6 +21,9 @@ return {
 			},
 			indent = {
 				enabled = true,
+				animate = {
+					enabled = false,
+				},
 			},
 			notifier = {
 				enabled = true,

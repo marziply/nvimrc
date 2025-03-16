@@ -66,7 +66,9 @@ end
 
 local has_words_before = function()
 	local line, col = table.unpack(vim.api.nvim_win_get_cursor(0))
-	local word = line[1]:sub(col, col):match("%s")
+	local content = vim.api.nvim_buf_get_lines(0, line - 1, line, true)
+	local char = content[1]
+	local word = char:sub(col, col):match("%s")
 
 	return col ~= 0 and word == nil
 end
@@ -98,18 +100,14 @@ local function cmp_key_binds()
 		["<c-d>"] = map.scroll_docs(4),
 		["<c-u>"] = map.scroll_docs(-4),
 		["<cr>"] = map.confirm(),
-		-- ["<tab>"] = map.select_next_item(select),
-		-- ["<s-tab>"] = map.select_prev_item(select),
-
 		["<tab>"] = function(fallback)
 			if not cmp.select_next_item() then
-				handle_movement(fallback)
+				fallback()
 			end
 		end,
-
 		["<s-tab>"] = function(fallback)
 			if not cmp.select_prev_item() then
-				handle_movement(fallback)
+				fallback()
 			end
 		end,
 	}
