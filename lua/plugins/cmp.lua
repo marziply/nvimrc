@@ -64,25 +64,6 @@ local function is_cmp_enabled()
 	return not cap and not syn
 end
 
-local has_words_before = function()
-	local line, col = table.unpack(vim.api.nvim_win_get_cursor(0))
-	local content = vim.api.nvim_buf_get_lines(0, line - 1, line, true)
-	local char = content[1]
-	local word = char:sub(col, col):match("%s")
-
-	return col ~= 0 and word == nil
-end
-
-local handle_movement = function(fallback)
-	local cmp = require("cmp")
-
-	if vim.bo.buftype ~= "prompt" and has_words_before() then
-		cmp.complete()
-	else
-		fallback()
-	end
-end
-
 local function cmp_key_binds()
 	local cmp = require("cmp")
 	local map = cmp.mapping
@@ -138,8 +119,12 @@ return {
 			-- local cmp_rs = require("cmp_lsp_rs")
 			local map = cmp.mapping
 			local buf_sources, win_sources = sources()
-			local win_opts = vim.tbl_extend("force", cmp.config.window.bordered(), {
-				max_width = 80,
+			local cmp_win_opts = vim.tbl_extend("force", cmp.config.window.bordered(), {
+				max_width = 40,
+				max_height = 40,
+			})
+			local docs_win_opts = vim.tbl_extend("force", cmp.config.window.bordered(), {
+				max_width = 60,
 				max_height = 40,
 			})
 
@@ -153,8 +138,8 @@ return {
 				mapping = map.preset.insert(cmp_key_binds()),
 				preselect = cmp.PreselectMode.None,
 				window = {
-					completion = win_opts,
-					documentation = win_opts,
+					completion = cmp_win_opts,
+					documentation = docs_win_opts,
 				},
 				formatting = {
 					-- Fixes: nvim-cmp/discussions/609#discussioncomment-1844480

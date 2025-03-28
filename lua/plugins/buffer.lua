@@ -1,57 +1,30 @@
 return {
 	{
-		"romgrk/barbar.nvim",
-		init = function()
-			vim.g.barbar_auto_setup = false
-		end,
-		opts = {
-			animation = false,
-			no_name_title = "*",
-			icons = {
-				button = false,
-				filetype = {
-					enabled = false,
-				},
-			},
-		},
-		dependencies = {
-			{
-				"lewis6991/gitsigns.nvim",
-				opts = {
-					signs = {
-						-- delete = {
-						-- 	hl = "GitSignsDelete",
-						-- 	numhl = "GitSignsDeleteNr",
-						-- 	linehl = "GitSignsDeleteLn",
-						-- 	text = "ᐯ",
-						-- },
-						-- topdelete = {
-						-- 	hl = "GitSignsDelete",
-						-- 	numhl = "GitSignsDeleteNr",
-						-- 	linehl = "GitSignsDeleteLn",
-						-- 	text = "ᐱ",
-						-- },
-						delete = {
-							text = "_",
-						},
-						topdelete = {
-							text = "‾",
-						},
-						add = {
-							text = "┃",
-						},
-						change = {
-							text = "┃",
-						},
-						changedelete = {
-							text = "~",
-						},
-						untracked = {
-							text = "┆",
-						},
+		"akinsho/bufferline.nvim",
+		opts = function()
+			local bl = require("bufferline")
+
+			return {
+				highlights = {
+					fill = {
+						bg = "#1C1C1C",
+					},
+					buffer_visible = {
+						fg = "grey",
 					},
 				},
-			},
-		},
+				options = {
+					style_preset = bl.style_preset.no_italic,
+					themable = false,
+					show_close_icon = false,
+					show_buffer_close_icons = false,
+					show_buffer_icons = false,
+					right_mouse_command = false,
+					left_moud_command = false,
+					diagnostics = "nvim_lsp",
+					separator_style = "thin",
+				},
+			}
+		end,
 	},
 }

@@ -2,6 +2,9 @@ return {
 	{
 		"folke/noice.nvim",
 		opts = {
+			notify = {
+				enbaled = false,
+			},
 			lsp = {
 				progress = {
 					enabled = false,

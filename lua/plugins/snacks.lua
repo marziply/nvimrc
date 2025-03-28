@@ -4,6 +4,13 @@ return {
 		lazy = false,
 		priority = 1000,
 		opts = {
+			styles = {
+				notification = {
+					wo = {
+						wrap = true,
+					},
+				},
+			},
 			animate = {
 				enabled = true,
 			},
@@ -25,8 +32,17 @@ return {
 					enabled = false,
 				},
 			},
+			notify = {
+				enabled = true,
+			},
 			notifier = {
 				enabled = true,
+				timeout = 5000,
+				top_down = false,
+				width = {
+					min = 40,
+					max = 0.3,
+				},
 			},
 			picker = {
 				enabled = true,

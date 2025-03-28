@@ -33,6 +33,8 @@ vim.diagnostic.config({
 	update_in_insert = false,
 })
 
+vim.g.barbar_auto_setup = false
+
 vim.g.markdown_fenced_languages = {
 	"ft=typescript",
 }
@@ -52,6 +54,14 @@ vim.g.rustaceanvim = {
 	},
 }
 
+vim.filetype.add({
+	extension = {
+		tera = "tera",
+		jinja = "jinja",
+		-- html = "jinja",
+	},
+})
+
 vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(args)
 		local client = vim.lsp.get_client_by_id(args.data.client_id)
@@ -61,6 +71,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		end
 	end,
 })
+
 vim.api.nvim_create_user_command("Reload", utils.reload, {
 	nargs = 1,
 	complete = function()
@@ -69,11 +80,12 @@ vim.api.nvim_create_user_command("Reload", utils.reload, {
 		return vim.tbl_keys(config.plugins)
 	end,
 })
--- vim.api.nvim_create_autocmd("FileType", {
--- 	pattern = "rust",
--- 	callback = function()
--- 		vim.treesitter.language.register("html", "rust")
--- 	end,
--- })
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "tera",
+	callback = function(event)
+		vim.bo[event.buf].commentstring = "{# %s #}"
+	end,
+})
 
 return init()

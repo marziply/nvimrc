@@ -20,7 +20,7 @@ aug filetypes
 	au BufEnter,BufReadPost,BufWritePost Earthfile setl ft=Earthfile
 	au
     \ BufEnter,BufReadPost,BufWritePost
-    \ *.{njk,tera}.html,*.html.tera
+    \ *.{njk,tera}.html,*.html.tera,*.askama
     \ setl ft=htmldjango
 	au
     \ 

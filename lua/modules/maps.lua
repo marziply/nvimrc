@@ -202,19 +202,19 @@ map("c", "<a-f>", "<s-right>")
 -- ## Buffers ##
 
 -- Switch to highlighted buffer
-nmap("<c-b>", "<cmd>BufferPick<cr>")
+nmap("<c-b>", "<cmd>BufferLinePick<cr>")
 -- Switch to previous/left buffer
-nmap("<c-p>", "<cmd>BufferPrevious<cr>")
+nmap("<c-p>", "<cmd>BufferLineCyclePrev<cr>")
 -- Switch to next/right buffer
-nmap("<c-n>", "<cmd>BufferNext<cr>")
+nmap("<c-n>", "<cmd>BufferLineCycleNext<cr>")
 -- Shift current buffer to the left
-nmap("<a-<>", "<cmd>BufferMovePrevious<cr>")
+nmap("<c-s-p>", "<cmd>BufferLineMovePrev<cr>")
 -- Shift current buffer to the right
-nmap("<a->>", "<cmd>BufferMoveNext<cr>")
+nmap("<c-s-n>", "<cmd>BufferLineMoveNext<cr>")
 -- Quit all buffers
 nmap("<c-g>q", ":bufdo bd!<cr>")
 -- Close current buffer
-nmap("Q", "<cmd>BufferClose!<cr>")
+nmap("Q", "<cmd>BufferLinePickClose<cr>")
 
 -- ## Telescope ##
 
