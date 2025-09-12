@@ -2,7 +2,12 @@ return {
 	{
 		"navarasu/onedark.nvim",
 		opts = {
-			style = "warmer",
+			style = "darker",
+			highlights = {
+				BufferCurrent = {
+					fg = "#dddddd",
+				},
+			},
 		},
 		init = function()
 			local onedark = require("onedark")

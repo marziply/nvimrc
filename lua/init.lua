@@ -41,12 +41,21 @@ vim.g.markdown_fenced_languages = {
 
 vim.g.rustaceanvim = {
 	server = {
-		capabilities = vim.lsp.protocol.make_client_capabilities(),
+		-- capabilities = vim.lsp.protocol.make_client_capabilities(),
 		default_settings = {
 			["rust-analyzer"] = {
 				diagnostics = {
 					disabled = {
 						"inactive-code",
+					},
+				},
+			},
+		},
+		capabilities = {
+			textDocument = {
+				completion = {
+					completionItem = {
+						snippetSupport = false,
 					},
 				},
 			},
