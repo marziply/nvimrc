@@ -1,4 +1,4 @@
-local function map(kind, bind, cmd, opts)
+function map(kind, bind, cmd, opts)
 	if type(cmd) == "function" then
 		return vim.keymap.set(kind, bind, cmd, opts or {})
 	end
@@ -40,34 +40,38 @@ function nmap_all(binds)
 	end
 end
 
-local function tmap(bind, opt)
+function tmap(bind, opt)
 	local cmd = "<cmd>Telescope " .. opt .. "<cr>"
 
 	lmap(bind, cmd)
 end
 
 function browse_config(dir)
-	local telescope = require("telescope.builtin")
+	return function()
+		local telescope = require("telescope.builtin")
 
-	telescope.find_files({
-		cwd = string.format("%s/%s", vim.env.NVIM_DIR, dir),
-	})
+		telescope.find_files({
+			cwd = string.format("%s/%s", vim.env.NVIM_DIR, dir),
+		})
+	end
 end
 
 function jump_to_diagnostic(index, severity)
-	vim.diagnostic.jump({
-		count = index,
-		severity = severity,
-		float = true,
-	})
+	return function()
+		vim.diagnostic.jump({
+			count = index,
+			severity = severity,
+			float = true,
+		})
+	end
 end
 
 function jump_to_error(index)
-	jump_to_diagnostic(index, vim.diagnostic.severity.ERROR)
+	return jump_to_diagnostic(index, vim.diagnostic.severity.ERROR)
 end
 
 function jump_to_warning(index)
-	jump_to_diagnostic(index, vim.diagnostic.severity.WARN)
+	return jump_to_diagnostic(index, vim.diagnostic.severity.WARN)
 end
 
 -- ## General ##
@@ -146,24 +150,18 @@ lmap("d", function()
 	})
 end)
 -- Jump to previous diagnostic hint
-nmap("[D", function()
-	jump_to_error(-1)
-end)
+nmap("[D", jump_to_error(-1))
 -- Jump to next diagnostic hint
-nmap("]D", function()
-	jump_to_error(1)
-end)
+nmap("]D", jump_to_error(1))
 -- Jump to previous warning hint
-nmap("[w", function()
-	jump_to_warning(-1)
-end)
+nmap("[w", jump_to_warning(-1))
 -- Jump to next arning hint
-nmap("]w", function()
-	jump_to_warning(1)
-end)
+nmap("]w", jump_to_warning(1))
 -- Toggle inlay hints
 lmap("i", function()
-	vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({}))
+	local enabled = vim.lsp.inlay_hint.is_enabled()
+
+	vim.lsp.inlay_hint.enable(not enabled)
 end)
 -- Go to definition
 nmap("gd", function()
@@ -234,13 +232,10 @@ tmap("gc", "git_commits")
 tmap("gb", "git_branches")
 -- Open git status window
 tmap("gs", "git_status")
--- Open file browser in Neovim directory
-lmap("nl", function()
-	browse_config("lua")
-end)
-lmap("nc", function()
-	browse_config("config")
-end)
+-- Open file browser in Neovim lua directory
+lmap("nl", browse_config("lua"))
+-- Open file browser in Neovim config directory
+lmap("nc", browse_config("config"))
 
 return {
 	nmap = nmap,
