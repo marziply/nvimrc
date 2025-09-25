@@ -1,5 +1,4 @@
 local uses = {
-	"windwp/nvim-autopairs",
 	"kylechui/nvim-surround",
 	"gbprod/stay-in-place.nvim",
 	"chentoast/marks.nvim",

@@ -6,7 +6,7 @@ require("modules.maps")
 local function init()
 	local lazy = require("lazy")
 
-	return lazy.setup("plugins", {
+	lazy.setup("plugins", {
 		lockfile = vim.fn.stdpath("config") .. "/lock.json",
 		concurrency = 10,
 		change_detection = {
@@ -26,14 +26,11 @@ if not vim.uv.fs_stat(manager) then
 	})
 end
 
-vim.lsp.inlay_hint.enable()
 vim.opt.rtp:prepend(manager)
 
 vim.diagnostic.config({
 	update_in_insert = false,
 })
-
-vim.g.barbar_auto_setup = false
 
 vim.g.markdown_fenced_languages = {
 	"ft=typescript",

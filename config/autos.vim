@@ -2,12 +2,7 @@ fun! Diagnostic()
   lua vim.diagnostic.open_float(nil, { focus = false, scope = "cursor" })
 endfun
 
-aug general
-  au!
-  au BufNewFile * startinsert
-aug end
-
-aug filetypes
+aug ft
 	au!
 	" au BufEnter,BufReadPost,BufWritePost *.sql setl ft=pgsql
 	au BufEnter,BufReadPost,BufWritePost *.dockerfile setl ft=dockerfile
@@ -17,13 +12,11 @@ aug filetypes
 	au BufEnter,BufReadPost,BufWritePost *.sway setl ft=i3config
 	au BufEnter,BufReadPost,BufWritePost *.tmpl.* setl ft=gotmpl
 	au BufEnter,BufReadPost,BufWritePost *.h setl ft=c
-	au BufEnter,BufReadPost,BufWritePost Earthfile setl ft=Earthfile
 	au
     \ BufEnter,BufReadPost,BufWritePost
     \ *.{njk,tera}.html,*.html.tera,*.askama
     \ setl ft=htmldjango
 	au
-    \ 
     \ BufEnter,BufReadPost,BufWritePost
     \ *.tfvars,*.env*,*.md,*.json,*.yaml
     \ setl nowrap
@@ -33,22 +26,20 @@ aug filetypes
     \ setl shiftwidth=2
 aug end
 
-aug vim_config
+aug config
 	au!
-	au BufWritePost **/nvim/init*.vim so <afile>
+	au BufWritePost **/nvim/init.vim so <afile>
 	au BufWritePost **/nvim/config/*.vim so <afile>
 	au BufWritePost **/nvim/lua/plugins/init.lua so <afile>
 	au BufWritePost **/nvim/lua/modules/*.lua so <afile>
-  " au
-  "    \ BufWritePost
-  "    \ */nvim/lua/plugins/*.lua
-  "    \ exec printf("Lazy reload '%s'", expand("<afile>:t:r")) |
-  "    \ exec printf("Reloaded %s", expand("<afile>:t:r"))
-
-  " Force Treesitter to recognize HTML within Rust files
 aug end
 
-aug diagnostics
+aug diag
   au!
   au CursorHold,CursorHoldI * call Diagnostic()
+aug end
+
+aug quickfix
+  au!
+  au FileType qf nnoremap <buffer> <cr> <cr>:cclose<cr>
 aug end

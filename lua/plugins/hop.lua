@@ -32,7 +32,7 @@ return {
 				current_line_only = true,
 			})
 
-			maps.nmap_with_all({
+			maps.nmap_all({
 				["T"] = up_char,
 				["t"] = down_char,
 				["<c-h>u"] = up_char,

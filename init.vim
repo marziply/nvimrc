@@ -20,10 +20,10 @@ call SetDefault('XDG_CACHE_HOME', $HOME . '/.cache')
 call SetDefault('NVIM_DIR', g:xdg_config_home . '/nvim')
 call SetDefault('NVIM_CACHE_DIR', g:xdg_cache_home . '/nvim')
 
+let mapleader = ","
+
 lua require('init')
 
 for module in glob(g:nvim_dir . '/config/*.vim', 0, 1)
 	exec 'so' module
 endfor
-
-let g:omni_sql_no_default_maps = 1

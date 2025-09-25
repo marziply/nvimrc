@@ -1,5 +1,5 @@
 " General
-set cmdheight=2
+set cmdheight=1
 set timeoutlen=3000
 set updatetime=250
 set signcolumn=yes

@@ -1,17 +1,9 @@
-local utils = require("modules.utils")
-local silent = {
-	silent = true,
-}
-
 local function map(kind, bind, cmd, opts)
+	if type(cmd) == "function" then
+		return vim.keymap.set(kind, bind, cmd, opts or {})
+	end
+
 	return vim.api.nvim_set_keymap(kind, bind, cmd, opts or {})
-end
-
-local function map_telescope(char, opt)
-	local bind = "<c-t>" .. char
-	local cmd = "<cmd>Telescope " .. opt .. "<cr>"
-
-	nmap(bind, cmd)
 end
 
 function nmap(bind, cmd, opts)
@@ -26,30 +18,62 @@ function imap(bind, cmd, opts)
 	return map("i", bind, cmd, opts)
 end
 
+function cmap(bind, cmd, opts)
+	return map("c", bind, cmd, opts)
+end
+
+function lmap(bind, cmd, opts)
+	return nmap("<leader>" .. bind, cmd, opts)
+end
+
+function snmap(bind, cmd, opts)
+	local _opts = opts or {}
+
+	_opts.silent = true
+
+	return nmap(bind, cmd, _opts)
+end
+
 function nmap_all(binds)
-	for bind, cmd in pairs(binds) do
-		nmap(bind, cmd)
-	end
-end
-
-function nmap_with_all(binds)
 	for bind, fn in pairs(binds) do
-		nmap_with(bind, fn)
+		nmap(bind, fn)
 	end
 end
 
-function nmap_with(bind, fn)
-	return vim.keymap.set("n", bind, fn)
+local function tmap(bind, opt)
+	local cmd = "<cmd>Telescope " .. opt .. "<cr>"
+
+	lmap(bind, cmd)
 end
 
-function vmap_with(bind, fn)
-	return vim.keymap.set("v", bind, fn)
+function browse_config(dir)
+	local telescope = require("telescope.builtin")
+
+	telescope.find_files({
+		cwd = string.format("%s/%s", vim.env.NVIM_DIR, dir),
+	})
+end
+
+function jump_to_diagnostic(index, severity)
+	vim.diagnostic.jump({
+		count = index,
+		severity = severity,
+		float = true,
+	})
+end
+
+function jump_to_error(index)
+	jump_to_diagnostic(index, vim.diagnostic.severity.ERROR)
+end
+
+function jump_to_warning(index)
+	jump_to_diagnostic(index, vim.diagnostic.severity.WARN)
 end
 
 -- ## General ##
 
 -- Reset CMD output
-nmap("<esc>", ":echo<cr>", silent)
+snmap("<esc>", ":echo<cr>")
 -- Remap ctrl c to escape in norm/vis
 map("", "<c-c>", "<esc>")
 -- Remap ctrl c to escape in ins/cmd
@@ -57,11 +81,11 @@ imap("<c-c>", "<esc>")
 -- Unbind default <c-f> binding
 nmap("<c-f>", "<nop>")
 -- Save buffer in normal mode
-nmap("<c-s>", ":w<cr>", silent)
+snmap("<c-s>", ":w<cr>")
 -- Save buffer in insert mode
 imap("<c-s>", "<esc>:w<cr>")
 -- Quit buffer
-nmap("<c-q>", ":bd<cr>", silent)
+snmap("<c-q>", ":bd<cr>")
 -- Scroll up
 nmap("<c-k>", "10<c-y>")
 -- Scroll down
@@ -74,28 +98,12 @@ nmap("<c-i>", "<c-i>zz")
 nmap("<c-m>o", "o<esc>o")
 -- Insert two lines down
 nmap("<c-m>O", "O<esc>O")
--- Restart LSP
-nmap("<c-g>LR", "<cmd>LspRestart<cr>")
--- Show LSP info on buffer
-nmap("<c-g>LI", "<cmd>LspInfo<cr>")
--- Sync Lazy
-nmap("<c-g>S", "<cmd>Lazy sync<cr>")
--- Update packages via Lazy
-nmap("<c-g>U", "<cmd>Lazy update<cr>")
--- Show Lazy UI
-nmap("<c-g>I", "<cmd>Lazy show<cr>")
--- Open terminal window
-nmap("<c-g>t", "<cmd>ToggleTerm<cr>")
--- Source the current file
-nmap("<c-g>s", '<cmd>exec "source " . expand("%")<cr>')
--- Open quick fixes
-nmap("<c-g>gc", "<cmd>GitConflictListQf<cr>")
+-- Open list of Git conflicts
+lmap("gq", "<cmd>GitConflictListQf<cr>")
 -- Insert one line up
 nmap("mo", "o<esc>")
 -- Insert one line down
 nmap("mO", "O<esc>")
--- Insert one character and return to normal mode
-nmap("Y", "i_<esc>r")
 -- Jump to next search result and center buffer
 nmap("n", "nzz")
 -- Jump to previous search result and center buffer
@@ -116,44 +124,20 @@ nmap("v]", "$%V%o$")
 nmap("gcs", "v[gc")
 -- Comment toggle block backward
 nmap("gcS", "v]gc")
--- Reload all plugins
--- nmap_with("<c-g>R", function()
---   local config = require("lazy.core.config")
---   local loader = require("lazy.core.loader")
---
---   for name, plugin in pairs(config.plugins) do
---     local ok = pcall(loader.reload, plugin)
---
---     if ok then
---       print("Reloaded " .. name)
---     end
---   end
---
---   print("All plugins reloaded")
--- end)
 
 -- ## Utils ##
 
 -- Open Spectre window
-nmap_with("<c-g>R", function()
+lmap("rr", function()
 	local spectre = require("spectre")
 
 	spectre.open()
-end)
--- Dismiss notifications
-nmap_with("<c-g>c", function()
-	local notify = require("notify")
-
-	notify.dismiss({
-		pending = true,
-		silent = true,
-	})
 end)
 
 -- ## LSP ##
 
 -- Open diagnostics window
-nmap_with("<c-g>d", function()
+lmap("d", function()
 	vim.diagnostic.open_float({
 		severity = vim.diagnostic.severity.HINT,
 	})
@@ -162,42 +146,38 @@ nmap_with("<c-g>d", function()
 	})
 end)
 -- Jump to previous diagnostic hint
-nmap_with("[D", function()
-	vim.diagnostic.goto_prev({
-		severity = vim.diagnostic.severity.HINT,
-	})
+nmap("[D", function()
+	jump_to_error(-1)
 end)
 -- Jump to next diagnostic hint
-nmap_with("]D", function()
-	vim.diagnostic.goto_next({
-		severity = vim.diagnostic.severity.HINT,
-	})
+nmap("]D", function()
+	jump_to_error(1)
 end)
 -- Jump to previous warning hint
-nmap_with("[w", function()
-	vim.diagnostic.goto_prev({
-		severity = vim.diagnostic.severity.WARN,
-	})
+nmap("[w", function()
+	jump_to_warning(-1)
 end)
 -- Jump to next arning hint
-nmap_with("]w", function()
-	vim.diagnostic.goto_next({
-		severity = vim.diagnostic.severity.WARN,
-	})
+nmap("]w", function()
+	jump_to_warning(1)
 end)
 -- Toggle inlay hints
-nmap_with("<c-g>i", function()
+lmap("i", function()
 	vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({}))
+end)
+-- Go to definition
+nmap("gd", function()
+	vim.lsp.buf.definition()
 end)
 
 -- ## Command line ##
 
-map("c", "<c-a>", "<home>")
-map("c", "<c-f>", "<right>")
-map("c", "<c-b>", "<left>")
-map("c", "<c-d>", "<del>")
-map("c", "<a-b>", "<s-left>")
-map("c", "<a-f>", "<s-right>")
+cmap("<c-a>", "<home>")
+cmap("<c-f>", "<right>")
+cmap("<c-b>", "<left>")
+cmap("<c-d>", "<del>")
+cmap("<a-b>", "<s-left>")
+cmap("<a-f>", "<s-right>")
 
 -- ## Buffers ##
 
@@ -208,80 +188,58 @@ nmap("<c-p>", "<cmd>BufferLineCyclePrev<cr>")
 -- Switch to next/right buffer
 nmap("<c-n>", "<cmd>BufferLineCycleNext<cr>")
 -- Shift current buffer to the left
-nmap("<c-s-p>", "<cmd>BufferLineMovePrev<cr>")
+lmap("<", "<cmd>BufferLineMovePrev<cr>")
 -- Shift current buffer to the right
-nmap("<c-s-n>", "<cmd>BufferLineMoveNext<cr>")
+lmap(">", "<cmd>BufferLineMoveNext<cr>")
 -- Quit all buffers
-nmap("<c-g>q", ":bufdo bd!<cr>")
+lmap("q", ":bufdo bd!<cr>")
 -- Close current buffer
-nmap("Q", "<cmd>BufferLinePickClose<cr>")
+nmap("Q", ":bp | bd#<cr>")
 
 -- ## Telescope ##
 
--- Open file discovery window
-map_telescope("p", "find_files")
--- Open live grep window
-map_telescope("f", "live_grep")
--- Open command history window
-map_telescope("c", "command_history")
--- Open search history window
-map_telescope("s", "search_history")
--- Open spell suggest window
-map_telescope("S", "spell_suggest")
--- Open manual pages discovery window
-map_telescope("M", "man_pages")
--- Open marks window
-map_telescope("m", "marks")
 -- Open quick fixes
-map_telescope("q", "quickfix")
--- Open active regsiters window
-map_telescope("r", "registers")
+tmap("q", "quickfix")
 -- Open undo window
-map_telescope("u", "undo")
--- Open live grep window using the word at cursor as a search term
-map_telescope("*", "grep_string")
+tmap("u", "undo")
+-- Open live grep window for word at cursor
+tmap("*", "grep_string")
+-- Open file discovery window
+tmap("ff", "find_files")
+-- Open live grep window
+tmap("fg", "live_grep")
+-- Open command history window
+tmap("ch", "command_history")
+-- Open search history window
+tmap("sh", "search_history")
+-- Open spell suggest window
+tmap("ss", "spell_suggest")
+-- Open manual pages discovery window
+tmap("mp", "man_pages")
+-- Open marks window
+tmap("ma", "marks")
+-- Open active regsiters window
+tmap("re", "registers")
 -- Open buffer diagnostics discovery window
-map_telescope("lD", "diagnostics bufnr=0")
+tmap("lo", "diagnostics bufnr=0")
 -- Jump to symbol references at cursor
-map_telescope("lr", "lsp_references")
+tmap("lr", "lsp_references")
 -- Jump to symbol implementations at cursor
-map_telescope("li", "lsp_implementations")
+tmap("li", "lsp_implementations")
 -- Jump to symbol definition at cursor
-map_telescope("ld", "lsp_definitions")
+tmap("ld", "lsp_definitions")
 -- Open git commits window
-map_telescope("gc", "git_commits")
+tmap("gc", "git_commits")
 -- Open git branches window
-map_telescope("gb", "git_branches")
+tmap("gb", "git_branches")
 -- Open git status window
-map_telescope("gs", "git_status")
+tmap("gs", "git_status")
 -- Open file browser in Neovim directory
-nmap_with("<c-t>C", function()
-	local telescope = require("telescope.builtin")
-
-	telescope.find_files({
-		cwd = string.format("%s/lua", vim.env.NVIM_DIR),
-	})
+lmap("nl", function()
+	browse_config("lua")
 end)
-
--- Rename symbol at cursor
-nmap_with("<c-g>r", function()
-	utils.exec_from("renamer", function(r)
-		r.rename()
-	end)
-end)
-
--- Substitude word at cursor
--- nmap_with("<c-g>s", function()
--- 	local word = vim.fn.expand("<cword>")
---
--- 	utils.popup_substitute(word)
--- end)
-
--- Substitude current visual selection
-vmap_with("<c-r>", function()
-	vim.cmd([[normal! "vy"]])
-
-	utils.popup_substitute(vim.fn.getreg("v"))
+lmap("nc", function()
+	browse_config("config")
 end)
 
 return {
@@ -289,6 +247,4 @@ return {
 	vmap = vmap,
 	imap = imap,
 	nmap_all = nmap_all,
-	nmap_with = nmap_with,
-	nmap_with_all = nmap_with_all,
 }

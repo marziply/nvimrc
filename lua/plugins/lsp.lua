@@ -5,6 +5,7 @@ local servers = {
 	"bashls",
 	"jsonnet_ls",
 	"luau_lsp",
+	"dartls",
 }
 
 function attempt(lsp, name, config)
