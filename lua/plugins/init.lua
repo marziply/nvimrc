@@ -35,4 +35,5 @@ return vim.list_extend(uses, {
 	"AndrewRadev/splitjoin.vim",
 	"sitiom/nvim-numbertoggle",
 	"b0o/schemastore.nvim",
+	"tpope/vim-repeat",
 })

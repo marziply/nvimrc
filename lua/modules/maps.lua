@@ -1,25 +1,17 @@
-function map(kind, bind, cmd, opts)
-	if type(cmd) == "function" then
-		return vim.keymap.set(kind, bind, cmd, opts or {})
-	end
-
-	return vim.api.nvim_set_keymap(kind, bind, cmd, opts or {})
-end
-
 function nmap(bind, cmd, opts)
-	return map("n", bind, cmd, opts)
+	return vim.keymap.set("n", bind, cmd, opts)
 end
 
 function vmap(bind, cmd, opts)
-	return map("v", bind, cmd, opts)
+	return vim.keymap.set("v", bind, cmd, opts)
 end
 
 function imap(bind, cmd, opts)
-	return map("i", bind, cmd, opts)
+	return vim.keymap.set("i", bind, cmd, opts)
 end
 
 function cmap(bind, cmd, opts)
-	return map("c", bind, cmd, opts)
+	return vim.keymap.set("c", bind, cmd, opts)
 end
 
 function lmap(bind, cmd, opts)
@@ -27,11 +19,11 @@ function lmap(bind, cmd, opts)
 end
 
 function snmap(bind, cmd, opts)
-	local _opts = opts or {}
+	local def_opts = opts or {}
 
-	_opts.silent = true
+	def_opts.silent = true
 
-	return nmap(bind, cmd, _opts)
+	return nmap(bind, cmd, def_opts)
 end
 
 function nmap_all(binds)
@@ -43,7 +35,21 @@ end
 function tmap(bind, opt)
 	local cmd = "<cmd>Telescope " .. opt .. "<cr>"
 
-	lmap(bind, cmd)
+	return lmap(bind, cmd)
+end
+
+local function move_tab(cmd)
+	local plug = string.format("<plug>(Repeat%s)", cmd)
+	local exec = string.format('call repeat#set("\\%s")', plug)
+
+	snmap(plug, function()
+		vim.cmd(cmd)
+	end)
+
+	return function()
+		vim.cmd(cmd)
+		vim.cmd(exec)
+	end
 end
 
 function browse_dir(dir)
@@ -76,10 +82,10 @@ end
 
 -- ## General ##
 
+-- Remap ctrl c to escape in norm/vis
+vim.keymap.set({ "n", "v" }, "<c-c>", "<esc>")
 -- Reset CMD output
 snmap("<esc>", ":echo<cr>")
--- Remap ctrl c to escape in norm/vis
-map("", "<c-c>", "<esc>")
 -- Remap ctrl c to escape in ins/cmd
 imap("<c-c>", "<esc>")
 -- Unbind default <c-f> binding
@@ -173,6 +179,10 @@ cmap("<a-f>", "<s-right>")
 
 -- ## Buffers ##
 
+-- Quit all buffers
+lmap("q", ":bufdo bd!<cr>")
+-- Close current buffer
+nmap("Q", ":bp | bd#<cr>")
 -- Switch to highlighted buffer
 nmap("<c-b>", "<cmd>BufferLinePick<cr>")
 -- Switch to previous/left buffer
@@ -180,13 +190,9 @@ nmap("<c-p>", "<cmd>BufferLineCyclePrev<cr>")
 -- Switch to next/right buffer
 nmap("<c-n>", "<cmd>BufferLineCycleNext<cr>")
 -- Shift current buffer to the left
-lmap("<", "<cmd>BufferLineMovePrev<cr>")
+lmap("<", move_tab("BufferLineMovePrev"))
 -- Shift current buffer to the right
-lmap(">", "<cmd>BufferLineMoveNext<cr>")
--- Quit all buffers
-lmap("q", ":bufdo bd!<cr>")
--- Close current buffer
-nmap("Q", ":bp | bd#<cr>")
+lmap(">", move_tab("BufferLineMoveNext"))
 
 -- ## Telescope ##
 
