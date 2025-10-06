@@ -46,12 +46,12 @@ function tmap(bind, opt)
 	lmap(bind, cmd)
 end
 
-function browse_config(dir)
+function browse_dir(dir)
 	return function()
 		local telescope = require("telescope.builtin")
 
 		telescope.find_files({
-			cwd = string.format("%s/%s", vim.env.NVIM_DIR, dir),
+			cwd = dir,
 		})
 	end
 end
@@ -140,19 +140,8 @@ end)
 
 -- ## LSP ##
 
--- Open diagnostics window
-lmap("d", function()
-	vim.diagnostic.open_float({
-		severity = vim.diagnostic.severity.HINT,
-	})
-	vim.diagnostic.open_float({
-		severity = vim.diagnostic.severity.WARN,
-	})
-end)
--- Jump to previous diagnostic hint
-nmap("[D", jump_to_error(-1))
--- Jump to next diagnostic hint
-nmap("]D", jump_to_error(1))
+-- Go to definition
+nmap("gd", vim.lsp.buf.definition)
 -- Jump to previous warning hint
 nmap("[w", jump_to_warning(-1))
 -- Jump to next arning hint
@@ -163,9 +152,14 @@ lmap("i", function()
 
 	vim.lsp.inlay_hint.enable(not enabled)
 end)
--- Go to definition
-nmap("gd", function()
-	vim.lsp.buf.definition()
+-- Open diagnostics window
+lmap("d", function()
+	vim.diagnostic.open_float({
+		severity = vim.diagnostic.severity.HINT,
+	})
+	vim.diagnostic.open_float({
+		severity = vim.diagnostic.severity.WARN,
+	})
 end)
 
 -- ## Command line ##
@@ -232,10 +226,12 @@ tmap("gc", "git_commits")
 tmap("gb", "git_branches")
 -- Open git status window
 tmap("gs", "git_status")
+-- Open file browser in local config directory
+lmap("cc", browse_dir("~/.config"))
 -- Open file browser in Neovim lua directory
-lmap("nl", browse_config("lua"))
+lmap("nl", browse_dir("~/.config/nvim/lua"))
 -- Open file browser in Neovim config directory
-lmap("nc", browse_config("config"))
+lmap("nc", browse_dir("~/.config/nvim/config"))
 
 return {
 	nmap = nmap,
