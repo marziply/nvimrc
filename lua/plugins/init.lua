@@ -29,9 +29,9 @@ for _, method in ipairs(events) do
 end
 
 return vim.list_extend(uses, {
-	{
-		import = "plugins.lang",
-	},
+	-- {
+	-- 	import = "plugins.lang",
+	-- },
 	"AndrewRadev/splitjoin.vim",
 	"sitiom/nvim-numbertoggle",
 	"b0o/schemastore.nvim",

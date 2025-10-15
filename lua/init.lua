@@ -1,5 +1,6 @@
 local manager = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 local utils = require("modules.utils")
+local servers = require("modules.servers")
 
 require("modules.maps")
 
@@ -13,6 +14,16 @@ local function init()
 			notify = false,
 		},
 	})
+
+	for k, v in pairs(servers) do
+		if type(v) == "function" then
+			vim.lsp.config(k, v())
+		else
+			vim.lsp.config(k, v)
+		end
+
+		vim.lsp.enable(k)
+	end
 end
 
 if not vim.uv.fs_stat(manager) then

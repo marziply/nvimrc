@@ -2,12 +2,11 @@ return {
 	{
 		"pmizio/typescript-tools.nvim",
 		opts = function()
-			local lsp = require("lspconfig")
 			local vite_exists = io.open("vite.config.ts", "r") ~= nil
 			local deno_exists = io.open("deno.json", "r") ~= nil
 
 			return {
-				root_dir = lsp.util.root_pattern("package.json"),
+				root_dir = vim.fs.find("package.json"),
 				autostart = not vite_exists and not deno_exists,
 				settings = {
 					publish_diagnostic_on = "change",

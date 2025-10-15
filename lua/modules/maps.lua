@@ -32,13 +32,7 @@ function nmap_all(binds)
 	end
 end
 
-function tmap(bind, opt)
-	local cmd = "<cmd>Telescope " .. opt .. "<cr>"
-
-	return lmap(bind, cmd)
-end
-
-local function move_tab(cmd)
+function move_tab(cmd)
 	local plug = string.format("<plug>(Repeat%s)", cmd)
 	local exec = string.format('call repeat#set("\\%s")', plug)
 
@@ -49,16 +43,6 @@ local function move_tab(cmd)
 	return function()
 		vim.cmd(cmd)
 		vim.cmd(exec)
-	end
-end
-
-function browse_dir(dir)
-	return function()
-		local telescope = require("telescope.builtin")
-
-		telescope.find_files({
-			cwd = dir,
-		})
 	end
 end
 
@@ -193,51 +177,6 @@ nmap("<c-n>", "<cmd>BufferLineCycleNext<cr>")
 lmap("<", move_tab("BufferLineMovePrev"))
 -- Shift current buffer to the right
 lmap(">", move_tab("BufferLineMoveNext"))
-
--- ## Telescope ##
-
--- Open quick fixes
-tmap("q", "quickfix")
--- Open undo window
-tmap("u", "undo")
--- Open live grep window for word at cursor
-tmap("*", "grep_string")
--- Open file discovery window
-tmap("ff", "find_files")
--- Open live grep window
-tmap("fg", "live_grep")
--- Open command history window
-tmap("ch", "command_history")
--- Open search history window
-tmap("sh", "search_history")
--- Open spell suggest window
-tmap("ss", "spell_suggest")
--- Open manual pages discovery window
-tmap("mp", "man_pages")
--- Open marks window
-tmap("ma", "marks")
--- Open active regsiters window
-tmap("re", "registers")
--- Open buffer diagnostics discovery window
-tmap("lo", "diagnostics bufnr=0")
--- Jump to symbol references at cursor
-tmap("lr", "lsp_references")
--- Jump to symbol implementations at cursor
-tmap("li", "lsp_implementations")
--- Jump to symbol definition at cursor
-tmap("ld", "lsp_definitions")
--- Open git commits window
-tmap("gc", "git_commits")
--- Open git branches window
-tmap("gb", "git_branches")
--- Open git status window
-tmap("gs", "git_status")
--- Open file browser in local config directory
-lmap("cc", browse_dir("~/.config"))
--- Open file browser in Neovim lua directory
-lmap("nl", browse_dir("~/.config/nvim/lua"))
--- Open file browser in Neovim config directory
-lmap("nc", browse_dir("~/.config/nvim/config"))
 
 return {
 	nmap = nmap,

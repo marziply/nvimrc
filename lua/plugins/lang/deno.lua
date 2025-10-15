@@ -2,12 +2,11 @@ return {
 	{
 		"sigmasd/deno-nvim",
 		opts = function()
-			local lsp = require("lspconfig")
 			local deno_exists = io.open("deno.json", "r") ~= nil
 
 			return {
 				server = {
-					root_dir = lsp.util.root_pattern("deno.json"),
+					root_dir = vim.fs.find("deno.json"),
 					autostart = deno_exists,
 					settings = {
 						deno = {
