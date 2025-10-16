@@ -32,6 +32,12 @@ return vim.list_extend(uses, {
 	-- {
 	-- 	import = "plugins.lang",
 	-- },
+	{
+		import = "plugins.lang.rust",
+	},
+	{
+		import = "plugins.lang.go",
+	},
 	"AndrewRadev/splitjoin.vim",
 	"sitiom/nvim-numbertoggle",
 	"b0o/schemastore.nvim",

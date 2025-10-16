@@ -62,6 +62,16 @@ return {
 			"go.mod",
 		},
 	},
+	bash = {
+		cmd = {
+			"bash-language-server",
+		},
+		filetypes = {
+			"sh",
+			"zsh",
+			"bash",
+		},
+	},
 	vue = function()
 		local nvm_lib = os.getenv("NVM_LIB")
 		local ts_path = string.format("%s/node_modules/typescript", nvm_lib)
