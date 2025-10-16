@@ -15,6 +15,12 @@ local function init()
 		},
 	})
 
+	vim.lsp.config("*", {
+		root_markers = {
+			".git",
+		},
+	})
+
 	for k, v in pairs(servers) do
 		if type(v) == "function" then
 			vim.lsp.config(k, v())
