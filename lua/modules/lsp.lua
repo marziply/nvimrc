@@ -74,6 +74,21 @@ return {
 			"bash",
 		},
 	},
+	clang = {
+		{
+			root_dir = vim.fs.find({
+				".git",
+				"format.cfg",
+			}),
+			filetypes = {
+				"c",
+				"h",
+				"cc",
+				"cpp",
+				"hpp",
+			},
+		},
+	},
 	vue = function()
 		local nvm_lib = os.getenv("NVM_LIB")
 		local ts_path = string.format("%s/node_modules/typescript", nvm_lib)
@@ -92,65 +107,56 @@ return {
 			},
 		}
 	end,
-	clang = {
-		{
-			root_dir = vim.fs.find({
-				".git",
-				"format.cfg",
-			}),
+	json = function()
+		local store = require("schemastore")
+
+		return {
 			filetypes = {
-				"c",
-				"h",
-				"cc",
-				"cpp",
-				"hpp",
+				"json",
 			},
-		},
-	},
-	-- json = function()
-	-- 	local store = require("schemastore")
-	--
-	-- 	return {
-	-- 		settings = {
-	-- 			json = {
-	-- 				schemas = store.json.schemas(),
-	-- 				validate = {
-	-- 					enable = true,
-	-- 				},
-	-- 			},
-	-- 		},
-	-- 	}
-	-- end,
-	-- yaml = function()
-	-- 	local store = require("schemastore")
-	--
-	-- 	return {
-	-- 		settings = {
-	-- 			yaml = {
-	-- 				customTags = {
-	-- 					"!reference sequence",
-	-- 				},
-	-- 				keyOrdering = false,
-	-- 				proseWrap = "always",
-	-- 				schemas = store.yaml.schemas({
-	-- 					ignore = {
-	-- 						"Deployer Recipe",
-	-- 						"RKE Cluster Configuration YAML",
-	-- 					},
-	-- 					extra = {
-	-- 						{
-	-- 							url = "https://taskfile.dev/schema.json",
-	-- 							name = "taskfile.yaml",
-	-- 							fileMatch = "**/taskfile.yaml",
-	-- 						},
-	-- 					},
-	-- 				}),
-	-- 				schemaStore = {
-	-- 					enable = false,
-	-- 					url = "",
-	-- 				},
-	-- 			},
-	-- 		},
-	-- 	}
-	-- end,
+			settings = {
+				json = {
+					schemas = store.json.schemas(),
+					validate = {
+						enable = true,
+					},
+				},
+			},
+		}
+	end,
+	yaml = function()
+		local store = require("schemastore")
+
+		return {
+			filetypes = {
+				"yaml",
+			},
+			settings = {
+				yaml = {
+					customTags = {
+						"!reference sequence",
+					},
+					keyOrdering = false,
+					proseWrap = "always",
+					schemas = store.yaml.schemas({
+						ignore = {
+							"Deployer Recipe",
+							"RKE Cluster Configuration YAML",
+						},
+						extra = {
+							{
+								url = "https://taskfile.dev/schema.json",
+								name = "taskfile.yaml",
+								fileMatch = "**/taskfile.yaml",
+							},
+						},
+					}),
+					schemaStore = {
+						enable = false,
+						url = "",
+					},
+				},
+			},
+		}
+	end,
 }

@@ -8,6 +8,7 @@
   "cmp-path": { "branch": "main", "commit": "c642487086dbd9a93160e1679a1327be111cbc25" },
   "conform.nvim": { "branch": "master", "commit": "fbcb4fa7f34bfea9be702ffff481a8e336ebf6ed" },
   "crates.nvim": { "branch": "main", "commit": "ac9fa498a9edb96dc3056724ff69d5f40b898453" },
+  "deno-nvim": { "branch": "master", "commit": "5c1ef9762f916033bd3b9b37878384cae24ddb4e" },
   "gitsigns.nvim": { "branch": "main", "commit": "1ee5c1fd068c81f9dd06483e639c2aa4587dc197" },
   "go.nvim": { "branch": "master", "commit": "db20146ef63322949af69b0955f80ee7d98145bd" },
   "guihua.lua": { "branch": "master", "commit": "c49a0fb7346586a1b1431d7e407f943c4164d8cb" },
