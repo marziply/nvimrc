@@ -1,4 +1,4 @@
-local function maps(keys)
+local function plugin_keys(keys)
 	local ret = {}
 
 	for k, v in pairs(keys) do
@@ -20,6 +20,16 @@ local function maps(keys)
 	return ret
 end
 
+local function win_key(name)
+	return {
+		name,
+		mode = {
+			"n",
+			"i",
+		},
+	}
+end
+
 return {
 	{
 		"folke/snacks.nvim",
@@ -33,7 +43,33 @@ return {
 					},
 				},
 			},
-			animate = {
+			picker = {
+				enabled = true,
+				win = {
+					input = {
+						keys = {
+							["<c-u>"] = win_key("preview_scroll_up"),
+							["<c-d>"] = win_key("preview_scroll_down"),
+						},
+					},
+				},
+			},
+			indent = {
+				enabled = true,
+				animate = {
+					enabled = false,
+				},
+			},
+			notifier = {
+				enabled = true,
+				timeout = 6000,
+				top_down = false,
+				width = {
+					min = 40,
+					max = 0.3,
+				},
+			},
+			notify = {
 				enabled = true,
 			},
 			bufdelete = {
@@ -48,44 +84,14 @@ return {
 			git = {
 				enabled = true,
 			},
-			indent = {
-				enabled = true,
-				animate = {
-					enabled = false,
-				},
-			},
-			notify = {
-				enabled = true,
-			},
-			notifier = {
-				enabled = true,
-				timeout = 5000,
-				top_down = false,
-				width = {
-					min = 40,
-					max = 0.3,
-				},
-			},
-			picker = {
-				enabled = true,
-			},
 			scope = {
-				enabled = true,
+				enabled = false,
 			},
 			statuscolumn = {
 				enabled = true,
 			},
-			terminal = {
-				enabled = true,
-			},
-			words = {
-				enabled = true,
-			},
-			win = {
-				enabled = true,
-			},
 		},
-		keys = maps({
+		keys = plugin_keys({
 			["*"] = "grep_word",
 			q = "qflist",
 			u = "undo",

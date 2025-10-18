@@ -3,11 +3,11 @@ return {
 		"folke/noice.nvim",
 		opts = {
 			notify = {
-				enbaled = false,
+				enabled = false,
 			},
 			lsp = {
 				progress = {
-					enabled = false,
+					enabled = true,
 				},
 			},
 			presets = {

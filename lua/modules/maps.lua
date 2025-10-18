@@ -18,12 +18,20 @@ function lmap(bind, cmd, opts)
 	return nmap("<leader>" .. bind, cmd, opts)
 end
 
+function slmap(bind, cmd, opts)
+	opts = opts or {}
+
+	opts.silent = true
+
+	return lmap(bind, cmd, opts)
+end
+
 function snmap(bind, cmd, opts)
-	local def_opts = opts or {}
+	opts = opts or {}
 
-	def_opts.silent = true
+	opts.silent = true
 
-	return nmap(bind, cmd, def_opts)
+	return nmap(bind, cmd, opts)
 end
 
 function nmap_all(binds)
@@ -81,31 +89,23 @@ imap("<c-s>", "<esc>:w<cr>")
 -- Quit buffer
 snmap("<c-q>", ":bd<cr>")
 -- Scroll up
-nmap("<c-k>", "10<c-y>")
+nmap("<c-k>", "15<c-y>")
 -- Scroll down
-nmap("<c-j>", "10<c-e>")
--- Center buffer after previous jump
+nmap("<c-j>", "15<c-e>")
+-- Page up and center
+nmap("<c-u>", "<c-u>M")
+-- Page down and center
+nmap("<c-d>", "<c-d>M")
+-- Previous jump and center
 nmap("<c-o>", "<c-o>zz")
--- Center buffer after next jump
+-- Next jump and center
 nmap("<c-i>", "<c-i>zz")
 -- Insert two lines up
-nmap("<c-m>o", "o<esc>o")
+lmap("iu", "O<esc>O")
 -- Insert two lines down
-nmap("<c-m>O", "O<esc>O")
--- Open list of Git conflicts
-lmap("gq", "<cmd>GitConflictListQf<cr>")
--- Insert one line up
-nmap("mo", "o<esc>")
--- Insert one line down
-nmap("mO", "O<esc>")
+lmap("id", "o<esc>o")
 -- Jump to next search result and center buffer
 nmap("n", "nzz")
--- Jump to previous search result and center buffer
-nmap("N", "Nzz")
--- Switch to left buffer and center buffer
-nmap("H", "Hzz")
--- Switch to right buffer and center buffer
-nmap("L", "Lzz")
 -- Scroll to bottom of buffer and center buffer
 nmap("G", "Gzz")
 -- Jump to next search of word at cursor and center buffer
@@ -116,17 +116,8 @@ nmap("v[", "V$%o$")
 nmap("v]", "$%V%o$")
 -- Comment toggle block forward
 nmap("gcs", "v[gc")
--- Comment toggle block backward
-nmap("gcS", "v]gc")
-
--- ## Utils ##
-
--- Open Spectre window
-lmap("rr", function()
-	local spectre = require("spectre")
-
-	spectre.open()
-end)
+-- Execute last command
+slmap("<leader>", ":<c-p><cr>")
 
 -- ## LSP ##
 
@@ -152,21 +143,14 @@ lmap("d", function()
 	})
 end)
 
--- ## Command line ##
-
-cmap("<c-a>", "<home>")
-cmap("<c-f>", "<right>")
-cmap("<c-b>", "<left>")
-cmap("<c-d>", "<del>")
-cmap("<a-b>", "<s-left>")
-cmap("<a-f>", "<s-right>")
-
 -- ## Buffers ##
 
--- Quit all buffers
-lmap("q", ":bufdo bd!<cr>")
+-- Close all buffers
+slmap("bd", ":bufdo bd!<cr>")
+-- Close all buffers except current
+slmap("be", ":%bd | e# | bd#<cr>")
 -- Close current buffer
-nmap("Q", ":bp | bd#<cr>")
+snmap("Q", ":bp | bd#<cr>")
 -- Switch to highlighted buffer
 nmap("<c-b>", "<cmd>BufferLinePick<cr>")
 -- Switch to previous/left buffer
@@ -177,6 +161,15 @@ nmap("<c-n>", "<cmd>BufferLineCycleNext<cr>")
 lmap("<", move_tab("BufferLineMovePrev"))
 -- Shift current buffer to the right
 lmap(">", move_tab("BufferLineMoveNext"))
+
+-- ## Plugins ##
+
+-- Open Spectre window
+lmap("rr", function()
+	local spectre = require("spectre")
+
+	spectre.open()
+end)
 
 return {
 	nmap = nmap,
