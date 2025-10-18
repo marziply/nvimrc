@@ -30,6 +30,14 @@ local function win_key(name)
 	}
 end
 
+local enabled = {
+	enabled = true,
+}
+
+local disabled = {
+	enabled = false,
+}
+
 return {
 	{
 		"folke/snacks.nvim",
@@ -56,9 +64,7 @@ return {
 			},
 			indent = {
 				enabled = true,
-				animate = {
-					enabled = false,
-				},
+				animate = disabled,
 			},
 			notifier = {
 				enabled = true,
@@ -69,27 +75,11 @@ return {
 					max = 0.3,
 				},
 			},
-			notify = {
-				enabled = true,
-			},
-			bufdelete = {
-				enabled = false,
-			},
-			dashboard = {
-				enabled = true,
-			},
-			debug = {
-				enabled = true,
-			},
-			git = {
-				enabled = true,
-			},
-			scope = {
-				enabled = false,
-			},
-			statuscolumn = {
-				enabled = true,
-			},
+			notify = enabled,
+			dashboard = enabled,
+			debug = enabled,
+			git = enabled,
+			statuscolumn = enabled,
 		},
 		keys = plugin_keys({
 			["*"] = "grep_word",

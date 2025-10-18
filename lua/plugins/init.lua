@@ -29,6 +29,8 @@ for _, method in ipairs(events) do
 end
 
 return vim.list_extend(uses, {
+	-- @FIXME: Deno and TypeScript plugins are broken due to lspconfig
+	--         deprecation
 	-- {
 	-- 	import = "plugins.lang",
 	-- },
@@ -42,4 +44,5 @@ return vim.list_extend(uses, {
 	"sitiom/nvim-numbertoggle",
 	"b0o/schemastore.nvim",
 	"tpope/vim-repeat",
+	"isobit/vim-caddyfile",
 })
