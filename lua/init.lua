@@ -1,6 +1,6 @@
 local manager = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 local utils = require("modules.utils")
-local servers = require("modules.servers")
+local lsp = require("modules.lsp")
 
 require("modules.maps")
 
@@ -21,7 +21,7 @@ local function init()
 		},
 	})
 
-	for k, v in pairs(servers) do
+	for k, v in pairs(lsp) do
 		if type(v) == "function" then
 			vim.lsp.config(k, v())
 		else

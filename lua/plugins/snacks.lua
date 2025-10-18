@@ -1,4 +1,4 @@
-local function keys(keys)
+local function maps(keys)
 	local ret = {}
 
 	for k, v in pairs(keys) do
@@ -85,7 +85,7 @@ return {
 				enabled = true,
 			},
 		},
-		keys = keys({
+		keys = maps({
 			["*"] = "grep_word",
 			q = "qflist",
 			u = "undo",

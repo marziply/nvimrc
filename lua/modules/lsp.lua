@@ -28,6 +28,7 @@ return {
 					},
 					globals = {
 						"vim",
+						"Snacks",
 					},
 				},
 				workspace = {
