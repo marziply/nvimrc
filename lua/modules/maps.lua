@@ -124,7 +124,7 @@ nmap("[w", jump_to_warning(-1))
 -- Jump to next arning hint
 nmap("]w", jump_to_warning(1))
 -- Toggle inlay hints
-lmap("i", function()
+lmap("ii", function()
 	local enabled = vim.lsp.inlay_hint.is_enabled()
 
 	vim.lsp.inlay_hint.enable(not enabled)
