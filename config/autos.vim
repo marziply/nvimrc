@@ -18,7 +18,7 @@ aug ft
     \ setl ft=htmldjango
 	au
     \ BufEnter,BufReadPost,BufWritePost
-    \ *.tfvars,*.env*,*.md,*.json,*.yaml
+    \ *.tf*,*.env*,*.md,*.json,*.yaml
     \ setl nowrap
 	au 
     \ BufEnter,BufReadPost,BufWritePost

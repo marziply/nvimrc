@@ -92,10 +92,6 @@ snmap("<c-q>", ":bd<cr>")
 nmap("<c-k>", "15<c-y>")
 -- Scroll down
 nmap("<c-j>", "15<c-e>")
--- Page up and center
-nmap("<c-u>", "<c-u>M")
--- Page down and center
-nmap("<c-d>", "<c-d>M")
 -- Previous jump and center
 nmap("<c-o>", "<c-o>zz")
 -- Next jump and center
