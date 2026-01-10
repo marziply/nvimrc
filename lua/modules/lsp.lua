@@ -75,18 +75,18 @@ return {
 		},
 	},
 	clang = {
-		{
-			root_dir = vim.fs.find({
-				".git",
-				"format.cfg",
-			}),
-			filetypes = {
-				"c",
-				"h",
-				"cc",
-				"cpp",
-				"hpp",
-			},
+		cmd = {
+			"clang-format",
+		},
+		root_markers = {
+			"format.cfg",
+		},
+		filetypes = {
+			"c",
+			"h",
+			"cc",
+			"cpp",
+			"hpp",
 		},
 	},
 	vue = function()
@@ -94,7 +94,13 @@ return {
 		local ts_path = string.format("%s/node_modules/typescript", nvm_lib)
 
 		return {
-			root_dir = vim.fs.find("vite.config.ts"),
+			root_markers = {
+				"vite.config.ts",
+			},
+			cmd = {
+				"vue-language-server",
+				"--stdio",
+			},
 			filetypes = {
 				"typescript",
 				"vue",
@@ -111,6 +117,10 @@ return {
 		local store = require("schemastore")
 
 		return {
+			cmd = {
+				"vscode-json-language-server",
+				"--stdio",
+			},
 			filetypes = {
 				"json",
 			},
@@ -128,6 +138,10 @@ return {
 		local store = require("schemastore")
 
 		return {
+			cmd = {
+				"yaml-language-server",
+				"--stdio",
+			},
 			filetypes = {
 				"yaml",
 			},

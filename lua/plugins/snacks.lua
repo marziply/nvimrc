@@ -85,6 +85,7 @@ return {
 			["*"] = "grep_word",
 			q = "qflist",
 			u = "undo",
+			bb = "buffers",
 			ff = "files",
 			fg = "grep",
 			ch = "command_history",

@@ -1,10 +1,14 @@
 return {
+	-- {
+	-- 	"mrcjkb/rustaceanvim",
+	-- 	lazy = false,
+	-- 	dependencies = {
+	-- 		"saecki/crates.nvim",
+	-- 		config = true,
+	-- 	},
+	-- },
 	{
-		"mrcjkb/rustaceanvim",
-		lazy = false,
-		dependencies = {
-			"saecki/crates.nvim",
-			config = true,
-		},
+		"saecki/crates.nvim",
+		config = true,
 	},
 }

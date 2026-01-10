@@ -114,6 +114,12 @@ nmap("v]", "$%V%o$")
 nmap("gcs", "v[gc")
 -- Execute last command
 slmap("<leader>", ":<c-p><cr>")
+-- Reset LSP
+slmap("dr", function()
+	vim.diagnostic.reset(nil, vim.api.nvim_get_current_buf())
+
+	vim.print("Reset LSP")
+end)
 
 -- ## LSP ##
 
@@ -137,6 +143,11 @@ lmap("d", function()
 	vim.diagnostic.open_float({
 		severity = vim.diagnostic.severity.WARN,
 	})
+end)
+slmap("RR", function()
+	vim.lsp.stop_client(vim.lsp.get_clients())
+
+	vim.cmd([[bufdo! edit]])
 end)
 
 -- ## Buffers ##
