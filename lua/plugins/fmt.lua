@@ -90,7 +90,8 @@ return {
 					},
 					ruff = {
 						stdin = true,
-						command = "ruff format",
+						command = "ruff",
+						args = "format",
 					},
 					tofu = {
 						stdin = true,
