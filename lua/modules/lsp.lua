@@ -14,6 +14,11 @@ return {
 				cargo = {
 					allFeatures = true,
 				},
+				diagnostics = {
+					disabled = {
+						"inactive-code",
+					},
+				},
 			},
 		},
 	},
