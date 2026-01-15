@@ -9,6 +9,13 @@ return {
 		root_markers = {
 			"Cargo.toml",
 		},
+		settings = {
+			["rust-analyzer"] = {
+				cargo = {
+					allFeatures = true,
+				},
+			},
+		},
 	},
 	lua = {
 		cmd = {
