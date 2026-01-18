@@ -63,6 +63,12 @@ return {
 					go = {
 						"gofmt",
 					},
+					html = {
+						"html",
+					},
+					htmldjango = {
+						"html",
+					},
 				},
 				formatters = {
 					rustfmt_nightly = {
@@ -97,6 +103,11 @@ return {
 						stdin = true,
 						command = "tofu",
 						args = "fmt -",
+					},
+					html = {
+						stdin = true,
+						command = "prettier",
+						args = "--parser html",
 					},
 				},
 			}
