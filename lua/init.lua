@@ -53,35 +53,10 @@ vim.g.markdown_fenced_languages = {
 	"ft=typescript",
 }
 
-vim.g.rustaceanvim = {
-	server = {
-		-- capabilities = vim.lsp.protocol.make_client_capabilities(),
-		default_settings = {
-			["rust-analyzer"] = {
-				diagnostics = {
-					disabled = {
-						"inactive-code",
-					},
-				},
-			},
-		},
-		capabilities = {
-			textDocument = {
-				completion = {
-					completionItem = {
-						snippetSupport = false,
-					},
-				},
-			},
-		},
-	},
-}
-
 vim.filetype.add({
 	extension = {
 		tera = "tera",
 		jinja = "jinja",
-		-- html = "jinja",
 	},
 })
 
