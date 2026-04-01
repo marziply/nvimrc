@@ -5,5 +5,11 @@ return {
 		keymap = {
 			preset = "enter",
 		},
+		sources = {
+			default = {
+				"lsp",
+				"path",
+			},
+		},
 	},
 }
