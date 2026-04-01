@@ -17,7 +17,7 @@ local function sources()
 		},
 	}
 	local buf_sources = vim.tbl_map(mapper, {
-		"nvim_lsp_signature_help",
+		-- "nvim_lsp_signature_help",
 		"crates",
 		"path",
 		"cmd",
@@ -80,7 +80,10 @@ local function cmp_key_binds()
 		["<c-p>"] = movement,
 		["<c-d>"] = map.scroll_docs(4),
 		["<c-u>"] = map.scroll_docs(-4),
-		["<cr>"] = map.confirm(),
+		["<cr>"] = map.confirm({
+			behavior = cmp.ConfirmBehavior.Insert,
+			select = false,
+		}),
 		["<tab>"] = function(fallback)
 			if not cmp.select_next_item() then
 				fallback()
@@ -114,9 +117,9 @@ end
 return {
 	{
 		"hrsh7th/nvim-cmp",
+		enabled = false,
 		opts = function()
 			local cmp = require("cmp")
-			-- local cmp_rs = require("cmp_lsp_rs")
 			local map = cmp.mapping
 			local buf_sources, win_sources = sources()
 			local cmp_win_opts = vim.tbl_extend("force", cmp.config.window.bordered(), {
@@ -127,10 +130,6 @@ return {
 				max_width = 60,
 				max_height = 40,
 			})
-
-			-- for _, source in ipairs(buf_sources) do
-			-- 	cmp_rs.filter_out.entry_filter(source)
-			-- end
 
 			return {
 				enabled = is_cmp_enabled,
@@ -156,7 +155,7 @@ return {
 		end,
 		dependencies = {
 			"hrsh7th/cmp-nvim-lsp",
-			"hrsh7th/cmp-nvim-lsp-signature-help",
+			-- "hrsh7th/cmp-nvim-lsp-signature-help",
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-path",
 			"hrsh7th/cmp-cmdline",

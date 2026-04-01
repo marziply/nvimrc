@@ -66,15 +66,15 @@ return {
 					html = {
 						"html",
 					},
-					htmldjango = {
-						"html",
-					},
+					-- htmldjango = {
+					-- 	"html",
+					-- },
 				},
 				formatters = {
 					rustfmt_nightly = {
 						stdin = true,
 						command = "rustfmt",
-						args = "+nightly --edition 2021",
+						args = "+nightly --edition 2024",
 						cwd = util.root_file({
 							"Cargo.toml",
 						}),

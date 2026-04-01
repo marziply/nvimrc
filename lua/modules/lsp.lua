@@ -11,6 +11,11 @@ return {
 		},
 		settings = {
 			["rust-analyzer"] = {
+				completion = {
+					autoimport = {
+						enable = true,
+					},
+				},
 				cargo = {
 					allFeatures = true,
 				},
