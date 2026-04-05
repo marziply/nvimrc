@@ -144,11 +144,6 @@ lmap("d", function()
 		severity = vim.diagnostic.severity.WARN,
 	})
 end)
-slmap("RR", function()
-	vim.lsp.stop_client(vim.lsp.get_clients())
-
-	vim.cmd([[bufdo! edit]])
-end)
 
 -- ## Buffers ##
 
@@ -174,8 +169,25 @@ lmap(">", move_tab("BufferLineMoveNext"))
 -- Open Spectre window
 lmap("rr", function()
 	local spectre = require("spectre")
+	local buf = vim.api.nvim_create_buf(false, true)
+	local width = math.floor(vim.o.columns * 0.6)
+	local height = math.floor(vim.o.lines * 0.6)
+	local row = math.floor((vim.o.lines - height) / 2)
+	local col = math.floor((vim.o.columns - width) / 2)
 
-	spectre.open()
+	vim.api.nvim_open_win(buf, true, {
+		relative = "editor",
+		style = "minimal",
+		border = "rounded",
+		width = width,
+		height = height,
+		row = row,
+		col = col,
+	})
+
+	spectre.open({
+		is_insert_mode = true,
+	})
 end)
 
 return {
