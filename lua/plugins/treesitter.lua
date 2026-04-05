@@ -10,6 +10,7 @@ local targets = {
 	"go",
 	"rust",
 	"c",
+	"toml",
 }
 
 return {
