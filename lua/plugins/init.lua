@@ -29,7 +29,6 @@ for _, method in ipairs(events) do
 end
 
 return vim.list_extend(uses, {
-	"Wansmer/treesj",
 	"sitiom/nvim-numbertoggle",
 	"b0o/schemastore.nvim",
 	"tpope/vim-repeat",
