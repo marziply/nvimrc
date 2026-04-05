@@ -1,29 +1,44 @@
+local targets = {
+	"lua",
+	"javascript",
+	"tsx",
+	"json",
+	"html",
+	"css",
+	"scss",
+	"sql",
+	"go",
+	"rust",
+	"c",
+}
+
 return {
 	{
 		"nvim-treesitter/nvim-treesitter",
-		branch = "master",
-		main = "nvim-treesitter.configs",
+		branch = "main",
+		main = "nvim-treesitter",
+		init = function()
+			local ts = require("nvim-treesitter")
+			local config = require("nvim-treesitter.config")
+
+			vim.api.nvim_create_autocmd("FileType", {
+				callback = function()
+					pcall(vim.treesitter.start)
+
+					vim.bo.indentexpr = "v:lua.require('nvim-treesitter').indentexpr()"
+				end,
+			})
+
+			local installed = config.get_installed()
+			local parsers = vim.iter(targets)
+				:filter(function(parser)
+					return not vim.tbl_contains(installed, parser)
+				end)
+				:totable()
+
+			ts.install(parsers)
+		end,
 		opts = {
-			auto_install = true,
-			ensure_installed = {
-				"lua",
-				"javascript",
-				"tsx",
-				"json",
-				"html",
-				"css",
-				"scss",
-				"sql",
-				"go",
-				"rust",
-				"c",
-			},
-			indent = {
-				enable = true,
-			},
-			highlight = {
-				enable = true,
-			},
 			textobjects = {
 				select = {
 					enable = true,
@@ -33,7 +48,10 @@ return {
 		},
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter-context",
-			"nvim-treesitter/nvim-treesitter-textobjects",
+			{
+				"nvim-treesitter/nvim-treesitter-textobjects",
+				branch = "main",
+			},
 		},
 	},
 }
