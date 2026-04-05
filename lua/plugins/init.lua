@@ -1,6 +1,6 @@
 local uses = {
 	"kylechui/nvim-surround",
-	"gbprod/stay-in-place.nvim",
+	"windwp/nvim-autopairs",
 	"chentoast/marks.nvim",
 }
 local events = {
@@ -29,7 +29,7 @@ for _, method in ipairs(events) do
 end
 
 return vim.list_extend(uses, {
-	"AndrewRadev/splitjoin.vim",
+	"Wansmer/treesj",
 	"sitiom/nvim-numbertoggle",
 	"b0o/schemastore.nvim",
 	"tpope/vim-repeat",
