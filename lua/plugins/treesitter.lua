@@ -11,6 +11,7 @@ local targets = {
 	"rust",
 	"c",
 	"toml",
+	"bash",
 }
 
 return {
