@@ -19,10 +19,9 @@ return {
 				"path",
 			},
 		},
-		signature = {
-			enabled = true,
-			window = {
-				direction_priority = { "s" },
+		completion = {
+			documentation = {
+				auto_show = true,
 			},
 		},
 	},
