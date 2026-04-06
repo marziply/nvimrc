@@ -3,6 +3,7 @@ local targets = {
 	"javascript",
 	"tsx",
 	"json",
+	"yaml",
 	"html",
 	"css",
 	"scss",
@@ -12,6 +13,7 @@ local targets = {
 	"c",
 	"toml",
 	"bash",
+	"gitconfig",
 }
 
 return {
