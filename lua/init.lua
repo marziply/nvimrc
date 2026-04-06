@@ -32,6 +32,12 @@ local function init()
 	end
 end
 
+local function equalise_windows()
+	vim.schedule(function()
+		vim.cmd("wincmd =")
+	end)
+end
+
 if not vim.uv.fs_stat(manager) then
 	vim.fn.system({
 		"git",
@@ -58,6 +64,14 @@ vim.filetype.add({
 		tera = "tera",
 		jinja = "jinja",
 	},
+})
+
+vim.api.nvim_create_autocmd("VimEnter", {
+	callback = equalise_windows,
+})
+
+vim.api.nvim_create_autocmd("SessionLoadPost", {
+	callback = equalise_windows,
 })
 
 vim.api.nvim_create_autocmd("LspAttach", {

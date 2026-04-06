@@ -21,6 +21,8 @@ call SetDefault('NVIM_DIR', g:xdg_config_home . '/nvim')
 call SetDefault('NVIM_CACHE_DIR', g:xdg_cache_home . '/nvim')
 
 let mapleader = ","
+let g:loaded_netrw = 1
+let g:loaded_netrwPlugin = 1
 
 lua require('init')
 

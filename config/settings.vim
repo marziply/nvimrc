@@ -4,6 +4,7 @@ set timeoutlen=3000
 set updatetime=250
 set signcolumn=yes
 set clipboard+=unnamedplus
+set sessionoptions+=winpos,terminal,folds
 
 " Tabs
 set tabstop=2
