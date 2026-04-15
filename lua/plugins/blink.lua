@@ -5,11 +5,11 @@ return {
 		keymap = {
 			preset = "enter",
 			["<c-u>"] = {
-				"scroll_signature_up",
+				"scroll_documentation_up",
 				"fallback",
 			},
 			["<c-d>"] = {
-				"scroll_signature_down",
+				"scroll_documentation_down",
 				"fallback",
 			},
 		},
