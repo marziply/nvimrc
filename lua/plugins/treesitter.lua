@@ -13,7 +13,8 @@ local targets = {
 	"c",
 	"toml",
 	"bash",
-	"gitconfig",
+	"git_config",
+	"just",
 }
 
 return {
