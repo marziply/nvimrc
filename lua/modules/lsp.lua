@@ -69,6 +69,14 @@ return {
 			"luau",
 		},
 	},
+	python = {
+		cmd = {
+			"pylsp",
+		},
+		filetypes = {
+			"python",
+		},
+	},
 	go = {
 		cmd = {
 			"gopls",

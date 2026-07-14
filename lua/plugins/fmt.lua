@@ -95,7 +95,7 @@ return {
 						args = "-s 2 -w 80 -u 1 -U 1 -C --no-space-function -",
 					},
 					ruff = {
-						stdin = true,
+						stdin = false,
 						command = "ruff",
 						args = "format",
 					},
