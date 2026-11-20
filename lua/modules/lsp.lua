@@ -114,6 +114,19 @@ return {
 			"hpp",
 		},
 	},
+	tsc = {
+		cmd = {
+			"tsc",
+			"--lsp",
+			"--stdio",
+		},
+		filetypes = {
+			"typescript",
+			"javascript",
+			"typescriptreact",
+			"javascriptreact",
+		},
+	},
 	vue = function()
 		local nvm_lib = os.getenv("NVM_LIB")
 		local ts_path = string.format("%s/node_modules/typescript", nvm_lib)

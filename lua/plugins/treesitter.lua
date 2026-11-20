@@ -15,6 +15,8 @@ local targets = {
 	"bash",
 	"git_config",
 	"just",
+	"terraform",
+	"vue",
 }
 
 return {
